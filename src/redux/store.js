@@ -3,6 +3,7 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { authReducer } from "./reducers/userReducers";
 import { serviceReducer, servicesReducer } from "./reducers/serviceReducers";
+import { employeeReducer, employeesReducer } from "./reducers/employeesReducer";
 
 const authFromLocalStorage = localStorage.getItem("auth")
   ? JSON.parse(localStorage.getItem("auth"))
@@ -16,6 +17,8 @@ const rootReducer = combineReducers({
   auth: authReducer,
   serviceDetails: serviceReducer,
   serviceList: servicesReducer,
+  employeeDetails: employeeReducer,
+  employeeList: employeesReducer,
 });
 
 const store = createStore(
