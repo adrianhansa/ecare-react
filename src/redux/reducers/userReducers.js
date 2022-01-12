@@ -1,4 +1,7 @@
 import {
+  EMPLOYEE_LOGIN_FAIL,
+  EMPLOYEE_LOGIN_REQUEST,
+  EMPLOYEE_LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
@@ -15,6 +18,12 @@ export const authReducer = (state = { auth: {} }, action) => {
     case LOGIN_SUCCESS:
       return { loading: false, user: action.payload };
     case LOGIN_FAIL:
+      return { loading: false, error: action.payload };
+    case EMPLOYEE_LOGIN_REQUEST:
+      return { loading: true };
+    case EMPLOYEE_LOGIN_SUCCESS:
+      return { loading: false, user: action.payload };
+    case EMPLOYEE_LOGIN_FAIL:
       return { loading: false, error: action.payload };
     case REGISTER_REQUEST:
       return { loading: true };
