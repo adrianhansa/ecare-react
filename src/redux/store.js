@@ -4,6 +4,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { authReducer } from "./reducers/userReducers";
 import { serviceReducer, servicesReducer } from "./reducers/serviceReducers";
 import { employeeReducer, employeesReducer } from "./reducers/employeesReducer";
+import { shiftReducer, shiftsReducer } from "./reducers/shiftsReducer";
 
 const authFromLocalStorage = localStorage.getItem("auth")
   ? JSON.parse(localStorage.getItem("auth"))
@@ -19,6 +20,8 @@ const rootReducer = combineReducers({
   serviceList: servicesReducer,
   employeeDetails: employeeReducer,
   employeeList: employeesReducer,
+  shiftDetails: shiftReducer,
+  shiftList: shiftsReducer,
 });
 
 const store = createStore(
