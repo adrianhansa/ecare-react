@@ -5,6 +5,10 @@ import { authReducer } from "./reducers/userReducers";
 import { serviceReducer, servicesReducer } from "./reducers/serviceReducers";
 import { employeeReducer, employeesReducer } from "./reducers/employeesReducer";
 import { shiftReducer, shiftsReducer } from "./reducers/shiftsReducer";
+import {
+  workingStatusReducer,
+  workingStatusesReducer,
+} from "./reducers/workingStatusReducer";
 
 const authFromLocalStorage = localStorage.getItem("auth")
   ? JSON.parse(localStorage.getItem("auth"))
@@ -22,6 +26,8 @@ const rootReducer = combineReducers({
   employeeList: employeesReducer,
   shiftDetails: shiftReducer,
   shiftList: shiftsReducer,
+  workingStatusDetails: workingStatusReducer,
+  workingStatusList: workingStatusesReducer,
 });
 
 const store = createStore(
