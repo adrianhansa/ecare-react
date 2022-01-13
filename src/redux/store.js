@@ -9,6 +9,10 @@ import {
   workingStatusReducer,
   workingStatusesReducer,
 } from "./reducers/workingStatusReducer";
+import {
+  workShiftReducer,
+  workShiftsReducer,
+} from "./reducers/workShiftsReducer";
 
 const authFromLocalStorage = localStorage.getItem("auth")
   ? JSON.parse(localStorage.getItem("auth"))
@@ -28,6 +32,8 @@ const rootReducer = combineReducers({
   shiftList: shiftsReducer,
   workingStatusDetails: workingStatusReducer,
   workingStatusList: workingStatusesReducer,
+  workShiftDetails: workShiftReducer,
+  workShiftList: workShiftsReducer,
 });
 
 const store = createStore(
