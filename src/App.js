@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Services from "./pages/services/Services";
 import ServiceScreen from "./pages/services/ServiceScreen";
+import Employees from "./pages/employees/Employees";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/services" element={<Services />} />
           <Route path="/services/:slug" element={<ServiceScreen />} />
+          <Route path="/services/employees/:slug" element={<Employees />} />
         </Routes>
       </BrowserRouter>
     </Provider>

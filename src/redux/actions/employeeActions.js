@@ -22,22 +22,24 @@ import {
 } from "../constants/employeeConstants";
 
 export const addEmployee =
-  ({
-    name,
-    email,
-    payrollNumber,
+  (
     service,
-    address,
-    phone,
-    contractHours,
-    role,
-    driver,
-    accessLevel,
-  }) =>
+    {
+      name,
+      email,
+      payrollNumber,
+      address,
+      phone,
+      contractHours,
+      role,
+      driver,
+      accessLevel,
+    }
+  ) =>
   async (dispatch) => {
     try {
       dispatch({ type: ADD_EMPLOYEE_REQUEST });
-      const { data } = await axios.post(`${URL}/employee`, {
+      const { data } = await axios.post(`${URL}/employees/${service}`, {
         name,
         email,
         payrollNumber,
@@ -124,10 +126,10 @@ export const getEmployee = (id) => async (dispatch) => {
   }
 };
 
-export const getEmployees = () => async (dispatch) => {
+export const getEmployees = (service) => async (dispatch) => {
   try {
     dispatch({ type: GET_EMPLOYEES_REQUEST });
-    const response = await axios.get(`${URL}/employees`);
+    const response = await axios.get(`${URL}/employees/${service}`);
     dispatch({ type: GET_EMPLOYEES_SUCCESS, payload: response.data });
   } catch (error) {
     dispatch({

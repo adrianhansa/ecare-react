@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Button, Card } from "react-bootstrap";
-import EditSevice from "./EditService";
+import EditEmployee from "./EditEmployee";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
-import { deleteService } from "../../redux/actions/serviceActions";
-import { Link } from "react-router-dom";
+import { deleteEmployee } from "../../redux/actions/employeeActions";
 
-const ServiceCard = ({ service }) => {
+const EmployeeCard = ({ employee }) => {
   const dispatch = useDispatch();
-  const { error, success } = useSelector((state) => state.serviceDetails);
-
+  const { error, success } = useSelector((state) => state.employeeDetails);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleDelete = () => {
@@ -24,11 +22,11 @@ const ServiceCard = ({ service }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteService(service._id));
+        dispatch(deleteEmployee(employee._id));
         Swal.fire({
           position: "bottom-end",
           icon: "success",
-          title: "Service deleted",
+          title: "Employee deleted",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -40,18 +38,15 @@ const ServiceCard = ({ service }) => {
   }, [success]);
   return (
     <Card className="mb-4">
-      <Card.Header>{service.name}</Card.Header>
-      <Card.Body>{service.address}</Card.Body>
+      <Card.Header>{employee.name}</Card.Header>
+      <Card.Body>{employee.role}</Card.Body>
       <Card.Footer>
-        <EditSevice
+        <EditEmployee
           show={show}
-          service={service}
+          employee={employee}
           handleClose={handleClose}
           error={error}
         />
-        <Link className="btn btn-primary me-2" to={`/services/${service.slug}`}>
-          Access
-        </Link>
         <Button className="success me-2" onClick={() => setShow(true)}>
           Edit
         </Button>
@@ -63,4 +58,4 @@ const ServiceCard = ({ service }) => {
   );
 };
 
-export default ServiceCard;
+export default EmployeeCard;

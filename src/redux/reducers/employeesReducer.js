@@ -43,13 +43,13 @@ export const employeeReducer = (state = { employee: {} }, action) => {
     case GET_EMPLOYEE_REQUEST:
       return { loading: true };
     case GET_EMPLOYEE_SUCCESS:
-      return { loading: false, employee: action.payload };
+      return { loading: false, success: true, employee: action.payload };
     case GET_EMPLOYEE_FAIL:
       return { loading: false, error: action.payload };
     case UPDATE_EMPLOYEE_REQUEST:
       return { loading: true };
     case UPDATE_EMPLOYEE_SUCCESS:
-      return { loading: false, employee: action.payload };
+      return { loading: false, success: true, employee: action.payload };
     case UPDATE_EMPLOYEE_FAIL:
       return { loading: false, error: action.payload };
     case DELETE_EMPLOYEE_REQUEST:
@@ -61,7 +61,7 @@ export const employeeReducer = (state = { employee: {} }, action) => {
     case ADD_EMPLOYEE_REQUEST:
       return { loading: true };
     case ADD_EMPLOYEE_SUCCESS:
-      return { loading: false, employee: action.payload };
+      return { loading: false, success: true, employee: action.payload };
     case ADD_EMPLOYEE_FAIL:
       return { loading: false, error: action.payload };
     default:
