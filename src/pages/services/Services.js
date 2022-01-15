@@ -15,9 +15,16 @@ const Services = () => {
     (state) => state.serviceList
   );
 
+  const { success } = useSelector((state) => state.serviceDetails);
+
   useEffect(() => {
     dispatch(getServices());
   }, [dispatch]);
+
+  useEffect(() => {
+    success && handleClose();
+  }, [success]);
+
   return (
     <Container fluid>
       <Row className="mt-3">

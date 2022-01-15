@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -7,7 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 
 const AddService = ({ show, handleClose }) => {
   const dispatch = useDispatch();
-  const serviceDetails = useSelector((state) => state.serviceDetails);
+  const { error } = useSelector((state) => state.serviceDetails);
+  //   useEffect(() => {
+  //     error && setErrorMessage(error);
+  //     success && setSuccessAcction(success);
+  //   }, [error, success, dispatch]);
   const validationSchema = yup.object({
     name: yup.string().required("Please provide a name for the service."),
     address: yup
@@ -24,15 +28,12 @@ const AddService = ({ show, handleClose }) => {
       </Modal.Header>
 
       <Modal.Body>
-        {serviceDetails.error && (
-          <p className="text-danger">{serviceDetails.error}</p>
-        )}
+        {error && <p className="text-danger">{error}</p>}
         <Formik
           initialValues={{ name: "", address: "", phone: "" }}
           validationSchema={validationSchema}
           onSubmit={(values) => {
             dispatch(addService(values));
-            if (!serviceDetails.error) handleClose();
           }}
         >
           {(props) => (

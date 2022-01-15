@@ -21,9 +21,9 @@ export const serviceReducer = (state = { service: {} }, action) => {
     case ADD_SERVICE_REQUEST:
       return { loading: true };
     case ADD_SERVICE_SUCCESS:
-      return { loading: false, service: action.payload };
+      return { loading: false, success: true, service: action.payload };
     case ADD_SERVICE_FAIL:
-      return { loading: false, error: action.payload };
+      return { loading: false, success: false, error: action.payload };
     case GET_SERVICE_REQUEST:
       return { loading: true };
     case GET_SERVICE_SUCCESS:
