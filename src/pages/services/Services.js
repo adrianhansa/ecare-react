@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Container, Col, Row, Card, Button } from "react-bootstrap";
+import { Container, Col, Row } from "react-bootstrap";
 import { getServices } from "../../redux/actions/serviceActions";
 import AddService from "./AddService";
+import ServiceCard from "./ServiceCard";
 import { GrAddCircle } from "react-icons/gr";
 
 const Services = () => {
@@ -44,13 +45,7 @@ const Services = () => {
             {services &&
               services.map((service) => (
                 <Col sm={3} md={4} lg={3} key={service._id}>
-                  <Card className="mb-4">
-                    <Card.Header>{service.name}</Card.Header>
-                    <Card.Body>{service.address}</Card.Body>
-                    <Card.Footer>
-                      <Button className="primary">Access</Button>
-                    </Card.Footer>
-                  </Card>
+                  <ServiceCard service={service} />
                 </Col>
               ))}
           </Row>

@@ -2,10 +2,10 @@ import React from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { Formik } from "formik";
 import * as yup from "yup";
-import { addService } from "../../redux/actions/serviceActions";
+import { updateService } from "../../redux/actions/serviceActions";
 import { useDispatch, useSelector } from "react-redux";
 
-const AddService = ({ show, handleClose }) => {
+const UpdateService = ({ show, handleClose, service }) => {
   const dispatch = useDispatch();
   const { error } = useSelector((state) => state.serviceDetails);
   const validationSchema = yup.object({
@@ -20,16 +20,20 @@ const AddService = ({ show, handleClose }) => {
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Add a New Service</Modal.Title>
+        <Modal.Title>Update Service Information</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
         {error && <p className="text-danger">{error}</p>}
         <Formik
-          initialValues={{ name: "", address: "", phone: "" }}
+          initialValues={{
+            name: service.name,
+            address: service.address,
+            phone: service.phone,
+          }}
           validationSchema={validationSchema}
           onSubmit={(values) => {
-            dispatch(addService(values));
+            dispatch(updateService(service._id, values));
           }}
         >
           {(props) => (
@@ -80,7 +84,7 @@ const AddService = ({ show, handleClose }) => {
                 className="me-3"
                 onClick={props.handleSubmit}
               >
-                Add Service
+                Update Service
               </Button>
               <Button variant="secondary" onClick={handleClose}>
                 Cancel
@@ -93,4 +97,4 @@ const AddService = ({ show, handleClose }) => {
   );
 };
 
-export default AddService;
+export default UpdateService;
