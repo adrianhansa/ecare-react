@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { deleteService } from "../../redux/actions/serviceActions";
+import { Link } from "react-router-dom";
 
 const ServiceCard = ({ service }) => {
   const dispatch = useDispatch();
@@ -48,7 +49,9 @@ const ServiceCard = ({ service }) => {
           handleClose={handleClose}
           error={error}
         />
-        <Button className="primary me-2">Access</Button>
+        <Link className="btn btn-primary me-2" to={`/services/${service.slug}`}>
+          Access
+        </Link>
         <Button className="success me-2" onClick={() => setShow(true)}>
           Edit
         </Button>

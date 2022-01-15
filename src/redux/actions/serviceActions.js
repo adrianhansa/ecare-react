@@ -58,10 +58,10 @@ export const getServices = () => async (dispatch) => {
   }
 };
 
-export const getService = (id) => async (dispatch) => {
+export const getService = (slug) => async (dispatch) => {
   try {
     dispatch({ type: GET_SERVICE_REQUEST });
-    const { data } = await axios.get(`${URL}/services/${id}`);
+    const { data } = await axios.get(`${URL}/services/${slug}`);
     dispatch({ type: GET_SERVICE_SUCCESS, payload: data });
   } catch (error) {
     dispatch({

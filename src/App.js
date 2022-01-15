@@ -6,6 +6,7 @@ import AppNavbar from "./components/AppNavbar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Services from "./pages/services/Services";
+import ServiceScreen from "./pages/services/ServiceScreen";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/services/:slug" element={<ServiceScreen />} />
         </Routes>
       </BrowserRouter>
     </Provider>
