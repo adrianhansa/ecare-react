@@ -4,6 +4,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { addService } from "../../redux/actions/serviceActions";
 import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 const AddService = ({ show, handleClose }) => {
   const dispatch = useDispatch();
@@ -30,6 +31,13 @@ const AddService = ({ show, handleClose }) => {
           validationSchema={validationSchema}
           onSubmit={(values) => {
             dispatch(addService(values));
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Your work has been saved",
+              showConfirmButton: false,
+              timer: 100,
+            });
           }}
         >
           {(props) => (

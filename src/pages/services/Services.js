@@ -44,7 +44,7 @@ const Services = () => {
           <Row>
             {services &&
               services.map((service) => (
-                <Col sm={3} md={4} lg={3} key={service._id}>
+                <Col sm={6} md={4} lg={3} xl={2} key={service._id}>
                   <ServiceCard service={service} />
                 </Col>
               ))}
