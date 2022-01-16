@@ -18,10 +18,10 @@ import {
   UPDATE_SHIFT_SUCCESS,
 } from "../constants/shiftConstants";
 
-export const getShifts = () => async (dispatch) => {
+export const getShifts = (service) => async (dispatch) => {
   try {
     dispatch({ type: GET_SHIFTS_REQUEST });
-    const result = await axios.get(`${URL}/shifts`);
+    const result = await axios.get(`${URL}/shifts/${service}`);
     dispatch({ type: GET_SHIFTS_SUCCESS, payload: result.data });
   } catch (error) {
     dispatch({
@@ -35,17 +35,17 @@ export const getShifts = () => async (dispatch) => {
 };
 
 export const addShift =
-  ({ name, startTime, endTime }) =>
+  (service, { name, startTime, endTime }) =>
   async (dispatch) => {
     try {
       dispatch({ type: ADD_SHIFT_REQUEST });
-      const { data } = await axios.post(`${URL}/shifts`, {
+      const { data } = await axios.post(`${URL}/shifts/${service}`, {
         name,
         startTime,
         endTime,
       });
       dispatch({ type: ADD_SHIFT_SUCCESS, payload: data });
-      const result = await axios.get(`${URL}/shifts`);
+      const result = await axios.get(`${URL}/shifts/${service}`);
       dispatch({ type: GET_SHIFTS_SUCCESS, payload: result.data });
     } catch (error) {
       dispatch({

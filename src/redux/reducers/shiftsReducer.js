@@ -21,7 +21,7 @@ export const shiftReducer = (state = { shift: {} }, action) => {
     case ADD_SHIFT_REQUEST:
       return { loading: true };
     case ADD_SHIFT_SUCCESS:
-      return { loading: false, shift: action.payload };
+      return { loading: false, success: true, shift: action.payload };
     case ADD_SHIFT_FAIL:
       return { loading: false, error: action.payload };
     case GET_SHIFT_REQUEST:
@@ -33,7 +33,7 @@ export const shiftReducer = (state = { shift: {} }, action) => {
     case UPDATE_SHIFT_REQUEST:
       return { loading: true };
     case UPDATE_SHIFT_SUCCESS:
-      return { loading: false, shift: action.payload };
+      return { loading: false, success: true, shift: action.payload };
     case UPDATE_SHIFT_FAIL:
       return { loading: false, error: action.payload };
     case DELETE_SHIFT_REQUEST:

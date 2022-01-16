@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Container, Col, Row, Table } from "react-bootstrap";
 import { getShifts } from "../../redux/actions/shiftActions";
-// import AddShift from "./AddShift";
-// import ShiftPreview from "./ShiftPreview";
+import AddShift from "./AddShift";
+import ShiftPreview from "./ShiftPreview";
 import { GrAddCircle } from "react-icons/gr";
 
 const Shifts = () => {
@@ -44,6 +44,7 @@ const Shifts = () => {
                     <th>Shift name</th>
                     <th>Start time</th>
                     <th>End time</th>
+                    <th>Duration</th>
                     <th>Edit</th>
                     <th>Delete</th>
                   </tr>
@@ -52,14 +53,14 @@ const Shifts = () => {
                   {shifts &&
                     shifts.map((shift) => (
                       <tr key={shift._id}>
-                        {/* <ShiftPreview shift={shift} slug={slug} /> */}
+                        <ShiftPreview shift={shift} />
                       </tr>
                     ))}
                 </tbody>
               </Table>
             </Col>
           </Row>
-          {/* <AddShift show={show} handleClose={handleClose} slug={slug} /> */}
+          <AddShift show={show} handleClose={handleClose} service={slug} />
         </Col>
       </Row>
     </Container>
