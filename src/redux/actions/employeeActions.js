@@ -52,7 +52,7 @@ export const addEmployee =
         accessLevel,
       });
       dispatch({ type: ADD_EMPLOYEE_SUCCESS, payload: data });
-      const response = await axios.get(`${URL}/employees`);
+      const response = await axios.get(`${URL}/employees/${service}`);
       dispatch({ type: GET_EMPLOYEES_SUCCESS, payload: response.data });
     } catch (error) {
       dispatch({
@@ -68,6 +68,7 @@ export const addEmployee =
 export const updateEmployee =
   (
     id,
+    serviceId,
     {
       name,
       email,
@@ -97,7 +98,7 @@ export const updateEmployee =
         accessLevel,
       });
       dispatch({ type: UPDATE_EMPLOYEE_SUCCESS, payload: data });
-      const response = await axios.get(`${URL}/employees`);
+      const response = await axios.get(`${URL}/employees/${serviceId}`);
       dispatch({ type: GET_EMPLOYEES_SUCCESS, payload: response.data });
     } catch (error) {
       dispatch({
@@ -158,12 +159,12 @@ export const getAllEmployees = () => async (dispatch) => {
   }
 };
 
-export const deleteEmployee = (id) => async (dispatch) => {
+export const deleteEmployee = (id, service) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_EMPLOYEE_REQUEST });
     const { data } = await axios.delete(`${URL}/employees/${id}`);
     dispatch({ type: DELETE_EMPLOYEE_SUCCESS, payload: data });
-    const response = await axios.get(`${URL}/employees`);
+    const response = await axios.get(`${URL}/employees/${service}`);
     dispatch({ type: GET_EMPLOYEES_SUCCESS, payload: response.data });
   } catch (error) {
     dispatch({

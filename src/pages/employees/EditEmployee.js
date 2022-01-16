@@ -6,7 +6,7 @@ import { updateEmployee } from "../../redux/actions/employeeActions";
 import { useDispatch, useSelector } from "react-redux";
 import { getServices } from "../../redux/actions/serviceActions";
 
-const EditEmployee = ({ show, handleClose, employee }) => {
+const EditEmployee = ({ show, handleClose, employee, slug }) => {
   const dispatch = useDispatch();
   const { services } = useSelector((state) => state.serviceList);
   useEffect(() => {
@@ -62,7 +62,7 @@ const EditEmployee = ({ show, handleClose, employee }) => {
           }}
           validationSchema={validationSchema}
           onSubmit={(values) => {
-            dispatch(updateEmployee(employee._id, values));
+            dispatch(updateEmployee(employee._id, slug, values));
           }}
         >
           {(props) => (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Card } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import EditEmployee from "./EditEmployee";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
@@ -22,7 +22,7 @@ const EmployeeCard = ({ employee }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteEmployee(employee._id));
+        dispatch(deleteEmployee(employee._id, employee.service.slug));
         Swal.fire({
           position: "bottom-end",
           icon: "success",
@@ -37,24 +37,34 @@ const EmployeeCard = ({ employee }) => {
     success && handleClose();
   }, [success]);
   return (
-    <Card className="mb-4">
-      <Card.Header>{employee.name}</Card.Header>
-      <Card.Body>{employee.role}</Card.Body>
-      <Card.Footer>
+    <>
+      <td>{employee.name}</td>
+      <td>{employee.payrollNumber}</td>
+      <td>{employee.email}</td>
+      <td>{employee.phone}</td>
+      <td>{employee.address}</td>
+      <td>{employee.contractHours}</td>
+      <td>{employee.role}</td>
+      <td>{employee.accessLevel}</td>
+      <td>{employee.driver ? "Yes" : "No"}</td>
+      <td>
+        <Button className="success me-2" onClick={() => setShow(true)}>
+          Edit
+        </Button>{" "}
         <EditEmployee
           show={show}
           employee={employee}
           handleClose={handleClose}
           error={error}
+          slug={employee.service.slug}
         />
-        <Button className="success me-2" onClick={() => setShow(true)}>
-          Edit
-        </Button>
+      </td>
+      <td>
         <Button className="danger" onClick={handleDelete}>
           Delete
         </Button>
-      </Card.Footer>
-    </Card>
+      </td>
+    </>
   );
 };
 
