@@ -23,66 +23,130 @@ const ServiceScreen = () => {
           {error && <p className="text-danger">{error}</p>}
           {service && <h1>{service.name}</h1>}
           <Row className="mt-3">
-            <Col>
+            <Col xs={12} sm={6} md={3} lg={3} xl={2}>
               <Card className="mx-1 mb-3">
                 <Card.Title className="p-3">
-                  <img src="/Children.png" height={124} alt="Children" />
+                  <img src="/images/Children.png" height={124} alt="Children" />
                 </Card.Title>
                 <Card.Footer>
-                  <Link to={`/services/cyp/${slug}`}>
+                  <Link
+                    to={`/services/cyp/${slug}`}
+                    style={{ textDecoration: "none" }}
+                  >
                     <h4>Children / Young people</h4>
                   </Link>
                 </Card.Footer>
               </Card>
             </Col>
-            <Col>
+            <Col xs={12} sm={6} md={3} lg={3} xl={2}>
               <Card className="mx-1 mb-3">
                 <Card.Title className="p-3">
-                  <img src="/Employees.png" height={124} alt="Employees" />
+                  <img
+                    src="/images/Employees.png"
+                    height={124}
+                    alt="Employees"
+                  />
                 </Card.Title>
                 <Card.Footer>
-                  <Link to={`/services/employees/${slug}`}>
+                  <Link
+                    to={`/services/employees/${slug}`}
+                    style={{ textDecoration: "none" }}
+                  >
                     <h4>Employees</h4>
                   </Link>
                 </Card.Footer>
               </Card>
             </Col>
-            <Col>
+            <Col xs={12} sm={6} md={3} lg={3} xl={2}>
               <Card className="mx-1 mb-3">
                 <Card.Title className="p-3">
-                  <img src="/Rota.png" height={124} alt="Rota" />
+                  <img src="/images/Rota.png" height={124} alt="Rota" />
                 </Card.Title>
                 <Card.Footer>
-                  <Link to={`/services/rota/${slug}`}>
+                  <Link
+                    to={`/services/rota/${slug}`}
+                    style={{ textDecoration: "none" }}
+                  >
                     <h4>Rota</h4>
                   </Link>
                 </Card.Footer>
               </Card>
             </Col>
-            <Col>
+            <Col xs={12} sm={6} md={3} lg={3} xl={2}>
               <Card className="mx-1 mb-3">
                 <Card.Title className="p-3">
-                  <img src="/Handover.png" height={124} alt="Handover" />
+                  <img src="/images/Handover.png" height={124} alt="Handover" />
                 </Card.Title>
                 <Card.Footer>
-                  <Link to={`/services/handover/${slug}`}>
+                  <Link
+                    to={`/services/handover/${slug}`}
+                    style={{ textDecoration: "none" }}
+                  >
                     <h4>Handover</h4>
                   </Link>
                 </Card.Footer>
               </Card>
             </Col>
-            <Col>
+            <Col xs={12} sm={6} md={3} lg={3} xl={2}>
               <Card className="mx-1 mb-3">
                 <Card.Title className="p-3">
                   <img
-                    src="/CommunicationBook.png"
+                    src="/images/CommunicationBook.png"
                     height={124}
                     alt="Communication book"
                   />
                 </Card.Title>
                 <Card.Footer>
-                  <Link to={`/services/communication-book/${slug}`}>
+                  <Link
+                    to={`/services/communication-book/${slug}`}
+                    style={{ textDecoration: "none" }}
+                  >
                     <h4>Communication Book</h4>
+                  </Link>
+                </Card.Footer>
+              </Card>
+            </Col>
+            <Col xs={12} sm={6} md={3} lg={3} xl={2}>
+              <Card className="mx-1 mb-3">
+                <Card.Title className="p-3">
+                  <img src="/images/Shifts.png" height={124} alt="Shifts" />
+                </Card.Title>
+                <Card.Footer>
+                  <Link
+                    to={`/services/shifts/${slug}`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <h4>Shifts</h4>
+                  </Link>
+                </Card.Footer>
+              </Card>
+            </Col>
+            <Col xs={12} sm={6} md={3} lg={3} xl={2}>
+              <Card className="mx-1 mb-3">
+                <Card.Title className="p-3">
+                  <img src="/images/Diary.png" height={124} alt="Diary" />
+                </Card.Title>
+                <Card.Footer>
+                  <Link
+                    to={`/services/diary/${slug}`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <h4>Diary</h4>
+                  </Link>
+                </Card.Footer>
+              </Card>
+            </Col>
+            <Col xs={12} sm={6} md={3} lg={3} xl={2}>
+              <Card className="mx-1 mb-3">
+                <Card.Title className="p-3">
+                  <img src="/images/Roles.png" height={124} alt="Roles" />
+                </Card.Title>
+                <Card.Footer>
+                  <Link
+                    to={`/services/roles/${slug}`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <h4>Roles</h4>
                   </Link>
                 </Card.Footer>
               </Card>

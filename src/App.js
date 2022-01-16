@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import Services from "./pages/services/Services";
 import ServiceScreen from "./pages/services/ServiceScreen";
 import Employees from "./pages/employees/Employees";
+import Shifts from "./pages/shifts/Shifts";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
           <Route path="/services" element={<Services />} />
           <Route path="/services/:slug" element={<ServiceScreen />} />
           <Route path="/services/employees/:slug" element={<Employees />} />
+          <Route path="/services/shifts/:slug" element={<Shifts />} />
         </Routes>
       </BrowserRouter>
     </Provider>
