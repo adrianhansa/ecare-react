@@ -22,7 +22,7 @@ const Employees = () => {
 
   useEffect(() => {
     dispatch(getEmployees(slug));
-  }, [dispatch]);
+  }, [dispatch, slug]);
 
   useEffect(() => {
     success && handleClose();
