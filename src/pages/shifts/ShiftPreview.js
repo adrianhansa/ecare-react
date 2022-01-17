@@ -42,6 +42,7 @@ const ShiftPreview = ({ shift }) => {
       <td>{shift.startTime}</td>
       <td>{shift.endTime}</td>
       <td>{shift.duration}</td>
+      <td>{shift.present ? "Yes" : "No"}</td>
       <td>
         <Button className="success me-2" onClick={() => setShow(true)}>
           Edit

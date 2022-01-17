@@ -45,6 +45,7 @@ const Shifts = () => {
                     <th>Start time</th>
                     <th>End time</th>
                     <th>Duration</th>
+                    <th>Care hours</th>
                     <th>Edit</th>
                     <th>Delete</th>
                   </tr>

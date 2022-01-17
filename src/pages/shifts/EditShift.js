@@ -12,6 +12,7 @@ const EditShift = ({ show, handleClose, shift }) => {
     name: yup.string().required("Please provide a name for the service."),
     startTime: yup.string().required("Please select the start time."),
     endTime: yup.string().required("Please select the end time."),
+    present: yup.bool(),
   });
   return (
     <Modal show={show} onHide={handleClose}>
@@ -24,6 +25,7 @@ const EditShift = ({ show, handleClose, shift }) => {
         <Formik
           initialValues={{
             name: shift.name,
+            present: shift.present,
             startTime: shift.startTime,
             endTime: shift.endTime,
           }}
@@ -46,6 +48,15 @@ const EditShift = ({ show, handleClose, shift }) => {
                 {props.touched.name && (
                   <p className="text-danger">{props.errors.name}</p>
                 )}
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicPresent">
+                <Form.Label>Care hours</Form.Label>
+                <Form.Check
+                  type="checkbox"
+                  value={props.values.present}
+                  checked={props.values.present}
+                  onChange={props.handleChange("present")}
+                />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicStartTime">
                 <Form.Label>Start Time</Form.Label>

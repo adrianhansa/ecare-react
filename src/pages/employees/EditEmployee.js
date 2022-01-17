@@ -153,6 +153,7 @@ const EditEmployee = ({ show, handleClose, employee, slug }) => {
                   value={props.values.accessLevel}
                   onChange={props.handleChange("accessLevel")}
                   onBlur={props.handleBlur("accessLevel")}
+                  key={props.values.accessLevel}
                 >
                   <option>1</option>
                   <option>2</option>
@@ -168,6 +169,7 @@ const EditEmployee = ({ show, handleClose, employee, slug }) => {
                   value={props.values.service}
                   onChange={props.handleChange("service")}
                   onBlur={props.handleBlur("service")}
+                  key={props.values.service}
                 >
                   {services &&
                     services.map((service) => {
@@ -184,6 +186,7 @@ const EditEmployee = ({ show, handleClose, employee, slug }) => {
                 <Form.Label>Role</Form.Label>
                 <Form.Select
                   value={props.values.role}
+                  key={props.values.role}
                   onChange={props.handleChange("role")}
                   onBlur={props.handleBlur("role")}
                 >

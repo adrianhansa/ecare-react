@@ -35,7 +35,7 @@ export const getShifts = (service) => async (dispatch) => {
 };
 
 export const addShift =
-  (service, { name, startTime, endTime }) =>
+  (service, { name, startTime, endTime, present }) =>
   async (dispatch) => {
     try {
       dispatch({ type: ADD_SHIFT_REQUEST });
@@ -43,6 +43,7 @@ export const addShift =
         name,
         startTime,
         endTime,
+        present,
       });
       dispatch({ type: ADD_SHIFT_SUCCESS, payload: data });
       const result = await axios.get(`${URL}/shifts/${service}`);
@@ -59,7 +60,7 @@ export const addShift =
   };
 
 export const updateShift =
-  (id, service, { name, startTime, endTime }) =>
+  (id, service, { name, startTime, endTime, present }) =>
   async (dispatch) => {
     try {
       dispatch({ type: UPDATE_SHIFT_REQUEST });
@@ -67,6 +68,7 @@ export const updateShift =
         name,
         startTime,
         endTime,
+        present,
       });
       dispatch({ type: UPDATE_SHIFT_SUCCESS, payload: data });
       const result = await axios.get(`${URL}/shifts/${service}`);

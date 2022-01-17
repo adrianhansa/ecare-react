@@ -10,6 +10,7 @@ const AddShift = ({ show, handleClose, service }) => {
   const { error } = useSelector((state) => state.shiftDetails);
   const validationSchema = yup.object({
     name: yup.string().required("Please provide a name for the shift."),
+    present: yup.bool(),
     startTime: yup.string().required("Please select the start time."),
     endTime: yup.string().required("Please select the end time."),
   });
@@ -24,12 +25,12 @@ const AddShift = ({ show, handleClose, service }) => {
         <Formik
           initialValues={{
             name: "",
+            present: false,
             startTime: "00:00",
             endTime: "00:00",
           }}
           validationSchema={validationSchema}
           onSubmit={(values) => {
-            console.log(values);
             dispatch(addShift(service, values));
           }}
         >
@@ -47,6 +48,13 @@ const AddShift = ({ show, handleClose, service }) => {
                 {props.touched.name && (
                   <p className="text-danger">{props.errors.name}</p>
                 )}
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicPresent">
+                <Form.Label>Care hours</Form.Label>
+                <Form.Check
+                  value={props.values.present}
+                  onChange={props.handleChange("present")}
+                />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicStartTime">
                 <Form.Label>Start Time</Form.Label>
