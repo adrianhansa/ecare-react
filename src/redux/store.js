@@ -6,10 +6,6 @@ import { serviceReducer, servicesReducer } from "./reducers/serviceReducers";
 import { employeeReducer, employeesReducer } from "./reducers/employeesReducer";
 import { shiftReducer, shiftsReducer } from "./reducers/shiftsReducer";
 import {
-  workingStatusReducer,
-  workingStatusesReducer,
-} from "./reducers/workingStatusReducer";
-import {
   workShiftReducer,
   workShiftsReducer,
 } from "./reducers/workShiftsReducer";
@@ -30,8 +26,6 @@ const rootReducer = combineReducers({
   employeeList: employeesReducer,
   shiftDetails: shiftReducer,
   shiftList: shiftsReducer,
-  workingStatusDetails: workingStatusReducer,
-  workingStatusList: workingStatusesReducer,
   workShiftDetails: workShiftReducer,
   workShiftList: workShiftsReducer,
 });
