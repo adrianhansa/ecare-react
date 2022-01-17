@@ -59,7 +59,7 @@ export const addShift =
   };
 
 export const updateShift =
-  (id, { name, startTime, endTime }) =>
+  (id, service, { name, startTime, endTime }) =>
   async (dispatch) => {
     try {
       dispatch({ type: UPDATE_SHIFT_REQUEST });
@@ -69,7 +69,7 @@ export const updateShift =
         endTime,
       });
       dispatch({ type: UPDATE_SHIFT_SUCCESS, payload: data });
-      const result = await axios.get(`${URL}/shifts`);
+      const result = await axios.get(`${URL}/shifts/${service}`);
       dispatch({ type: GET_SHIFTS_SUCCESS, payload: result.data });
     } catch (error) {
       dispatch({
@@ -98,12 +98,12 @@ export const getShift = (id) => async (dispatch) => {
   }
 };
 
-export const deleteShift = (id) => async (dispatch) => {
+export const deleteShift = (id, service) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_SHIFT_REQUEST });
     const { data } = await axios.delete(`${URL}/shifts/${id}`);
     dispatch({ type: DELETE_SHIFT_SUCCESS, payload: data });
-    const result = await axios.get(`${URL}/shifts`);
+    const result = await axios.get(`${URL}/shifts/${service}`);
     dispatch({ type: GET_SHIFTS_SUCCESS, payload: result.data });
   } catch (error) {
     dispatch({

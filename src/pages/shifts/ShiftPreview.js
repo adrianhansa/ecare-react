@@ -22,7 +22,7 @@ const ShiftPreview = ({ shift }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteShift(shift._id));
+        dispatch(deleteShift(shift._id, shift.service.slug));
         Swal.fire({
           position: "bottom-end",
           icon: "success",

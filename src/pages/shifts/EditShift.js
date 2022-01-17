@@ -29,7 +29,7 @@ const EditShift = ({ show, handleClose, shift }) => {
           }}
           validationSchema={validationSchema}
           onSubmit={(values) => {
-            dispatch(updateShift(shift._id, values));
+            dispatch(updateShift(shift._id, shift.service.slug, values));
           }}
         >
           {(props) => (
@@ -52,7 +52,7 @@ const EditShift = ({ show, handleClose, shift }) => {
                 <Form.Control
                   type="time"
                   value={props.values.startTime}
-                  onChange={props.handleChange("stratTime")}
+                  onChange={props.handleChange("startTime")}
                   onBlur={props.handleBlur("startTime")}
                 />
                 {props.touched.startTime && (
