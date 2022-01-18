@@ -69,12 +69,7 @@ export const deleteWorkShift = (id, day) => async (dispatch) => {
 };
 
 export const addWorkShift =
-  (
-    day,
-    service,
-    employee,
-    { date, shift, startTime, endTime, notes, workingStatus }
-  ) =>
+  (day, service, employee, { date, shift, startTime, endTime, notes }) =>
   async (dispatch) => {
     try {
       dispatch({ type: ADD_WORKING_SHIFT_REQUEST });
@@ -86,7 +81,6 @@ export const addWorkShift =
         endTime,
         notes,
         service,
-        workingStatus,
       });
       dispatch({ type: ADD_WORKING_SHIFT_SUCCESS, payload: data });
       const result = await axios.get(`${URL}/work-shifts/${day}`);

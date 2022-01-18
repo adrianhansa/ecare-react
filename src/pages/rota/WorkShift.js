@@ -9,18 +9,26 @@ import {
   updateWorkShift,
   deleteWorkShift,
 } from "../../redux/actions/workShiftActions";
-import { Formik } from "formik";
-import * as yup from "yup";
 
 const WorkShift = ({ data, service, shifts, show, handleClose }) => {
   const dispatch = useDispatch();
+  const [selectedShift, setSelectedShift] = useState(false);
+  const [shift, setShift] = useState("");
+  const [startTime, setStartTime] = useState("00:00");
+  const [endTime, setEndTime] = useState("00:00");
+  const [notes, setNotes] = useState("");
+  const [allocatedTo, setAllocatedTo] = useState("");
   const { error } = useSelector((state) => state.workShiftDetails);
-  const validationSchema = yup.object({
-    name: yup.string().required("Please provide a name for the shift."),
-    present: yup.bool(),
-    startTime: yup.string().required("Please select the start time."),
-    endTime: yup.string().required("Please select the end time."),
-  });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(
+      startTime,
+      endTime,
+      shift.name,
+      data.employee.name,
+      moment(data.day).format("DD-MM-YYYY")
+    );
+  };
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
@@ -32,82 +40,83 @@ const WorkShift = ({ data, service, shifts, show, handleClose }) => {
 
       <Modal.Body>
         {error && <p className="text-danger">{error}</p>}
-        <Formik
-          initialValues={{
-            name: "",
-            present: false,
-            startTime: "00:00",
-            endTime: "00:00",
-          }}
-          validationSchema={validationSchema}
-          onSubmit={(values) => {
-            dispatch(
-              addWorkShift(data.day, service, data.employee._id, values)
-            );
-          }}
-        >
-          {(props) => (
-            <Form>
-              <Form.Group className="mb-3" controlId="formBasicName">
-                <Form.Label>Name</Form.Label>
+        <Form>
+          <Form.Group className="mb-3" controlId="formBasicName">
+            <Form.Label>
+              Select the shift {selectedShift && selectedShift}
+              {startTime}---{endTime}
+            </Form.Label>
+            <Form.Select
+              value={shift}
+              onChange={(e) => {
+                const item = shifts.find(
+                  (shift) => shift._id === e.target.value
+                );
+                setShift(item);
+                setStartTime(item.startTime);
+
+                setEndTime(item.endTime);
+                setSelectedShift(true);
+              }}
+            >
+              {shifts &&
+                shifts.map((shift) => (
+                  <option key={shift._id} value={shift._id}>
+                    {shift.name}
+                  </option>
+                ))}
+            </Form.Select>
+          </Form.Group>
+          {selectedShift && (
+            <>
+              <Form.Group>
+                <Form.Label>Start time</Form.Label>
+                <Form.Control
+                  type="time"
+                  value={shift.startTime ? shift.startTime : startTime}
+                  onChange={(e) => setStartTime(e.target.value)}
+                />
+                <Form.Label>End time</Form.Label>
+                <Form.Control
+                  type="time"
+                  value={shift.endTime ? shift.endTime : endTime}
+                  onChange={(e) => setEndTime(e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Notes</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Shift name"
-                  value={props.values.name}
-                  onChange={props.handleChange("name")}
-                  onBlur={props.handleBlur("name")}
-                />
-                {props.touched.name && (
-                  <p className="text-danger">{props.errors.name}</p>
-                )}
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicPresent">
-                <Form.Label>Care hours</Form.Label>
-                <Form.Check
-                  value={props.values.present}
-                  onChange={props.handleChange("present")}
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
                 />
               </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicStartTime">
-                <Form.Label>Start Time</Form.Label>
-                <Form.Control
-                  type="time"
-                  value={props.values.startTime}
-                  onChange={props.handleChange("startTime")}
-                  onBlur={props.handleBlur("startTime")}
-                />
-                {props.touched.startTime && (
-                  <p className="text-danger">{props.errors.startTime}</p>
-                )}
-              </Form.Group>
-
-              <Form.Group className="mb-3" controlId="formBasicEndTime">
-                <Form.Label>End Time</Form.Label>
-                <Form.Control
-                  type="time"
-                  value={props.values.endTime}
-                  onChange={props.handleChange("endTime")}
-                  onBlur={props.handleBlur("endTime")}
-                />
-                {props.touched.endTime && (
-                  <p className="text-danger">{props.errors.endTime}</p>
-                )}
-              </Form.Group>
-
-              <Button
-                variant="primary"
-                type="submit"
-                className="me-3"
-                onClick={props.handleSubmit}
-              >
-                Save Shift
-              </Button>
-              <Button variant="secondary" onClick={handleClose}>
-                Cancel
-              </Button>
-            </Form>
+            </>
           )}
-        </Formik>
+          {selectedShift && shift && shift.present && (
+            <Form.Group>
+              <Form.Label>Allocated To</Form.Label>
+              <Form.Control
+                type="text"
+                value={allocatedTo}
+                onChange={(e) => setAllocatedTo(e.target.value)}
+              />
+            </Form.Group>
+          )}
+          <div className="mt-3">
+            <Button
+              variant="primary"
+              type="submit"
+              className="me-3"
+              onClick={handleSubmit}
+            >
+              Save Shift
+            </Button>
+            <Button variant="secondary" onClick={handleClose}>
+              Cancel
+            </Button>
+          </div>
+        </Form>
       </Modal.Body>
     </Modal>
   );

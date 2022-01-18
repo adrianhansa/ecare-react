@@ -48,7 +48,7 @@ const Rota = () => {
   useEffect(() => {
     dispatch(getEmployees(slug));
     dispatch(getShifts(slug));
-  }, [dispatch]);
+  }, [dispatch, slug]);
 
   const openModal = (day, employee) => {
     setShow(true);
@@ -75,7 +75,14 @@ const Rota = () => {
             format="dd-MM-yyyy"
           />
         </Col>
-        <Table responsive hover striped bordered className="mt-3">
+        <Table
+          responsive
+          hover
+          striped
+          bordered
+          className="mt-3"
+          style={{ fontSize: 12 }}
+        >
           <thead>
             <tr>
               <td></td>
@@ -88,13 +95,11 @@ const Rota = () => {
               })}
             </tr>
             <tr>
-              <td>Employee name</td>
+              <td>Employee</td>
               {myDays.map((day) => {
                 return (
                   <td className="text-center" key={day}>
-                    <span className="small">
-                      {moment(day).format("DD-MM-YY")}
-                    </span>
+                    <span>{moment(day).format("DD-MM-YY")}</span>
                   </td>
                 );
               })}
@@ -108,12 +113,32 @@ const Rota = () => {
                   {myDays.map((day) => {
                     return (
                       <td key={day}>
-                        <GrAddCircle
-                          type="button"
-                          onClick={() => openModal(day, employee)}
-                          className="me-3"
-                        />
-                        <FiEdit type="button" color="green" className="me-1" />
+                        <Row>
+                          <Col
+                            className="text-center"
+                            style={{
+                              borderBottom: "1px dashed grey",
+                              margin: 4,
+                            }}
+                          >
+                            <span>E</span>
+                          </Col>
+                          <div
+                            style={{
+                              fontSize: 13,
+                              display: "flex",
+                              justifyContent: "space-around",
+                              marginTop: 5,
+                              marginBottom: 1,
+                            }}
+                          >
+                            <GrAddCircle
+                              type="button"
+                              onClick={() => openModal(day, employee)}
+                            />
+                            <FiEdit type="button" color="green" />
+                          </div>
+                        </Row>
                       </td>
                     );
                   })}
