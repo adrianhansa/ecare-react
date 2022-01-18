@@ -70,20 +70,22 @@ export const deleteWorkShift = (id, day) => async (dispatch) => {
 
 export const addWorkShift =
   (
-    id,
     day,
-    { date, employee, shift, startTime, endTime, notes, workingStatus }
+    service,
+    employee,
+    { date, shift, startTime, endTime, notes, workingStatus }
   ) =>
   async (dispatch) => {
     try {
       dispatch({ type: ADD_WORKING_SHIFT_REQUEST });
-      const { data } = await axios.post(`${URL}/work-shifts/${id}`, {
+      const { data } = await axios.post(`${URL}/work-shifts`, {
         date,
         employee,
         shift,
         startTime,
         endTime,
         notes,
+        service,
         workingStatus,
       });
       dispatch({ type: ADD_WORKING_SHIFT_SUCCESS, payload: data });
