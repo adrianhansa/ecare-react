@@ -17,6 +17,9 @@ import {
   UPDATE_WORKING_SHIFT_FAIL,
   UPDATE_WORKING_SHIFT_REQUEST,
   UPDATE_WORKING_SHIFT_SUCCESS,
+  GET_WORKING_SHIFTS_BY_EMPLOYEE_BY_DAY_FAIL,
+  GET_WORKING_SHIFTS_BY_EMPLOYEE_BY_DAY_REQUEST,
+  GET_WORKING_SHIFTS_BY_EMPLOYEE_BY_DAY_SUCCESS,
 } from "../constants/workShiftConstants";
 
 export const workShiftReducer = (state = { workShift: {} }, action) => {
@@ -44,6 +47,22 @@ export const workShiftReducer = (state = { workShift: {} }, action) => {
     case DELETE_WORKING_SHIFT_SUCCESS:
       return { loading: false, workShift: action.payload };
     case DELETE_WORKING_SHIFT_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const workShiftsByEmployeeByDayReducer = (
+  state = { workShiftsByEmployeeByDay: [] },
+  action
+) => {
+  switch (action.type) {
+    case GET_WORKING_SHIFTS_BY_EMPLOYEE_BY_DAY_REQUEST:
+      return { loading: true };
+    case GET_WORKING_SHIFTS_BY_EMPLOYEE_BY_DAY_SUCCESS:
+      return { loading: false, workShiftsByEmployee: action.payload };
+    case GET_WORKING_SHIFTS_BY_EMPLOYEE_BY_DAY_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

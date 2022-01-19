@@ -3,7 +3,10 @@ import { Container, Row, Col, Table } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { getEmployees } from "../../redux/actions/employeeActions";
 import { getShifts } from "../../redux/actions/shiftActions";
-import { getWorkShiftsByInterval } from "../../redux/actions/workShiftActions";
+import {
+  getWorkShiftsByInterval,
+  getWorkShiftsByEmployeeByDay,
+} from "../../redux/actions/workShiftActions";
 import { useParams } from "react-router-dom";
 import DateRangePicker from "@wojtekmaj/react-daterange-picker";
 import moment from "moment";
@@ -12,6 +15,8 @@ import { GrAddCircle } from "react-icons/gr";
 import { FiEdit } from "react-icons/fi";
 
 const Rota = () => {
+  const dispatch = useDispatch();
+  const { slug } = useParams();
   const [value, onChange] = useState([new Date(), new Date()]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -44,7 +49,7 @@ const Rota = () => {
   };
 
   const myDays = enumerateDaysBetweenDates(startDate, endDate);
-  const { slug } = useParams();
+
   useEffect(() => {
     setStartDate(moment(value[0]).format("MM-DD-YYYY"));
     setEndDate(moment(value[1]).format("MM-DD-YYYY"));
@@ -53,7 +58,10 @@ const Rota = () => {
 
   const shiftList = useSelector((state) => state.shiftList);
   const employeeList = useSelector((state) => state.employeeList);
-  const dispatch = useDispatch();
+  const { workShifts, loading, error } = useSelector(
+    (state) => state.workShiftList
+  );
+
   useEffect(() => {
     dispatch(getEmployees(slug));
     dispatch(getShifts(slug));
@@ -104,7 +112,7 @@ const Rota = () => {
               })}
             </tr>
             <tr>
-              <td>Employee</td>
+              <td>Employee {workShifts && workShifts.length}</td>
               {myDays.map((day) => {
                 return (
                   <td className="text-center" key={day}>
@@ -130,7 +138,9 @@ const Rota = () => {
                               margin: 4,
                             }}
                           >
-                            <span>E</span>
+                            <span>
+                              {/* //dispatch getWorkShiftysByEmployee */}
+                            </span>
                           </Col>
                           <div
                             style={{

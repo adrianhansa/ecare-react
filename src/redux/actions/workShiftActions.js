@@ -7,6 +7,9 @@ import {
   DELETE_WORKING_SHIFT_FAIL,
   DELETE_WORKING_SHIFT_REQUEST,
   DELETE_WORKING_SHIFT_SUCCESS,
+  GET_WORKING_SHIFTS_BY_EMPLOYEE_BY_DAY_FAIL,
+  GET_WORKING_SHIFTS_BY_EMPLOYEE_BY_DAY_REQUEST,
+  GET_WORKING_SHIFTS_BY_EMPLOYEE_BY_DAY_SUCCESS,
   GET_WORKING_SHIFTS_BY_INTERVAL_FAIL,
   GET_WORKING_SHIFTS_BY_INTERVAL_REQUEST,
   GET_WORKING_SHIFTS_BY_INTERVAL_SUCCESS,
@@ -51,6 +54,28 @@ export const getWorkShiftsByInterval =
     } catch (error) {
       dispatch({
         type: GET_WORKING_SHIFTS_BY_INTERVAL_FAIL,
+        payload:
+          error.message && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+export const getWorkShiftsByEmployeeByDay =
+  (service, employee, day) => async (dispatch) => {
+    try {
+      dispatch({ type: GET_WORKING_SHIFTS_BY_EMPLOYEE_BY_DAY_REQUEST });
+      const { data } = await axios.get(
+        `${URL}/work-shifts/${service}/${employee}/${day}`
+      );
+      dispatch({
+        type: GET_WORKING_SHIFTS_BY_EMPLOYEE_BY_DAY_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_WORKING_SHIFTS_BY_EMPLOYEE_BY_DAY_FAIL,
         payload:
           error.message && error.response.data.message
             ? error.response.data.message
