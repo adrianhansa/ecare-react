@@ -21,13 +21,17 @@ const WorkShift = ({ data, service, shifts, show, handleClose }) => {
   const { error } = useSelector((state) => state.workShiftDetails);
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(
-      startTime,
-      endTime,
-      shift.name,
-      data.employee.name,
-      moment(data.day).format("DD-MM-YYYY")
+    dispatch(
+      addWorkShift(service, data.employee._id, {
+        date: moment(data.day).format("MM-DD-YYYY"),
+        shift: shift._id,
+        startTime,
+        endTime,
+        notes,
+        allocatedTo,
+      })
     );
+    handleClose();
   };
   return (
     <Modal show={show} onHide={handleClose}>
@@ -47,7 +51,7 @@ const WorkShift = ({ data, service, shifts, show, handleClose }) => {
               {startTime}---{endTime}
             </Form.Label>
             <Form.Select
-              value={shift}
+              value={shift._id}
               onChange={(e) => {
                 const item = shifts.find(
                   (shift) => shift._id === e.target.value
@@ -86,7 +90,7 @@ const WorkShift = ({ data, service, shifts, show, handleClose }) => {
               <Form.Group>
                 <Form.Label>Notes</Form.Label>
                 <Form.Control
-                  type="text"
+                  as="textarea"
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                 />

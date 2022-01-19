@@ -5,6 +5,9 @@ import {
   DELETE_WORKING_SHIFT_FAIL,
   DELETE_WORKING_SHIFT_REQUEST,
   DELETE_WORKING_SHIFT_SUCCESS,
+  GET_WORKING_SHIFTS_BY_INTERVAL_FAIL,
+  GET_WORKING_SHIFTS_BY_INTERVAL_REQUEST,
+  GET_WORKING_SHIFTS_BY_INTERVAL_SUCCESS,
   GET_WORKING_SHIFTS_FAIL,
   GET_WORKING_SHIFTS_REQUEST,
   GET_WORKING_SHIFTS_SUCCESS,
@@ -21,25 +24,25 @@ export const workShiftReducer = (state = { workShift: {} }, action) => {
     case ADD_WORKING_SHIFT_REQUEST:
       return { loading: true };
     case ADD_WORKING_SHIFT_SUCCESS:
-      return { loading: false, service: action.payload };
+      return { loading: false, workShift: action.payload };
     case ADD_WORKING_SHIFT_FAIL:
       return { loading: false, error: action.payload };
     case GET_WORKING_SHIFT_REQUEST:
       return { loading: true };
     case GET_WORKING_SHIFT_SUCCESS:
-      return { loading: false, service: action.payload };
+      return { loading: false, workShift: action.payload };
     case GET_WORKING_SHIFT_FAIL:
       return { loading: false, error: action.payload };
     case UPDATE_WORKING_SHIFT_REQUEST:
       return { loading: true };
     case UPDATE_WORKING_SHIFT_SUCCESS:
-      return { loading: false, service: action.payload };
+      return { loading: false, workShift: action.payload };
     case UPDATE_WORKING_SHIFT_FAIL:
       return { loading: false, error: action.payload };
     case DELETE_WORKING_SHIFT_REQUEST:
       return { loading: true };
     case DELETE_WORKING_SHIFT_SUCCESS:
-      return { loading: false, service: action.payload };
+      return { loading: false, workShift: action.payload };
     case DELETE_WORKING_SHIFT_FAIL:
       return { loading: false, error: action.payload };
     default:
@@ -52,8 +55,14 @@ export const workShiftsReducer = (state = { workShifts: [] }, action) => {
     case GET_WORKING_SHIFTS_REQUEST:
       return { loading: true };
     case GET_WORKING_SHIFTS_SUCCESS:
-      return { loading: false, services: action.payload };
+      return { loading: false, workShifts: action.payload };
     case GET_WORKING_SHIFTS_FAIL:
+      return { loading: false, error: action.payload };
+    case GET_WORKING_SHIFTS_BY_INTERVAL_REQUEST:
+      return { loading: true };
+    case GET_WORKING_SHIFTS_BY_INTERVAL_SUCCESS:
+      return { loading: false, workShifts: action.payload };
+    case GET_WORKING_SHIFTS_BY_INTERVAL_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

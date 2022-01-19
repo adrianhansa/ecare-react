@@ -3,6 +3,7 @@ import { Container, Row, Col, Table } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { getEmployees } from "../../redux/actions/employeeActions";
 import { getShifts } from "../../redux/actions/shiftActions";
+import { getWorkShiftsByInterval } from "../../redux/actions/workShiftActions";
 import { useParams } from "react-router-dom";
 import DateRangePicker from "@wojtekmaj/react-daterange-picker";
 import moment from "moment";
@@ -12,13 +13,20 @@ import { FiEdit } from "react-icons/fi";
 
 const Rota = () => {
   const [value, onChange] = useState([new Date(), new Date()]);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const [data, setData] = useState(null);
   const handleClose = () => {
     setShow(false);
     setData(null);
+    dispatch(
+      getWorkShiftsByInterval(
+        slug,
+        moment(startDate).format("MM-DD-YYYY"),
+        moment(endDate).format("MM-DD-YYYY")
+      )
+    );
   };
 
   const enumerateDaysBetweenDates = (startDate, endDate) => {
@@ -38,9 +46,10 @@ const Rota = () => {
   const myDays = enumerateDaysBetweenDates(startDate, endDate);
   const { slug } = useParams();
   useEffect(() => {
-    setStartDate(moment(value[0]).format("MMM-DD-yyyy"));
-    setEndDate(moment(value[1]).format("MMM-DD-yyyy"));
-  }, [value]);
+    setStartDate(moment(value[0]).format("MM-DD-YYYY"));
+    setEndDate(moment(value[1]).format("MM-DD-YYYY"));
+    dispatch(getWorkShiftsByInterval(slug, startDate, endDate));
+  }, [value, startDate, endDate]);
 
   const shiftList = useSelector((state) => state.shiftList);
   const employeeList = useSelector((state) => state.employeeList);
