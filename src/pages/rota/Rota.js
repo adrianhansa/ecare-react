@@ -3,10 +3,7 @@ import { Container, Row, Col, Table } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { getEmployees } from "../../redux/actions/employeeActions";
 import { getShifts } from "../../redux/actions/shiftActions";
-import {
-  getWorkShiftsByInterval,
-  getWorkShiftsByEmployeeByDay,
-} from "../../redux/actions/workShiftActions";
+import { getWorkShiftsByInterval } from "../../redux/actions/workShiftActions";
 import { useParams } from "react-router-dom";
 import DateRangePicker from "@wojtekmaj/react-daterange-picker";
 import moment from "moment";
@@ -61,6 +58,28 @@ const Rota = () => {
   const { workShifts, loading, error } = useSelector(
     (state) => state.workShiftList
   );
+
+  //TO BE PLACED IN A SEPARATE COMPONENT
+  const getEmployeeShiftsPerDay = (workshifts, employee, day) => {
+    const shifts = workshifts.filter((ws) => ws.employee === employee._id);
+    console.log("Shifts: ", shifts);
+    const result = shifts.find(
+      (item) => item.date.split("T")[0] === moment(day).format("YYYY-MM-DD")
+    );
+    if (result) {
+      return (
+        <>
+          <span>{result.shift.name}</span>
+          <br />
+          <span>
+            {result.startTime} - {result.endTime}
+          </span>
+        </>
+      );
+    } else {
+      return <></>;
+    }
+  };
 
   useEffect(() => {
     dispatch(getEmployees(slug));
@@ -139,7 +158,12 @@ const Rota = () => {
                             }}
                           >
                             <span>
-                              {/* //dispatch getWorkShiftysByEmployee */}
+                              {workShifts &&
+                                getEmployeeShiftsPerDay(
+                                  workShifts,
+                                  employee,
+                                  day
+                                )}
                             </span>
                           </Col>
                           <div

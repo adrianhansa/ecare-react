@@ -19,6 +19,7 @@ const WorkShift = ({ data, service, shifts, show, handleClose }) => {
   const [notes, setNotes] = useState("");
   const [allocatedTo, setAllocatedTo] = useState("");
   const { error } = useSelector((state) => state.workShiftDetails);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(
@@ -56,10 +57,11 @@ const WorkShift = ({ data, service, shifts, show, handleClose }) => {
                 const item = shifts.find(
                   (shift) => shift._id === e.target.value
                 );
-                setShift(item);
+
                 setStartTime(item.startTime);
 
                 setEndTime(item.endTime);
+                setShift(item);
                 setSelectedShift(true);
               }}
             >
@@ -77,13 +79,13 @@ const WorkShift = ({ data, service, shifts, show, handleClose }) => {
                 <Form.Label>Start time</Form.Label>
                 <Form.Control
                   type="time"
-                  value={shift.startTime ? shift.startTime : startTime}
+                  value={startTime}
                   onChange={(e) => setStartTime(e.target.value)}
                 />
                 <Form.Label>End time</Form.Label>
                 <Form.Control
                   type="time"
-                  value={shift.endTime ? shift.endTime : endTime}
+                  value={endTime}
                   onChange={(e) => setEndTime(e.target.value)}
                 />
               </Form.Group>
