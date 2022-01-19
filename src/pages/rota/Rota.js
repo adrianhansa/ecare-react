@@ -62,23 +62,30 @@ const Rota = () => {
   //TO BE PLACED IN A SEPARATE COMPONENT
   const getEmployeeShiftsPerDay = (workshifts, employee, day) => {
     const shifts = workshifts.filter((ws) => ws.employee === employee._id);
-    console.log("Shifts: ", shifts);
-    const result = shifts.find(
+    const results = shifts.filter(
       (item) => item.date.split("T")[0] === moment(day).format("YYYY-MM-DD")
     );
-    if (result) {
-      return (
-        <>
-          <span>{result.shift.name}</span>
-          <br />
-          <span>
-            {result.startTime} - {result.endTime}
-          </span>
-        </>
-      );
-    } else {
-      return <></>;
-    }
+    return (
+      <>
+        {results.length > 0 ? (
+          <>
+            {results.map((result) => {
+              return (
+                <>
+                  <span>{result.shift.name}</span>
+                  <br />
+                  <span>
+                    {result.startTime} - {result.endTime}
+                  </span>
+                </>
+              );
+            })}
+          </>
+        ) : (
+          <></>
+        )}
+      </>
+    );
   };
 
   useEffect(() => {
