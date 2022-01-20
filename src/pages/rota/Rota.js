@@ -15,8 +15,8 @@ const Rota = () => {
   const dispatch = useDispatch();
   const { slug } = useParams();
   const [value, onChange] = useState([
-    moment(new Date()).startOf("week").add(1, "day"),
-    moment(new Date()).startOf("week").add(28, "days"),
+    moment(new Date()).startOf("week").add(1, "day").format("MM-DD-YYYY"),
+    moment(new Date()).startOf("week").add(28, "days").format("MM-DD-YYYY"),
   ]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -165,7 +165,7 @@ const Rota = () => {
               employeeList.employees.map((employee) => (
                 <tr key={employee._id}>
                   <td>
-                    <span className={employee.driver && "text-primary"}>
+                    <span className={employee.driver ? "text-primary" : ""}>
                       {employee.name}
                     </span>
                   </td>
