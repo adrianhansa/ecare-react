@@ -14,7 +14,10 @@ import { FiEdit } from "react-icons/fi";
 const Rota = () => {
   const dispatch = useDispatch();
   const { slug } = useParams();
-  const [value, onChange] = useState([new Date(), new Date()]);
+  const [value, onChange] = useState([
+    moment(new Date()).startOf("week").add(1, "day"),
+    moment(new Date()).startOf("week").add(28, "days"),
+  ]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [show, setShow] = useState(false);
@@ -71,15 +74,24 @@ const Rota = () => {
           <>
             {results.map((result) => {
               return (
-                <>
+                <div key={result._id}>
                   <span>{result.shift.name}</span>
                   <br />
-                  <span>
-                    {result.startTime} - {result.endTime}
-                  </span>
-                </>
+                  {result.shift.present && (
+                    <span>
+                      {result.startTime} - {result.endTime}
+                    </span>
+                  )}
+                </div>
               );
             })}
+            <span className="text-info">
+              {moment
+                .utc(
+                  results.reduce((acc, item) => acc + item.duration, 0) * 1000
+                )
+                .format("HH:mm")}
+            </span>
           </>
         ) : (
           <></>
@@ -152,7 +164,11 @@ const Rota = () => {
             {employeeList.employees &&
               employeeList.employees.map((employee) => (
                 <tr key={employee._id}>
-                  <td>{employee.name}</td>
+                  <td>
+                    <span className={employee.driver && "text-primary"}>
+                      {employee.name}
+                    </span>
+                  </td>
                   {myDays.map((day) => {
                     return (
                       <td key={day}>
