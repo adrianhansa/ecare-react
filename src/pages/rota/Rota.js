@@ -25,13 +25,6 @@ const Rota = () => {
   const handleClose = () => {
     setShow(false);
     setData(null);
-    dispatch(
-      getWorkShiftsByInterval(
-        slug,
-        moment(startDate).format("MM-DD-YYYY"),
-        moment(endDate).format("MM-DD-YYYY")
-      )
-    );
   };
 
   const enumerateDaysBetweenDates = (startDate, endDate) => {
@@ -53,8 +46,9 @@ const Rota = () => {
   useEffect(() => {
     setStartDate(moment(value[0]).format("MM-DD-YYYY"));
     setEndDate(moment(value[1]).format("MM-DD-YYYY"));
-    dispatch(getWorkShiftsByInterval(slug, startDate, endDate));
-  }, [value, startDate, endDate]);
+    !data && dispatch(getWorkShiftsByInterval(slug, startDate, endDate));
+    console.log(1);
+  }, [value, startDate, endDate, data]);
 
   const shiftList = useSelector((state) => state.shiftList);
   const employeeList = useSelector((state) => state.employeeList);
