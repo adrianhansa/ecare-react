@@ -3,7 +3,10 @@ import { Container, Row, Col, Table } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { getEmployees } from "../../redux/actions/employeeActions";
 import { getShifts } from "../../redux/actions/shiftActions";
-import { getWorkShiftsByInterval } from "../../redux/actions/workShiftActions";
+import {
+  getWorkShiftsByInterval,
+  deleteWorkShift,
+} from "../../redux/actions/workShiftActions";
 import { useParams } from "react-router-dom";
 import DateRangePicker from "@wojtekmaj/react-daterange-picker";
 import moment from "moment";
@@ -11,13 +14,14 @@ import WorkShift from "./WorkShift";
 import { GrAddCircle } from "react-icons/gr";
 import { FiEdit } from "react-icons/fi";
 import { FiDelete } from "react-icons/fi";
+import Swal from "sweetalert2";
 
 const Rota = () => {
   const dispatch = useDispatch();
   const { slug } = useParams();
   const [value, onChange] = useState([
     moment(new Date()).startOf("week").add(1, "day").format("MM-DD-YYYY"),
-    moment(new Date()).startOf("week").add(28, "days").format("MM-DD-YYYY"),
+    moment(new Date()).startOf("week").add(14, "days").format("MM-DD-YYYY"),
   ]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -43,6 +47,32 @@ const Rota = () => {
   };
 
   const myDays = enumerateDaysBetweenDates(startDate, endDate);
+  const colWidth = 95 / myDays.length;
+
+  const handleDeleteWorkShift = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteWorkShift(id, slug));
+        dispatch(getWorkShiftsByInterval(slug, startDate, endDate));
+        setData(null);
+        Swal.fire({
+          position: "bottom-end",
+          icon: "success",
+          title: "Shift deleted",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+      }
+    });
+  };
 
   useEffect(() => {
     setStartDate(moment(value[0]).format("MM-DD-YYYY"));
@@ -74,7 +104,12 @@ const Rota = () => {
                   style={{ background: result.shift.color }}
                 >
                   <span className="mr-3">{result.shift.name}</span>
-                  <FiDelete type="button" color="red" className="me-auto" />
+                  <FiDelete
+                    type="button"
+                    color="red"
+                    className="me-auto"
+                    onClick={() => handleDeleteWorkShift(result._id)}
+                  />
                   <br />
                   {result.shift.present && (
                     <span>
@@ -133,12 +168,12 @@ const Rota = () => {
           responsive
           hover
           bordered
-          className="mt-3 p-"
+          className="mt-3"
           style={{ fontSize: 12 }}
         >
           <thead className="bg-primary text-white">
             <tr>
-              <td></td>
+              <td width="5%"></td>
               {myDays.map((day) => {
                 return (
                   <td className="text-center" key={day}>
@@ -151,7 +186,7 @@ const Rota = () => {
               <td>Employee {workShifts && workShifts.length}</td>
               {myDays.map((day) => {
                 return (
-                  <td className="text-center" key={day}>
+                  <td className="text-center" key={day} width={`${colWidth}%`}>
                     <span>{moment(day).format("DD-MM-YY")}</span>
                   </td>
                 );
@@ -171,21 +206,13 @@ const Rota = () => {
                     return (
                       <td key={day}>
                         <Row>
-                          <Col
-                            className="text-center"
-                            style={{
-                              borderBottom: "1px dashed grey",
-                              margin: 4,
-                            }}
-                          >
-                            <span>
-                              {workShifts &&
-                                getEmployeeShiftsPerDay(
-                                  workShifts,
-                                  employee,
-                                  day
-                                )}
-                            </span>
+                          <Col className="text-center" style={{ margin: 4 }}>
+                            {workShifts &&
+                              getEmployeeShiftsPerDay(
+                                workShifts,
+                                employee,
+                                day
+                              )}
                           </Col>
                           <div
                             style={{

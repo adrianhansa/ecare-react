@@ -100,13 +100,11 @@ export const getWorkShift = (id) => async (dispatch) => {
   }
 };
 
-export const deleteWorkShift = (id, day) => async (dispatch) => {
+export const deleteWorkShift = (id, slug) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_WORKING_SHIFT_REQUEST });
-    const { data } = await axios.delete(`${URL}/work-shifts/${id}`);
+    const { data } = await axios.delete(`${URL}/work-shifts/${slug}/${id}`);
     dispatch({ type: DELETE_WORKING_SHIFT_SUCCESS, payload: data });
-    const result = await axios.get(`${URL}/work-shifts/${day}`);
-    dispatch({ type: GET_WORKING_SHIFTS_SUCCESS, payload: result.data });
   } catch (error) {
     dispatch({
       type: DELETE_WORKING_SHIFT_FAIL,
