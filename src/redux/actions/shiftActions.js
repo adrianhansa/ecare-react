@@ -35,12 +35,13 @@ export const getShifts = (service) => async (dispatch) => {
 };
 
 export const addShift =
-  (service, { name, startTime, endTime, present }) =>
+  (service, { name, startTime, endTime, present, color }) =>
   async (dispatch) => {
     try {
       dispatch({ type: ADD_SHIFT_REQUEST });
       const { data } = await axios.post(`${URL}/shifts/${service}`, {
         name,
+        color,
         startTime,
         endTime,
         present,
@@ -60,12 +61,13 @@ export const addShift =
   };
 
 export const updateShift =
-  (id, service, { name, startTime, endTime, present }) =>
+  (id, service, { name, startTime, endTime, present, color }) =>
   async (dispatch) => {
     try {
       dispatch({ type: UPDATE_SHIFT_REQUEST });
       const { data } = await axios.put(`${URL}/shifts/${id}`, {
         name,
+        color,
         startTime,
         endTime,
         present,

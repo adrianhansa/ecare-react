@@ -13,6 +13,7 @@ const AddShift = ({ show, handleClose, service }) => {
     present: yup.bool(),
     startTime: yup.string().required("Please select the start time."),
     endTime: yup.string().required("Please select the end time."),
+    color: yup.string(),
   });
   return (
     <Modal show={show} onHide={handleClose}>
@@ -28,6 +29,7 @@ const AddShift = ({ show, handleClose, service }) => {
             present: false,
             startTime: "00:00",
             endTime: "00:00",
+            color: "",
           }}
           validationSchema={validationSchema}
           onSubmit={(values) => {
@@ -48,6 +50,15 @@ const AddShift = ({ show, handleClose, service }) => {
                 {props.touched.name && (
                   <p className="text-danger">{props.errors.name}</p>
                 )}
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicName">
+                <Form.Label>Select a color</Form.Label>
+                <Form.Control
+                  type="color"
+                  value={props.values.color}
+                  onChange={props.handleChange("color")}
+                  onBlur={props.handleBlur("color")}
+                />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicPresent">
                 <Form.Label>Care hours</Form.Label>

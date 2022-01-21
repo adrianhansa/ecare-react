@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { deleteShift } from "../../redux/actions/shiftActions";
+import { GiAzulFlake } from "react-icons/gi";
 
 const ShiftPreview = ({ shift }) => {
   const dispatch = useDispatch();
@@ -39,6 +40,9 @@ const ShiftPreview = ({ shift }) => {
   return (
     <>
       <td>{shift.name}</td>
+      <td>
+        <GiAzulFlake style={{ color: shift.color }} />
+      </td>
       <td>{shift.startTime}</td>
       <td>{shift.endTime}</td>
       <td>{shift.duration}</td>

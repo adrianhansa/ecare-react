@@ -10,6 +10,7 @@ import moment from "moment";
 import WorkShift from "./WorkShift";
 import { GrAddCircle } from "react-icons/gr";
 import { FiEdit } from "react-icons/fi";
+import { FiDelete } from "react-icons/fi";
 
 const Rota = () => {
   const dispatch = useDispatch();
@@ -47,7 +48,6 @@ const Rota = () => {
     setStartDate(moment(value[0]).format("MM-DD-YYYY"));
     setEndDate(moment(value[1]).format("MM-DD-YYYY"));
     !data && dispatch(getWorkShiftsByInterval(slug, startDate, endDate));
-    console.log(1);
   }, [value, startDate, endDate, data]);
 
   const shiftList = useSelector((state) => state.shiftList);
@@ -68,8 +68,13 @@ const Rota = () => {
           <>
             {results.map((result) => {
               return (
-                <div key={result._id}>
-                  <span>{result.shift.name}</span>
+                <div
+                  key={result._id}
+                  className="mb-2"
+                  style={{ background: result.shift.color }}
+                >
+                  <span className="mr-3">{result.shift.name}</span>
+                  <FiDelete type="button" color="red" className="me-auto" />
                   <br />
                   {result.shift.present && (
                     <span>
@@ -127,12 +132,11 @@ const Rota = () => {
         <Table
           responsive
           hover
-          striped
           bordered
-          className="mt-3"
+          className="mt-3 p-"
           style={{ fontSize: 12 }}
         >
-          <thead>
+          <thead className="bg-primary text-white">
             <tr>
               <td></td>
               {myDays.map((day) => {

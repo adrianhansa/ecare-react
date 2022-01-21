@@ -25,6 +25,7 @@ const EditShift = ({ show, handleClose, shift }) => {
         <Formik
           initialValues={{
             name: shift.name,
+            color: shift.color,
             present: shift.present,
             startTime: shift.startTime,
             endTime: shift.endTime,
@@ -48,6 +49,15 @@ const EditShift = ({ show, handleClose, shift }) => {
                 {props.touched.name && (
                   <p className="text-danger">{props.errors.name}</p>
                 )}
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicName">
+                <Form.Label>Select a color</Form.Label>
+                <Form.Control
+                  type="color"
+                  value={props.values.color}
+                  onChange={props.handleChange("color")}
+                  onBlur={props.handleBlur("color")}
+                />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicPresent">
                 <Form.Label>Care hours</Form.Label>

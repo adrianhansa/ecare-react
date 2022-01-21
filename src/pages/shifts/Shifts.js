@@ -42,6 +42,7 @@ const Shifts = () => {
                 <thead>
                   <tr>
                     <th>Shift name</th>
+                    <th>Color</th>
                     <th>Start time</th>
                     <th>End time</th>
                     <th>Duration</th>
