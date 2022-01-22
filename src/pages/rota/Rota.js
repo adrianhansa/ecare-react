@@ -24,7 +24,7 @@ const Rota = () => {
       moment(new Date()).startOf("week").add(1, "day").format("MM-DD-YYYY")
     ),
     new Date(
-      moment(new Date()).startOf("week").add(14, "days").format("MM-DD-YYYY")
+      moment(new Date()).startOf("week").add(28, "days").format("MM-DD-YYYY")
     ),
   ]);
   const [startDate, setStartDate] = useState(new Date());
@@ -156,14 +156,43 @@ const Rota = () => {
     const shiftsByType = [];
     shifts.map((shift) => {
       shiftsByType.push({
-        name: shift.name,
+        name: shift.name[0],
         color: shift.color,
+        present: shift.present,
         count: totalShiftsPerDay.filter((item) => {
           return shift.name === item.shift.name;
         }).length,
       });
     });
     return shiftsByType;
+  };
+
+  const countHours = (employee, workShifts) => {
+    const shifts = workShifts.filter((ws) => {
+      return ws.employee === employee._id;
+    });
+    let total = 0;
+    shifts.forEach((item) => {
+      total = total + item.duration;
+    });
+    const days = Math.floor(total / 86400);
+    console.log(days);
+    return `${
+      days * 24 +
+      Number(
+        moment
+          .utc(total * 1000)
+          .format("HH:mm")
+          .split(":")[0]
+      )
+    } hours, ${
+      moment
+        .utc(total * 1000)
+        .format("HH:mm")
+        .split(":")[1]
+    } minutes`;
+
+    // return moment.utc(total * 1000).format("HH:mm");
   };
 
   return (
@@ -198,26 +227,31 @@ const Rota = () => {
               {myDays.map((day) => {
                 return (
                   <td className="text-center p-0" key={day}>
-                    <span className="small">{moment(day).format("ddd")}</span>
+                    <div className="mb-2">
+                      <span className="small">{moment(day).format("ddd")}</span>
+                    </div>
                     {workShifts &&
                       shiftList.shifts &&
                       countShifts(shiftList.shifts, workShifts, day).map(
-                        (x) => (
-                          <>
-                            <br />
-                            <span style={{ color: x.color }}>
-                              {x.name}:{x.count}
-                            </span>
-                            <br />
-                          </>
-                        )
+                        (x) =>
+                          x.present && (
+                            <div className="mb-1" key={x.name}>
+                              <span
+                                style={{ color: x.color, letterSpacing: 3 }}
+                              >
+                                {x.name}:{x.count}
+                              </span>
+                            </div>
+                          )
                       )}
                   </td>
                 );
               })}
             </tr>
             <tr>
-              <td className="p-0">Employee</td>
+              <td className="p-0">
+                Employee {moment.utc(219600 * 1000).format("HH:mm")}
+              </td>
               {myDays.map((day) => {
                 return (
                   <td
@@ -239,6 +273,12 @@ const Rota = () => {
                     <span className={employee.driver ? "text-primary" : ""}>
                       {employee.name}
                     </span>
+                    <p className="mt-2">
+                      Hours worked in the selected period: <br />
+                      <span className="text-primary">
+                        {workShifts && countHours(employee, workShifts)}
+                      </span>
+                    </p>
                   </td>
                   {myDays.map((day) => {
                     return (
