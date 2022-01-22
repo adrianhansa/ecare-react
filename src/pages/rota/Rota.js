@@ -153,14 +153,17 @@ const Rota = () => {
     const totalShiftsPerDay = workShifts.filter((ws) => {
       return ws.date.split("T")[0] === moment(date).format("YYYY-MM-DD");
     });
-    const shiftsByType = totalShiftsPerDay.filter((ts) => {
-      return shifts.filter((shift) => {
-        return shift.name === ts.shift.name;
+    const shiftsByType = [];
+    shifts.map((shift) => {
+      shiftsByType.push({
+        name: shift.name,
+        color: shift.color,
+        count: totalShiftsPerDay.filter((item) => {
+          return shift.name === item.shift.name;
+        }).length,
       });
     });
-    // totalShiftsPerDay.;
-    console.log(totalShiftsPerDay);
-    return shiftsByType.length;
+    return shiftsByType;
   };
 
   return (
@@ -185,7 +188,6 @@ const Rota = () => {
         </Col>
         <Table
           responsive
-          // hover
           bordered
           className="mt-3 p-0"
           style={{ fontSize: 12 }}
@@ -199,7 +201,17 @@ const Rota = () => {
                     <span className="small">{moment(day).format("ddd")}</span>
                     {workShifts &&
                       shiftList.shifts &&
-                      countShifts(shiftList.shifts, workShifts, day)}
+                      countShifts(shiftList.shifts, workShifts, day).map(
+                        (x) => (
+                          <>
+                            <br />
+                            <span style={{ color: x.color }}>
+                              {x.name}:{x.count}
+                            </span>
+                            <br />
+                          </>
+                        )
+                      )}
                   </td>
                 );
               })}
