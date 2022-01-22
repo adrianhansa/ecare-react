@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Table } from "react-bootstrap";
+import { Container, Row, Col, Table, Card } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { getEmployees } from "../../redux/actions/employeeActions";
 import { getShifts } from "../../redux/actions/shiftActions";
@@ -23,11 +23,9 @@ const Rota = () => {
     new Date(
       moment(new Date()).startOf("week").add(1, "day").format("MM-DD-YYYY")
     ),
-    // new Date(),
     new Date(
       moment(new Date()).startOf("week").add(14, "days").format("MM-DD-YYYY")
     ),
-    // new Date() + 7,
   ]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -116,6 +114,7 @@ const Rota = () => {
                     className="me-auto"
                     onClick={() => handleDeleteWorkShift(result._id)}
                   />
+                  <FiEdit type="button" color="green" />
                   <br />
                   {result.shift.present && (
                     <span>
@@ -150,6 +149,20 @@ const Rota = () => {
     setData({ day, employee });
   };
 
+  const countShifts = (shifts, workShifts, date) => {
+    const totalShiftsPerDay = workShifts.filter((ws) => {
+      return ws.date.split("T")[0] === moment(date).format("YYYY-MM-DD");
+    });
+    const shiftsByType = totalShiftsPerDay.filter((ts) => {
+      return shifts.filter((shift) => {
+        return shift.name === ts.shift.name;
+      });
+    });
+    // totalShiftsPerDay.;
+    console.log(totalShiftsPerDay);
+    return shiftsByType.length;
+  };
+
   return (
     <Container fluid>
       <Row>
@@ -172,27 +185,34 @@ const Rota = () => {
         </Col>
         <Table
           responsive
-          hover
+          // hover
           bordered
-          className="mt-3"
+          className="mt-3 p-0"
           style={{ fontSize: 12 }}
         >
           <thead className="bg-primary text-white">
             <tr>
-              <td width="5%"></td>
+              <td width="5%" className="p-0"></td>
               {myDays.map((day) => {
                 return (
-                  <td className="text-center" key={day}>
+                  <td className="text-center p-0" key={day}>
                     <span className="small">{moment(day).format("ddd")}</span>
+                    {workShifts &&
+                      shiftList.shifts &&
+                      countShifts(shiftList.shifts, workShifts, day)}
                   </td>
                 );
               })}
             </tr>
             <tr>
-              <td>Employee</td>
+              <td className="p-0">Employee</td>
               {myDays.map((day) => {
                 return (
-                  <td className="text-center" key={day} width={`${colWidth}%`}>
+                  <td
+                    className="text-center p-0"
+                    key={day}
+                    width={`${colWidth}%`}
+                  >
                     <span>{moment(day).format("DD-MM-YY")}</span>
                   </td>
                 );
@@ -203,39 +223,41 @@ const Rota = () => {
             {employeeList.employees &&
               employeeList.employees.map((employee) => (
                 <tr key={employee._id}>
-                  <td>
+                  <td className="p-0">
                     <span className={employee.driver ? "text-primary" : ""}>
                       {employee.name}
                     </span>
                   </td>
                   {myDays.map((day) => {
                     return (
-                      <td key={day}>
-                        <Row>
-                          <Col className="text-center bg-info">
+                      <td key={day} className="p-0">
+                        <Row className="m-0">
+                          <Col
+                            className="text-center py-2"
+                            style={{ minHeight: 100 }}
+                          >
                             {workShifts &&
                               getEmployeeShiftsPerDay(
                                 workShifts,
                                 employee,
                                 day
                               )}
+                            <div
+                              className="mt-auto"
+                              style={{
+                                fontSize: 13,
+                                display: "flex",
+                                justifyContent: "space-around",
+                                marginTop: 5,
+                                marginBottom: 1,
+                              }}
+                            >
+                              <GrAddCircle
+                                type="button"
+                                onClick={() => openModal(day, employee)}
+                              />
+                            </div>
                           </Col>
-                          <div
-                            className="mt-auto"
-                            style={{
-                              fontSize: 13,
-                              display: "flex",
-                              justifyContent: "space-around",
-                              marginTop: 5,
-                              marginBottom: 1,
-                            }}
-                          >
-                            <GrAddCircle
-                              type="button"
-                              onClick={() => openModal(day, employee)}
-                            />
-                            <FiEdit type="button" color="green" />
-                          </div>
                         </Row>
                       </td>
                     );
