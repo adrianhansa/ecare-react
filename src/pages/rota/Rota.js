@@ -20,8 +20,14 @@ const Rota = () => {
   const dispatch = useDispatch();
   const { slug } = useParams();
   const [value, onChange] = useState([
-    moment(new Date()).startOf("week").add(1, "day").format("MM-DD-YYYY"),
-    moment(new Date()).startOf("week").add(14, "days").format("MM-DD-YYYY"),
+    new Date(
+      moment(new Date()).startOf("week").add(1, "day").format("MM-DD-YYYY")
+    ),
+    // new Date(),
+    new Date(
+      moment(new Date()).startOf("week").add(14, "days").format("MM-DD-YYYY")
+    ),
+    // new Date() + 7,
   ]);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -183,7 +189,7 @@ const Rota = () => {
               })}
             </tr>
             <tr>
-              <td>Employee {workShifts && workShifts.length}</td>
+              <td>Employee</td>
               {myDays.map((day) => {
                 return (
                   <td className="text-center" key={day} width={`${colWidth}%`}>
@@ -206,7 +212,7 @@ const Rota = () => {
                     return (
                       <td key={day}>
                         <Row>
-                          <Col className="text-center" style={{ margin: 4 }}>
+                          <Col className="text-center bg-info">
                             {workShifts &&
                               getEmployeeShiftsPerDay(
                                 workShifts,
@@ -215,6 +221,7 @@ const Rota = () => {
                               )}
                           </Col>
                           <div
+                            className="mt-auto"
                             style={{
                               fontSize: 13,
                               display: "flex",
