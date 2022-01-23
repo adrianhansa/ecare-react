@@ -29,7 +29,6 @@ const Rota = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [show, setShow] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
   const [data, setData] = useState(null);
   const handleClose = () => {
     setShow(false);
@@ -81,38 +80,7 @@ const Rota = () => {
 
   const shiftList = useSelector((state) => state.shiftList);
   const employeeList = useSelector((state) => state.employeeList);
-  const { workShifts, loading, error } = useSelector(
-    (state) => state.workShiftList
-  );
-
-  //TO BE PLACED IN A SEPARATE COMPONENT
-  const getEmployeeShiftsPerDay = (workshifts, employee, day) => {
-    const shifts = workshifts.filter((ws) => ws.employee === employee._id);
-    const results = shifts.filter(
-      (item) => item.date.split("T")[0] === moment(day).format("YYYY-MM-DD")
-    );
-    return (
-      <div>
-        {results.length > 0 ? (
-          <div>
-            <WorkShiftContainer
-              results={results}
-              handleDeleteWorkShift={handleDeleteWorkShift}
-            />
-            <span className="text-info">
-              {moment
-                .utc(
-                  results.reduce((acc, item) => acc + item.duration, 0) * 1000
-                )
-                .format("HH:mm")}
-            </span>
-          </div>
-        ) : (
-          <div></div>
-        )}
-      </div>
-    );
-  };
+  const { workShifts } = useSelector((state) => state.workShiftList);
 
   useEffect(() => {
     dispatch(getEmployees(slug));
@@ -121,11 +89,6 @@ const Rota = () => {
 
   const openModal = (day, employee) => {
     setShow(true);
-    setData({ day, employee });
-  };
-
-  const openEditModal = (day, employee) => {
-    setShowEditModal(true);
     setData({ day, employee });
   };
 
@@ -255,42 +218,44 @@ const Rota = () => {
                       </span>
                     </div>
                   </td>
-                  {myDays.map((day) => {
-                    return (
-                      <td key={day} className="p-0">
-                        <div
-                          className="m-1 mt-auto"
-                          style={{
-                            border: "1px solid grey",
-                          }}
-                        >
-                          <div className="text-center">
-                            {workShifts &&
-                              getEmployeeShiftsPerDay(
-                                workShifts,
-                                employee,
-                                day
-                              )}
-                            <div
-                              className="mt-auto"
-                              style={{
-                                fontSize: 13,
-                                display: "flex",
-                                justifyContent: "space-around",
-                                marginTop: 1,
-                                marginBottom: 1,
-                              }}
-                            >
-                              <GrAddCircle
-                                type="button"
-                                onClick={() => openModal(day, employee)}
+                  {myDays.map((day) => (
+                    <td key={day} className="p-0">
+                      <div
+                        className="m-1 mt-auto"
+                        style={{
+                          border: "1px solid grey",
+                        }}
+                      >
+                        <div className="text-center">
+                          {workShifts && (
+                            <>
+                              <WorkShiftContainer
+                                workshifts={workShifts}
+                                employee={employee}
+                                day={day}
+                                handleDeleteWorkShift={handleDeleteWorkShift}
                               />
-                            </div>
-                          </div>
+                              <div
+                                // className="mt-auto"
+                                style={{
+                                  fontSize: 13,
+                                  display: "flex",
+                                  justifyContent: "space-around",
+                                  marginTop: 1,
+                                  marginBottom: 1,
+                                }}
+                              >
+                                <GrAddCircle
+                                  type="button"
+                                  onClick={() => openModal(day, employee)}
+                                />
+                              </div>
+                            </>
+                          )}
                         </div>
-                      </td>
-                    );
-                  })}
+                      </div>
+                    </td>
+                  ))}
                 </tr>
               ))}
           </tbody>
