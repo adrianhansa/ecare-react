@@ -14,6 +14,7 @@ import {
   UPDATE_SERVICE_FAIL,
   UPDATE_SERVICE_REQUEST,
   UPDATE_SERVICE_SUCCESS,
+  LOGOUT_SERVICE,
 } from "../constants/serviceConstants";
 
 export const serviceReducer = (state = { service: {} }, action) => {
@@ -42,6 +43,8 @@ export const serviceReducer = (state = { service: {} }, action) => {
       return { loading: false, service: action.payload };
     case DELETE_SERVICE_FAIL:
       return { loading: false, error: action.payload };
+    case LOGOUT_SERVICE:
+      return { loading: false, service: action.payload };
     default:
       return state;
   }

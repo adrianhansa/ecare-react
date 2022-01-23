@@ -5,6 +5,7 @@ import { getServices } from "../../redux/actions/serviceActions";
 import AddService from "./AddService";
 import ServiceCard from "./ServiceCard";
 import { GrAddCircle } from "react-icons/gr";
+import { logoutService } from "../../redux/actions/serviceActions";
 
 const Services = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const Services = () => {
   const { success } = useSelector((state) => state.serviceDetails);
 
   useEffect(() => {
+    dispatch(logoutService());
     dispatch(getServices());
   }, [dispatch]);
 

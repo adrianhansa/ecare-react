@@ -1,8 +1,12 @@
 import React from "react";
 import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import { useSelector, useDispatch } from "react-redux";
 
 const AppNavbar = () => {
+  const { loading, service, error } = useSelector(
+    (state) => state.serviceDetails
+  );
   return (
     <Navbar bg="primary" variant="dark" expand="lg">
       <Container fluid>
@@ -16,6 +20,19 @@ const AppNavbar = () => {
             <LinkContainer to="/services">
               <Nav.Link>Services</Nav.Link>
             </LinkContainer>
+            {service && (
+              <>
+                <LinkContainer to={`/services/rota/${service.slug}`}>
+                  <Nav.Link>Rota</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to={`/services/shifts/${service.slug}`}>
+                  <Nav.Link>Shifts</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to={`/services/employees/${service.slug}`}>
+                  <Nav.Link>Employees</Nav.Link>
+                </LinkContainer>
+              </>
+            )}
             <LinkContainer to="/login">
               <Nav.Link>Login</Nav.Link>
             </LinkContainer>

@@ -15,6 +15,7 @@ import {
   UPDATE_SERVICE_FAIL,
   UPDATE_SERVICE_REQUEST,
   UPDATE_SERVICE_SUCCESS,
+  LOGOUT_SERVICE,
 } from "../constants/serviceConstants";
 import { URL } from "../constants/url";
 
@@ -72,6 +73,10 @@ export const getService = (slug) => async (dispatch) => {
           : error.message,
     });
   }
+};
+
+export const logoutService = () => async (dispatch) => {
+  dispatch({ type: LOGOUT_SERVICE, payload: null });
 };
 
 export const deleteService = (id) => async (dispatch) => {
