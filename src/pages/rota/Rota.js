@@ -12,9 +12,8 @@ import DateRangePicker from "@wojtekmaj/react-daterange-picker";
 import moment from "moment";
 import WorkShift from "./WorkShift";
 import { GrAddCircle } from "react-icons/gr";
-import { FiEdit } from "react-icons/fi";
-import { FiDelete } from "react-icons/fi";
 import Swal from "sweetalert2";
+import WorkShiftContainer from "./WorkShiftContainer";
 
 const Rota = () => {
   const dispatch = useDispatch();
@@ -30,6 +29,7 @@ const Rota = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [show, setShow] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [data, setData] = useState(null);
   const handleClose = () => {
     setShow(false);
@@ -38,15 +38,12 @@ const Rota = () => {
 
   const enumerateDaysBetweenDates = (startDate, endDate) => {
     var dates = [];
-
     var currDate = moment(startDate).startOf("day");
     var lastDate = moment(endDate).startOf("day");
-
     while (currDate.diff(lastDate) <= 0) {
       dates.push(currDate.clone().toDate());
       currDate.add(1, "days");
     }
-
     return dates;
   };
 
@@ -59,8 +56,6 @@ const Rota = () => {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
@@ -97,33 +92,13 @@ const Rota = () => {
       (item) => item.date.split("T")[0] === moment(day).format("YYYY-MM-DD")
     );
     return (
-      <>
+      <div>
         {results.length > 0 ? (
-          <>
-            {results.map((result) => {
-              return (
-                <div
-                  key={result._id}
-                  className="mb-2"
-                  style={{ background: result.shift.color }}
-                >
-                  <span className="mr-3">{result.shift.name}</span>
-                  <FiDelete
-                    type="button"
-                    color="red"
-                    className="me-auto"
-                    onClick={() => handleDeleteWorkShift(result._id)}
-                  />
-                  <FiEdit type="button" color="green" />
-                  <br />
-                  {result.shift.present && (
-                    <span>
-                      {result.startTime} - {result.endTime}
-                    </span>
-                  )}
-                </div>
-              );
-            })}
+          <div>
+            <WorkShiftContainer
+              results={results}
+              handleDeleteWorkShift={handleDeleteWorkShift}
+            />
             <span className="text-info">
               {moment
                 .utc(
@@ -131,11 +106,11 @@ const Rota = () => {
                 )
                 .format("HH:mm")}
             </span>
-          </>
+          </div>
         ) : (
-          <></>
+          <div></div>
         )}
-      </>
+      </div>
     );
   };
 
@@ -146,6 +121,11 @@ const Rota = () => {
 
   const openModal = (day, employee) => {
     setShow(true);
+    setData({ day, employee });
+  };
+
+  const openEditModal = (day, employee) => {
+    setShowEditModal(true);
     setData({ day, employee });
   };
 
@@ -168,15 +148,14 @@ const Rota = () => {
   };
 
   const countHours = (employee, workShifts) => {
-    const shifts = workShifts.filter((ws) => {
+    const employeeShifts = workShifts.filter((ws) => {
       return ws.employee === employee._id;
     });
     let total = 0;
-    shifts.forEach((item) => {
+    employeeShifts.forEach((item) => {
       total = total + item.duration;
     });
     const days = Math.floor(total / 86400);
-    console.log(days);
     return `${
       days * 24 +
       Number(
@@ -185,14 +164,12 @@ const Rota = () => {
           .format("HH:mm")
           .split(":")[0]
       )
-    } hours, ${
+    } h: ${
       moment
         .utc(total * 1000)
         .format("HH:mm")
         .split(":")[1]
-    } minutes`;
-
-    // return moment.utc(total * 1000).format("HH:mm");
+    } m`;
   };
 
   return (
@@ -249,9 +226,7 @@ const Rota = () => {
               })}
             </tr>
             <tr>
-              <td className="p-0">
-                Employee {moment.utc(219600 * 1000).format("HH:mm")}
-              </td>
+              <td className="p-0">Employee</td>
               {myDays.map((day) => {
                 return (
                   <td
@@ -273,21 +248,23 @@ const Rota = () => {
                     <span className={employee.driver ? "text-primary" : ""}>
                       {employee.name}
                     </span>
-                    <p className="mt-2">
-                      Hours worked in the selected period: <br />
+                    <div className="mt-2">
+                      Hours worked: <br />
                       <span className="text-primary">
                         {workShifts && countHours(employee, workShifts)}
                       </span>
-                    </p>
+                    </div>
                   </td>
                   {myDays.map((day) => {
                     return (
                       <td key={day} className="p-0">
-                        <Row className="m-0">
-                          <Col
-                            className="text-center py-2"
-                            style={{ minHeight: 100 }}
-                          >
+                        <div
+                          className="m-1 mt-auto"
+                          style={{
+                            border: "1px solid grey",
+                          }}
+                        >
+                          <div className="text-center">
                             {workShifts &&
                               getEmployeeShiftsPerDay(
                                 workShifts,
@@ -300,7 +277,7 @@ const Rota = () => {
                                 fontSize: 13,
                                 display: "flex",
                                 justifyContent: "space-around",
-                                marginTop: 5,
+                                marginTop: 1,
                                 marginBottom: 1,
                               }}
                             >
@@ -309,8 +286,8 @@ const Rota = () => {
                                 onClick={() => openModal(day, employee)}
                               />
                             </div>
-                          </Col>
-                        </Row>
+                          </div>
+                        </div>
                       </td>
                     );
                   })}
