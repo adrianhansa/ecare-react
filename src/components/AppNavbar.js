@@ -10,7 +10,9 @@ const AppNavbar = () => {
   return (
     <Navbar bg="primary" variant="dark" expand="lg">
       <Container fluid>
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+        <LinkContainer to={service ? `/services/${service.slug}` : "/"}>
+          <Navbar.Brand>{service ? service.name : "Easy Care"}</Navbar.Brand>
+        </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
@@ -30,6 +32,18 @@ const AppNavbar = () => {
                 </LinkContainer>
                 <LinkContainer to={`/services/employees/${service.slug}`}>
                   <Nav.Link>Employees</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to={`/services/handover/${service.slug}`}>
+                  <Nav.Link>Handover</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to={`/services/residents/${service.slug}`}>
+                  <Nav.Link>Children & YP</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to={`/services/diary/${service.slug}`}>
+                  <Nav.Link>Diary</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to={`/services/roles/${service.slug}`}>
+                  <Nav.Link>Roles</Nav.Link>
                 </LinkContainer>
               </>
             )}

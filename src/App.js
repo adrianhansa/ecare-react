@@ -10,6 +10,10 @@ import ServiceScreen from "./pages/services/ServiceScreen";
 import Employees from "./pages/employees/Employees";
 import Shifts from "./pages/shifts/Shifts";
 import Rota from "./pages/rota/Rota";
+import Residents from "./pages/residents/Residents";
+import Handover from "./pages/handover/Handover";
+import Diary from "./pages/diary/Diary";
+import Roles from "./pages/roles/Roles";
 
 const App = () => {
   return (
@@ -22,6 +26,10 @@ const App = () => {
           <Route path="/services" element={<Services />} />
           <Route path="/services/:slug" element={<ServiceScreen />} />
           <Route path="/services/rota/:slug" element={<Rota />} />
+          <Route path="/services/roles/:slug" element={<Roles />} />
+          <Route path="/services/residents/:slug" element={<Residents />} />
+          <Route path="/services/diary/:slug" element={<Diary />} />
+          <Route path="/services/handover/:slug" element={<Handover />} />
           <Route path="/services/employees/:slug" element={<Employees />} />
           <Route path="/services/shifts/:slug" element={<Shifts />} />
         </Routes>

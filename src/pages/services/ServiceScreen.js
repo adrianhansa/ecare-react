@@ -30,7 +30,7 @@ const ServiceScreen = () => {
                 </Card.Title>
                 <Card.Footer>
                   <Link
-                    to={`/services/cyp/${slug}`}
+                    to={`/services/residents/${slug}`}
                     style={{ textDecoration: "none" }}
                   >
                     <h4>Children / Young people</h4>
