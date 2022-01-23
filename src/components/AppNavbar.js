@@ -24,6 +24,7 @@ const AppNavbar = () => {
             </LinkContainer>
             {service && (
               <>
+                <Nav.Link>|</Nav.Link>
                 <LinkContainer to={`/services/rota/${service.slug}`}>
                   <Nav.Link>Rota</Nav.Link>
                 </LinkContainer>
@@ -38,6 +39,11 @@ const AppNavbar = () => {
                 </LinkContainer>
                 <LinkContainer to={`/services/residents/${service.slug}`}>
                   <Nav.Link>Children & YP</Nav.Link>
+                </LinkContainer>
+                <LinkContainer
+                  to={`/services/daily-observations/${service.slug}`}
+                >
+                  <Nav.Link>Daily Observations</Nav.Link>
                 </LinkContainer>
                 <LinkContainer to={`/services/diary/${service.slug}`}>
                   <Nav.Link>Diary</Nav.Link>

@@ -91,6 +91,25 @@ const ServiceScreen = () => {
               <Card className="mx-1 mb-3">
                 <Card.Title className="p-3">
                   <img
+                    src="/images/DailyNotes.png"
+                    height={124}
+                    alt="Daily Notes"
+                  />
+                </Card.Title>
+                <Card.Footer>
+                  <Link
+                    to={`/services/daily-observations/${slug}`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <h4>Daily Observations</h4>
+                  </Link>
+                </Card.Footer>
+              </Card>
+            </Col>
+            <Col xs={12} sm={6} md={3} lg={3} xl={2}>
+              <Card className="mx-1 mb-3">
+                <Card.Title className="p-3">
+                  <img
                     src="/images/CommunicationBook.png"
                     height={124}
                     alt="Communication book"

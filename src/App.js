@@ -14,6 +14,7 @@ import Residents from "./pages/residents/Residents";
 import Handover from "./pages/handover/Handover";
 import Diary from "./pages/diary/Diary";
 import Roles from "./pages/roles/Roles";
+import DailyObservations from "./pages/dailyObservations/DailyObservations";
 
 const App = () => {
   return (
@@ -28,6 +29,10 @@ const App = () => {
           <Route path="/services/rota/:slug" element={<Rota />} />
           <Route path="/services/roles/:slug" element={<Roles />} />
           <Route path="/services/residents/:slug" element={<Residents />} />
+          <Route
+            path="/services/daily-observations/:slug"
+            element={<DailyObservations />}
+          />
           <Route path="/services/diary/:slug" element={<Diary />} />
           <Route path="/services/handover/:slug" element={<Handover />} />
           <Route path="/services/employees/:slug" element={<Employees />} />
