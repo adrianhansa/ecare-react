@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Container, Col, Row, Table } from "react-bootstrap";
 import { getShifts } from "../../redux/actions/shiftActions";
+import { getService } from "../../redux/actions/serviceActions";
 import AddShift from "./AddShift";
 import ShiftPreview from "./ShiftPreview";
 import { GrAddCircle } from "react-icons/gr";
@@ -19,6 +20,7 @@ const Shifts = () => {
   const { success } = useSelector((state) => state.shiftDetails);
 
   useEffect(() => {
+    dispatch(getService(slug));
     dispatch(getShifts(slug));
   }, [dispatch, slug]);
 

@@ -7,6 +7,7 @@ import {
   getWorkShiftsByInterval,
   deleteWorkShift,
 } from "../../redux/actions/workShiftActions";
+import { getService } from "../../redux/actions/serviceActions";
 import { useParams } from "react-router-dom";
 import DateRangePicker from "@wojtekmaj/react-daterange-picker";
 import moment from "moment";
@@ -83,6 +84,7 @@ const Rota = () => {
   const { workShifts } = useSelector((state) => state.workShiftList);
 
   useEffect(() => {
+    dispatch(getService(slug));
     dispatch(getEmployees(slug));
     dispatch(getShifts(slug));
   }, [dispatch, slug]);

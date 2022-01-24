@@ -6,6 +6,7 @@ import { getEmployees } from "../../redux/actions/employeeActions";
 import AddEmployee from "./AddEmployee";
 import EmployeeCard from "./EmployeeCard";
 import { GrAddCircle } from "react-icons/gr";
+import { getService } from "../../redux/actions/serviceActions";
 
 const Employees = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ const Employees = () => {
   const { success } = useSelector((state) => state.employeeDetails);
 
   useEffect(() => {
+    dispatch(getService(slug));
     dispatch(getEmployees(slug));
   }, [dispatch, slug]);
 
