@@ -10,6 +10,10 @@ import {
   workShiftsReducer,
   workShiftsByEmployeeByDayReducer,
 } from "./reducers/workShiftsReducer";
+import {
+  serviceUserReducer,
+  serviceUsersReducer,
+} from "./reducers/serviceUserReducers";
 
 const authFromLocalStorage = localStorage.getItem("auth")
   ? JSON.parse(localStorage.getItem("auth"))
@@ -30,6 +34,8 @@ const rootReducer = combineReducers({
   workShiftDetails: workShiftReducer,
   workShiftList: workShiftsReducer,
   workShiftsByEmployeeList: workShiftsByEmployeeByDayReducer,
+  serviceUserDetails: serviceUserReducer,
+  serviceUserList: serviceUsersReducer,
 });
 
 const store = createStore(

@@ -1,12 +1,10 @@
 import React from "react";
 import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const AppNavbar = () => {
-  const { loading, service, error } = useSelector(
-    (state) => state.serviceDetails
-  );
+  const { service } = useSelector((state) => state.serviceDetails);
   return (
     <Navbar bg="primary" variant="dark" expand="lg">
       <Container fluid>
