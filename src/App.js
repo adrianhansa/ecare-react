@@ -14,6 +14,9 @@ import Residents from "./pages/residents/Residents";
 import Handover from "./pages/handover/Handover";
 import Diary from "./pages/diary/Diary";
 import Roles from "./pages/roles/Roles";
+import Supervisions from "./pages/supervisions/Supervisions";
+import Appraisals from "./pages/appraisals/Appraisals";
+import Communications from "./pages/communications/Communications";
 import DailyObservations from "./pages/dailyObservations/DailyObservations";
 
 const App = () => {
@@ -37,6 +40,15 @@ const App = () => {
           <Route path="/services/handover/:slug" element={<Handover />} />
           <Route path="/services/employees/:slug" element={<Employees />} />
           <Route path="/services/shifts/:slug" element={<Shifts />} />
+          <Route path="/services/appraisals/:slug" element={<Appraisals />} />
+          <Route
+            path="/services/communications/:slug"
+            element={<Communications />}
+          />
+          <Route
+            path="/services/supervisions/:slug"
+            element={<Supervisions />}
+          />
         </Routes>
       </BrowserRouter>
     </Provider>

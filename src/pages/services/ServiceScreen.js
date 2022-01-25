@@ -117,10 +117,10 @@ const ServiceScreen = () => {
                 </Card.Title>
                 <Card.Footer>
                   <Link
-                    to={`/services/communication-book/${slug}`}
+                    to={`/services/communications/${slug}`}
                     style={{ textDecoration: "none" }}
                   >
-                    <h4>Communication Book</h4>
+                    <h4>Communications</h4>
                   </Link>
                 </Card.Footer>
               </Card>
@@ -166,6 +166,44 @@ const ServiceScreen = () => {
                     style={{ textDecoration: "none" }}
                   >
                     <h4>Roles</h4>
+                  </Link>
+                </Card.Footer>
+              </Card>
+            </Col>
+            <Col xs={12} sm={6} md={3} lg={3} xl={2}>
+              <Card className="mx-1 mb-3">
+                <Card.Title className="p-3">
+                  <img
+                    src="/images/Supervision.png"
+                    height={124}
+                    alt="Supervisions"
+                  />
+                </Card.Title>
+                <Card.Footer>
+                  <Link
+                    to={`/services/supervisions/${slug}`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <h4>Supervisions</h4>
+                  </Link>
+                </Card.Footer>
+              </Card>
+            </Col>
+            <Col xs={12} sm={6} md={3} lg={3} xl={2}>
+              <Card className="mx-1 mb-3">
+                <Card.Title className="p-3">
+                  <img
+                    src="/images/Appraisal.png"
+                    height={124}
+                    alt="Appraisal"
+                  />
+                </Card.Title>
+                <Card.Footer>
+                  <Link
+                    to={`/services/appraisals/${slug}`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <h4>Appraisals</h4>
                   </Link>
                 </Card.Footer>
               </Card>

@@ -35,6 +35,15 @@ const AppNavbar = () => {
                 <LinkContainer to={`/services/handover/${service.slug}`}>
                   <Nav.Link>Handover</Nav.Link>
                 </LinkContainer>
+                <LinkContainer to={`/services/supervisions/${service.slug}`}>
+                  <Nav.Link>Supervisions</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to={`/services/appraisals/${service.slug}`}>
+                  <Nav.Link>Appraisals</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to={`/services/communications/${service.slug}`}>
+                  <Nav.Link>Communications</Nav.Link>
+                </LinkContainer>
                 <LinkContainer to={`/services/residents/${service.slug}`}>
                   <Nav.Link>Children & YP</Nav.Link>
                 </LinkContainer>
@@ -49,6 +58,7 @@ const AppNavbar = () => {
                 <LinkContainer to={`/services/roles/${service.slug}`}>
                   <Nav.Link>Roles</Nav.Link>
                 </LinkContainer>
+                <Nav.Link>|</Nav.Link>
               </>
             )}
             <LinkContainer to="/login">
