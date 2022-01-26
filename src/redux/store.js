@@ -22,6 +22,10 @@ import {
   appraisalReducer,
   appraisalsReducer,
 } from "./reducers/appraisalReducers";
+import {
+  supervisionReducer,
+  supervisionsReducer,
+} from "./reducers/supervisionReducers";
 
 const authFromLocalStorage = localStorage.getItem("auth")
   ? JSON.parse(localStorage.getItem("auth"))
@@ -48,6 +52,8 @@ const rootReducer = combineReducers({
   diaryEntryList: diaryEntriesReducer,
   appraisalDetails: appraisalReducer,
   appraisalList: appraisalsReducer,
+  supervisionDetails: supervisionReducer,
+  supervisionList: supervisionsReducer,
 });
 
 const store = createStore(
