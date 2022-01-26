@@ -18,6 +18,10 @@ import {
   diaryEntriesReducer,
   diaryEntryReducer,
 } from "./reducers/diaryEntryReducers";
+import {
+  appraisalReducer,
+  appraisalsReducer,
+} from "./reducers/appraisalReducers";
 
 const authFromLocalStorage = localStorage.getItem("auth")
   ? JSON.parse(localStorage.getItem("auth"))
@@ -40,8 +44,10 @@ const rootReducer = combineReducers({
   workShiftsByEmployeeList: workShiftsByEmployeeByDayReducer,
   serviceUserDetails: serviceUserReducer,
   serviceUserList: serviceUsersReducer,
-  diartEntryDetails: diaryEntryReducer,
+  diaryEntryDetails: diaryEntryReducer,
   diaryEntryList: diaryEntriesReducer,
+  appraisalDetails: appraisalReducer,
+  appraisalList: appraisalsReducer,
 });
 
 const store = createStore(
