@@ -27,6 +27,10 @@ import {
   supervisionsReducer,
 } from "./reducers/supervisionReducers";
 import { handoverReducer, handoversReducer } from "./reducers/handoverReducer";
+import {
+  communicationReducer,
+  communicationsReducer,
+} from "./reducers/communicationReducer";
 
 const authFromLocalStorage = localStorage.getItem("auth")
   ? JSON.parse(localStorage.getItem("auth"))
@@ -57,6 +61,8 @@ const rootReducer = combineReducers({
   supervisionList: supervisionsReducer,
   handoverDetails: handoverReducer,
   handoverList: handoversReducer,
+  communicationDetails: communicationReducer,
+  communicationList: communicationsReducer,
 });
 
 const store = createStore(
