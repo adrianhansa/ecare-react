@@ -19,10 +19,10 @@ import {
 } from "../constants/supervisionConstants";
 
 export const addSupervision =
-  (service, { plannedDate, date, supervisor, supervisee }) =>
+  (service, { date, plannedDate, supervisor, supervisee }) =>
   async (dispatch) => {
     try {
-      dispatch({ ADD_SUPERVISION_REQUEST });
+      dispatch({ type: ADD_SUPERVISION_REQUEST });
       const { data } = await axios.post(`${URL}/supervisions/${service}`, {
         plannedDate,
         date,
@@ -76,10 +76,10 @@ export const getSupervision = (id) => async (dispatch) => {
 };
 
 export const updateSupervision =
-  (id, { plannedDate, date, supervisor, supervisee }) =>
+  (service, id, { date, plannedDate, supervisor, supervisee }) =>
   async (dispatch) => {
     try {
-      dispatch({ UPDATE_SUPERVISION_REQUEST });
+      dispatch({ type: UPDATE_SUPERVISION_REQUEST });
       const { data } = await axios.put(`${URL}/supervisions/${id}`, {
         plannedDate,
         date,
@@ -100,9 +100,9 @@ export const updateSupervision =
     }
   };
 
-export const deleteSupervision = (id) => async (dispatch) => {
+export const deleteSupervision = (service, id) => async (dispatch) => {
   try {
-    dispatch({ DELETE_SUPERVISION_REQUEST });
+    dispatch({ type: DELETE_SUPERVISION_REQUEST });
     const { data } = await axios.delete(`${URL}/supervisions/${id}`);
     dispatch({ type: DELETE_SUPERVISION_SUCCESS, payload: data });
     const result = await axios.get(`${URL}/supervisions/${service}`);
