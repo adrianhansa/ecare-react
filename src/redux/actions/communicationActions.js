@@ -16,20 +16,20 @@ import {
   DELETE_COMMUNICATION_SUCCESS,
   DELETE_COMMUNICATION_FAIL,
   DELETE_COMMUNICATION_REQUEST,
-} from "../constants/communciationConstants";
+} from "../constants/communicationConstants";
 
 export const addCommunication =
-  (service, { employee, date }) =>
+  (service, { date, content }) =>
   async (dispatch) => {
     try {
-      dispatch({ ADD_COMMUNICATION_REQUEST });
+      dispatch({ type: ADD_COMMUNICATION_REQUEST });
       const { data } = await axios.post(`${URL}/communications/${service}`, {
-        employee,
         date,
+        content,
       });
       dispatch({ type: ADD_COMMUNICATION_SUCCESS, payload: data });
       const result = await axios.get(`${URL}/communications/${service}`);
-      dispatch({ type: GET_APPRAISALS_SUCCESS, payload: result.data });
+      dispatch({ type: GET_COMMUNICATIONS_SUCCESS, payload: result.data });
     } catch (error) {
       dispatch({
         type: ADD_COMMUNICATION_FAIL,
@@ -74,12 +74,13 @@ export const getCommunication = (id) => async (dispatch) => {
 };
 
 export const updateCommunication =
-  (id, { date }) =>
+  (service, id, { date, content }) =>
   async (dispatch) => {
     try {
-      dispatch({ UPDATE_COMMUNICATION_REQUEST });
+      dispatch({ type: UPDATE_COMMUNICATION_REQUEST });
       const { data } = await axios.put(`${URL}/communications/${id}`, {
         date,
+        content,
       });
       dispatch({ type: UPDATE_COMMUNICATION_SUCCESS, payload: data });
       const result = await axios.get(`${URL}/communications/${service}`);
@@ -95,9 +96,9 @@ export const updateCommunication =
     }
   };
 
-export const deleteCommunication = (id) => async (dispatch) => {
+export const deleteCommunication = (service, id) => async (dispatch) => {
   try {
-    dispatch({ DELETE_COMMUNICATION_REQUEST });
+    dispatch({ type: DELETE_COMMUNICATION_REQUEST });
     const { data } = await axios.delete(`${URL}/communications/${id}`);
     dispatch({ type: DELETE_COMMUNICATION_SUCCESS, payload: data });
     const result = await axios.get(`${URL}/communications/${service}`);

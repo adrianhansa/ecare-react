@@ -22,7 +22,7 @@ export const addAppraisal =
   (service, { employee, date }) =>
   async (dispatch) => {
     try {
-      dispatch({ ADD_APPRAISAL_REQUEST });
+      dispatch({ type: ADD_APPRAISAL_REQUEST });
       const { data } = await axios.post(`${URL}/appraisals/${service}`, {
         employee,
         date,
@@ -77,7 +77,7 @@ export const updateAppraisal =
   (id, { date }) =>
   async (dispatch) => {
     try {
-      dispatch({ UPDATE_APPRAISAL_REQUEST });
+      dispatch({ type: UPDATE_APPRAISAL_REQUEST });
       const { data } = await axios.put(`${URL}/appraisals/${id}`, {
         date,
       });
@@ -97,7 +97,7 @@ export const updateAppraisal =
 
 export const deleteAppraisal = (id) => async (dispatch) => {
   try {
-    dispatch({ DELETE_APPRAISAL_REQUEST });
+    dispatch({ type: DELETE_APPRAISAL_REQUEST });
     const { data } = await axios.delete(`${URL}/appraisals/${id}`);
     dispatch({ type: DELETE_APPRAISAL_SUCCESS, payload: data });
     const result = await axios.get(`${URL}/appraisals/${service}`);

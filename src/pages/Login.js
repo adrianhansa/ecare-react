@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { login } from "../redux/actions/userActions";
+import { login, employeeLogin } from "../redux/actions/userActions";
 
 const Login = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(login({ email: "adrian.hansa@yahoo.com", password: "111111" }));
+    dispatch(employeeLogin({ payrollNumber: "1008789", password: "helmed" }));
   }, [dispatch]);
   return <div>LOGIN</div>;
 };
