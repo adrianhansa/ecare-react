@@ -74,7 +74,7 @@ export const getAppraisal = (id) => async (dispatch) => {
 };
 
 export const updateAppraisal =
-  (id, { date }) =>
+  (service, id, { date }) =>
   async (dispatch) => {
     try {
       dispatch({ type: UPDATE_APPRAISAL_REQUEST });
@@ -95,7 +95,7 @@ export const updateAppraisal =
     }
   };
 
-export const deleteAppraisal = (id) => async (dispatch) => {
+export const deleteAppraisal = (service, id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_APPRAISAL_REQUEST });
     const { data } = await axios.delete(`${URL}/appraisals/${id}`);

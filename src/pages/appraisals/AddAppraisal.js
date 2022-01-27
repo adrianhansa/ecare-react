@@ -2,13 +2,13 @@ import React, { useEffect } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { Formik } from "formik";
 import * as yup from "yup";
-import { addSupervision } from "../../redux/actions/supervisionActions";
+import { addAppraisal } from "../../redux/actions/appraisalActions";
 import { getEmployees } from "../../redux/actions/employeeActions";
 import { useDispatch, useSelector } from "react-redux";
 
-const AddSupervision = ({ show, handleClose, service }) => {
+const AddAppraisal = ({ show, handleClose, service }) => {
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.supervisionDetails);
+  const { error } = useSelector((state) => state.appraisalDetails);
   useEffect(() => {
     dispatch(getEmployees(service));
   }, [dispatch, service]);
@@ -17,16 +17,12 @@ const AddSupervision = ({ show, handleClose, service }) => {
     date: yup
       .string()
       .required("Please select the date when the supervsion took place."),
-    plannedDate: yup
-      .string()
-      .required("Please select a date for when you plan the supervision."),
-    // supervisee: yup.string().required(),
-    // supervisor: yup.string().required(),
+    employee: yup.string().required(),
   });
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Create a New Message</Modal.Title>
+        <Modal.Title>Record a New Appraisal</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
@@ -34,29 +30,15 @@ const AddSupervision = ({ show, handleClose, service }) => {
         <Formik
           initialValues={{
             date: new Date(),
-            plannedDate: new Date(),
-            supervisor: "",
-            supervisee: "",
+            employee: "",
           }}
           validationSchema={validationSchema}
           onSubmit={(values) => {
-            dispatch(addSupervision(service, values));
+            dispatch(addAppraisal(service, values));
           }}
         >
           {(props) => (
             <Form>
-              <Form.Group className="mb-3" controlId="formBasicDate">
-                <Form.Label>Planned date</Form.Label>
-                <Form.Control
-                  type="date"
-                  value={props.values.plannedDate}
-                  onChange={props.handleChange("plannedDate")}
-                  onBlur={props.handleBlur("plannedDate")}
-                />
-                {props.touched.plannedDate && (
-                  <p className="text-danger">{props.errors.plannedDate}</p>
-                )}
-              </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicDate">
                 <Form.Label>Date</Form.Label>
                 <Form.Control
@@ -69,31 +51,16 @@ const AddSupervision = ({ show, handleClose, service }) => {
                   <p className="text-danger">{props.errors.date}</p>
                 )}
               </Form.Group>
-
               <Form.Group className="mb-3" controlId="formBasicName">
-                <Form.Label>Select the supervisee:</Form.Label>
+                <Form.Label>Select the Employee:</Form.Label>
                 <Form.Select
-                  value={props.values.supervisee}
-                  onChange={props.handleChange("supervisee")}
+                  value={props.values.employee}
+                  onChange={props.handleChange("employee")}
                 >
                   {employees &&
-                    employees.map((supervisee) => (
-                      <option key={supervisee._id} value={supervisee._id}>
-                        {supervisee.name}
-                      </option>
-                    ))}
-                </Form.Select>
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicName">
-                <Form.Label>Select the supervisor:</Form.Label>
-                <Form.Select
-                  value={props.values.supervisor}
-                  onChange={props.handleChange("supervisor")}
-                >
-                  {employees &&
-                    employees.map((supervisor) => (
-                      <option key={supervisor._id} value={supervisor._id}>
-                        {supervisor.name}
+                    employees.map((employee) => (
+                      <option key={employee._id} value={employee._id}>
+                        {employee.name}
                       </option>
                     ))}
                 </Form.Select>
@@ -104,7 +71,7 @@ const AddSupervision = ({ show, handleClose, service }) => {
                 className="me-3"
                 onClick={props.handleSubmit}
               >
-                Add Supervision
+                Add Appraisal
               </Button>
               <Button variant="secondary" onClick={handleClose}>
                 Cancel
@@ -117,4 +84,4 @@ const AddSupervision = ({ show, handleClose, service }) => {
   );
 };
 
-export default AddSupervision;
+export default AddAppraisal;
