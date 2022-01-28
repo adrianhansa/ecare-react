@@ -15,11 +15,11 @@ import { URL } from "../constants/url";
 export const login =
   ({ email, password }) =>
   async (dispatch) => {
-    dispatch({ type: LOGIN_REQUEST });
-    const { data } = await axios.post(`${URL}/login`, { email, password });
-    dispatch({ type: LOGIN_SUCCESS, payload: data });
-    localStorage.setItem("auth", JSON.stringify({ user: data }));
     try {
+      dispatch({ type: LOGIN_REQUEST });
+      const { data } = await axios.post(`${URL}/login`, { email, password });
+      dispatch({ type: LOGIN_SUCCESS, payload: data });
+      localStorage.setItem("auth", JSON.stringify({ user: data }));
     } catch (error) {
       dispatch({
         type: LOGIN_FAIL,
@@ -34,14 +34,14 @@ export const login =
 export const employeeLogin =
   ({ payrollNumber, password }) =>
   async (dispatch) => {
-    dispatch({ type: EMPLOYEE_LOGIN_REQUEST });
-    const { data } = await axios.post(`${URL}/employee-login`, {
-      payrollNumber,
-      password,
-    });
-    dispatch({ type: EMPLOYEE_LOGIN_SUCCESS, payload: data });
-    localStorage.setItem("auth", JSON.stringify({ user: data }));
     try {
+      dispatch({ type: EMPLOYEE_LOGIN_REQUEST });
+      const { data } = await axios.post(`${URL}/employee-login`, {
+        payrollNumber,
+        password,
+      });
+      dispatch({ type: EMPLOYEE_LOGIN_SUCCESS, payload: data });
+      localStorage.setItem("auth", JSON.stringify({ user: data }));
     } catch (error) {
       dispatch({
         type: EMPLOYEE_LOGIN_FAIL,
@@ -56,17 +56,17 @@ export const employeeLogin =
 export const register =
   ({ email, name, password, passwordVerify, companyName }) =>
   async (dispatch) => {
-    dispatch({ type: REGISTER_REQUEST });
-    const { data } = await axios.post(`${URL}/register`, {
-      email,
-      name,
-      password,
-      passwordVerify,
-      companyName,
-    });
-    dispatch({ type: REGISTER_SUCCESS, payload: data });
-    localStorage.setItem("auth", JSON.stringify({ user: data }));
     try {
+      dispatch({ type: REGISTER_REQUEST });
+      const { data } = await axios.post(`${URL}/register`, {
+        email,
+        name,
+        password,
+        passwordVerify,
+        companyName,
+      });
+      dispatch({ type: REGISTER_SUCCESS, payload: data });
+      localStorage.setItem("auth", JSON.stringify({ user: data }));
     } catch (error) {
       dispatch({
         type: REGISTER_FAIL,
