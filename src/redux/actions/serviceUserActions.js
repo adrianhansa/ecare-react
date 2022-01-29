@@ -81,7 +81,7 @@ export const updateServiceUser =
     }
   };
 
-export const deleteServiceUser = (id) => async (dispatch) => {
+export const deleteServiceUser = (service, id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_SERVICE_USER_REQUEST });
     const { data } = await axios.delete(`${URL}/service-users/${id}`);

@@ -27,19 +27,19 @@ export const serviceUserReducer = (state = { serviceUser: {} }, action) => {
     case ADD_SERVICE_USER_REQUEST:
       return { loading: true };
     case ADD_SERVICE_USER_SUCCESS:
-      return { loading: false, sucess: true, serviceUser: action.payload };
+      return { loading: false, success: true, serviceUser: action.payload };
     case ADD_SERVICE_USER_FAIL:
       return { loading: false, success: false, error: action.payload };
     case UPDATE_SERVICE_USER_REQUEST:
       return { loading: true };
     case UPDATE_SERVICE_USER_SUCCESS:
-      return { loading: false, sucess: true, serviceUser: action.payload };
+      return { loading: false, success: true, serviceUser: action.payload };
     case UPDATE_SERVICE_USER_FAIL:
       return { loading: false, success: false, error: action.payload };
     case DELETE_SERVICE_USER_REQUEST:
       return { loading: true };
     case DELETE_SERVICE_USER_SUCCESS:
-      return { loading: false, sucess: true, serviceUser: action.payload };
+      return { loading: false, success: true, serviceUser: action.payload };
     case DELETE_SERVICE_USER_FAIL:
       return { loading: false, success: false, error: action.payload };
     default:

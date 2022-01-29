@@ -211,6 +211,7 @@ const ServiceScreen = () => {
           </Row>
         </Col>
       </Row>
+      )
     </Container>
   );
 };
