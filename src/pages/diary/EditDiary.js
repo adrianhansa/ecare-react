@@ -2,59 +2,70 @@ import React from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { Formik } from "formik";
 import * as yup from "yup";
-import { addServiceUser } from "../../redux/actions/serviceUserActions";
+import { updateDiaryEntry } from "../../redux/actions/diaryEntryActions";
 import { useDispatch, useSelector } from "react-redux";
 
-const AddResident = ({ show, handleClose, service }) => {
+const EditDiary = ({ show, handleClose, diary, service }) => {
   const dispatch = useDispatch();
   const { error } = useSelector((state) => state.serviceUserDetails);
   const validationSchema = yup.object({
-    name: yup.string().required("Name is required."),
-    dob: yup.string().required("Please add date of birth."),
+    content: yup.string().required("Please enter the content."),
+    date: yup.string().required("Please select a date."),
+    time: yup.string(),
   });
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Add a New Service User</Modal.Title>
+        <Modal.Title>Update Diary Entry Details</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
         {error && <p className="text-danger">{error}</p>}
         <Formik
           initialValues={{
-            dob: new Date(),
-            name: "",
+            date: diary.date.split("T")[0],
+            time: diary.time,
+            content: diary.content,
           }}
           validationSchema={validationSchema}
           onSubmit={(values) => {
-            dispatch(addServiceUser(service, values));
+            dispatch(updateDiaryEntry(service, diary._id, values));
           }}
         >
           {(props) => (
             <Form>
               <Form.Group className="mb-3" controlId="formBasicName">
-                <Form.Label>Date of Birth</Form.Label>
+                <Form.Label>Date</Form.Label>
                 <Form.Control
                   type="date"
-                  value={props.values.dob}
-                  onChange={props.handleChange("dob")}
-                  onBlur={props.handleBlur("dob")}
+                  value={props.values.date}
+                  onChange={props.handleChange("date")}
+                  onBlur={props.handleBlur("date")}
                 />
                 {props.touched.date && (
-                  <p className="text-danger">{props.errors.dob}</p>
+                  <p className="text-danger">{props.errors.date}</p>
                 )}
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicName">
-                <Form.Label>Name</Form.Label>
+                <Form.Label>Time</Form.Label>
+                <Form.Control
+                  type="time"
+                  value={props.values.time}
+                  onChange={props.handleChange("time")}
+                  onBlur={props.handleBlur("time")}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicName">
+                <Form.Label>Content</Form.Label>
                 <Form.Control
                   type="text"
-                  value={props.values.name}
-                  onChange={props.handleChange("name")}
-                  onBlur={props.handleBlur("name")}
+                  value={props.values.content}
+                  onChange={props.handleChange("content")}
+                  onBlur={props.handleBlur("content")}
                 />
               </Form.Group>
               {props.touched.content && (
-                <p className="text-danger">{props.errors.name}</p>
+                <p className="text-danger">{props.errors.content}</p>
               )}
               <Button
                 variant="primary"
@@ -62,7 +73,7 @@ const AddResident = ({ show, handleClose, service }) => {
                 className="me-3"
                 onClick={props.handleSubmit}
               >
-                Add Resident
+                Update Diary Entry
               </Button>
               <Button variant="secondary" onClick={handleClose}>
                 Cancel
@@ -75,4 +86,4 @@ const AddResident = ({ show, handleClose, service }) => {
   );
 };
 
-export default AddResident;
+export default EditDiary;

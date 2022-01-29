@@ -22,7 +22,7 @@ const EditResident = ({ show, handleClose, serviceUser, service }) => {
         {error && <p className="text-danger">{error}</p>}
         <Formik
           initialValues={{
-            dob: serviceUser.dob,
+            dob: serviceUser.dob.split("T")[0],
             name: serviceUser.name,
           }}
           validationSchema={validationSchema}

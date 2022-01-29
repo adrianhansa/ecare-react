@@ -63,7 +63,7 @@ export const updateDiaryEntry =
   async (dispatch) => {
     try {
       dispatch({ type: UPDATE_DIARY_ENTRY_REQUEST });
-      const { data } = await axios.put(`${URL}/diary/${service}/${id}`, {
+      const { data } = await axios.put(`${URL}/diary/${id}`, {
         date,
         time,
         content,
@@ -98,7 +98,7 @@ export const getDiaryEntry = (id) => async (dispatch) => {
   }
 };
 
-export const deleteDiaryEntry = (id) => async (dispatch) => {
+export const deleteDiaryEntry = (service, id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_DIARY_ENTRY_REQUEST });
     const { data } = await axios.delete(`${URL}/diary/${id}`);
