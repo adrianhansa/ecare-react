@@ -18,7 +18,7 @@ import Roles from "./pages/roles/Roles";
 import Supervisions from "./pages/supervisions/Supervisions";
 import Appraisals from "./pages/appraisals/Appraisals";
 import Communications from "./pages/communications/Communications";
-import DailyObservations from "./pages/dailyObservations/DailyObservations";
+import DailyObservationItems from "./pages/dailyObservations/DailyObservationItems";
 import Absences from "./pages/absences/Absences";
 import ShiftPlans from "./pages/shiftPlans/ShiftPlans";
 import HealthAndSafety from "./pages/healthAndSafety/HealthAndSafety";
@@ -39,7 +39,7 @@ const App = () => {
           <Route path="/services/residents/:slug" element={<Residents />} />
           <Route
             path="/services/daily-observations/:slug"
-            element={<DailyObservations />}
+            element={<DailyObservationItems />}
           />
           <Route path="/services/diary/:slug" element={<Diary />} />
           <Route path="/services/handover/:slug" element={<Handover />} />

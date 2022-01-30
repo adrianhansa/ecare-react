@@ -24,9 +24,12 @@ import {
 export const addItem = (service, item) => async (dispatch) => {
   try {
     dispatch({ type: ADD_ITEM_REQUEST });
-    const { data } = await axios.post(`${URL}/${service}`, item);
+    const { data } = await axios.post(
+      `${URL}/daily-observation-items/${service}`,
+      item
+    );
     dispatch({ type: ADD_ITEM_SUCCESS, payload: data });
-    const result = await axios.put(`${URL}/${service}`);
+    const result = await axios.get(`${URL}/daily-observation-items/${service}`);
     dispatch({ type: GET_ITEMS_SUCCESS, payload: result.data });
   } catch (error) {
     dispatch({
@@ -42,9 +45,12 @@ export const addItem = (service, item) => async (dispatch) => {
 export const updateItem = (service, id, item) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_ITEM_REQUEST });
-    const { data } = await axios.put(`${URL}/${id}`, item);
+    const { data } = await axios.put(
+      `${URL}/daily-observation-items/${id}`,
+      item
+    );
     dispatch({ type: UPDATE_ITEM_SUCCESS, payload: data });
-    const result = await axios.put(`${URL}/${service}`);
+    const result = await axios.get(`${URL}/daily-observation-items/${service}`);
     dispatch({ type: GET_ITEMS_SUCCESS, payload: result.data });
   } catch (error) {
     dispatch({
@@ -60,9 +66,9 @@ export const updateItem = (service, id, item) => async (dispatch) => {
 export const deleteItem = (service, id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_ITEM_REQUEST });
-    const { data } = await axios.delete(`${URL}/${id}`);
+    const { data } = await axios.delete(`${URL}/daily-observation-items/${id}`);
     dispatch({ type: DELETE_ITEM_SUCCESS, payload: data });
-    const result = await axios.put(`${URL}/${service}`);
+    const result = await axios.get(`${URL}/daily-observation-items/${service}`);
     dispatch({ type: GET_ITEMS_SUCCESS, payload: result.data });
   } catch (error) {
     dispatch({
@@ -78,9 +84,11 @@ export const deleteItem = (service, id) => async (dispatch) => {
 export const toggleStatus = (service, id) => async (dispatch) => {
   try {
     dispatch({ type: TOGGLE_ITEM_STATUS_REQUEST });
-    const { data } = await axios.get(`${URL}/toggle-status/${id}`);
+    const { data } = await axios.get(
+      `${URL}/daily-observation-items/toggle-status/${id}`
+    );
     dispatch({ type: TOGGLE_ITEM_STATUS_SUCCESS, payload: data });
-    const result = await axios.put(`${URL}/${service}`);
+    const result = await axios.get(`${URL}/daily-observation-items/${service}`);
     dispatch({ type: GET_ITEMS_SUCCESS, payload: result.data });
   } catch (error) {
     dispatch({
@@ -96,7 +104,7 @@ export const toggleStatus = (service, id) => async (dispatch) => {
 export const getItem = (id) => async (dispatch) => {
   try {
     dispatch({ type: GET_ITEM_REQUEST });
-    const result = await axios.get(`${URL}/${id}`);
+    const result = await axios.get(`${URL}/daily-observation-items/${id}`);
     dispatch({ type: GET_ITEM_SUCCESS, payload: result.data });
   } catch (error) {
     dispatch({
@@ -112,7 +120,7 @@ export const getItem = (id) => async (dispatch) => {
 export const getItems = (service) => async (dispatch) => {
   try {
     dispatch({ type: GET_ITEMS_REQUEST });
-    const result = await axios.get(`${URL}/${service}`);
+    const result = await axios.get(`${URL}/daily-observation-items/${service}`);
     dispatch({ type: GET_ITEMS_SUCCESS, payload: result.data });
   } catch (error) {
     dispatch({
