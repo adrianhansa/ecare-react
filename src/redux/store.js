@@ -32,6 +32,10 @@ import {
   communicationsReducer,
 } from "./reducers/communicationReducer";
 import { absenceReducer, absencesReducer } from "./reducers/absenceReducers";
+import {
+  dailyObservationItemReducer,
+  dailyObservationItemsReducer,
+} from "./reducers/dailyObservationItemsReducers";
 
 const authFromLocalStorage = localStorage.getItem("auth")
   ? JSON.parse(localStorage.getItem("auth"))
@@ -66,6 +70,8 @@ const rootReducer = combineReducers({
   communicationList: communicationsReducer,
   absenceDetails: absenceReducer,
   absenceList: absencesReducer,
+  dailyObservationItemDetails: dailyObservationItemReducer,
+  dailyObservationItemList: dailyObservationItemsReducer,
 });
 
 const store = createStore(
