@@ -4,7 +4,10 @@ import EditItem from "./EditItem";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
-import { deleteItem } from "../../redux/actions/dailyObservationItemActions";
+import {
+  deleteItem,
+  toggleStatus,
+} from "../../redux/actions/dailyObservationItemActions";
 
 const ItemPreview = ({ item, service }) => {
   const dispatch = useDispatch();
@@ -42,7 +45,23 @@ const ItemPreview = ({ item, service }) => {
     <>
       <td>{item.description}</td>
       <td>{item.element}</td>
-
+      <td>
+        {item.active ? (
+          <span
+            onClick={() => dispatch(toggleStatus(service, item._id))}
+            style={{ cursor: "pointer" }}
+          >
+            Yes
+          </span>
+        ) : (
+          <span
+            onClick={() => dispatch(toggleStatus(service, item._id))}
+            style={{ cursor: "pointer" }}
+          >
+            No
+          </span>
+        )}
+      </td>
       <td>
         <Button className="success me-2" onClick={() => setShow(true)}>
           Edit

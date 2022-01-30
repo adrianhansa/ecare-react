@@ -85,8 +85,9 @@ export const toggleStatus = (service, id) => async (dispatch) => {
   try {
     dispatch({ type: TOGGLE_ITEM_STATUS_REQUEST });
     const { data } = await axios.get(
-      `${URL}/daily-observation-items/toggle-status/${id}`
+      `${URL}/daily-observation-items/${service}/toggle-status/${id}`
     );
+
     dispatch({ type: TOGGLE_ITEM_STATUS_SUCCESS, payload: data });
     const result = await axios.get(`${URL}/daily-observation-items/${service}`);
     dispatch({ type: GET_ITEMS_SUCCESS, payload: result.data });
