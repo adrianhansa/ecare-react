@@ -43,7 +43,7 @@ export const addHandover =
   };
 
 export const updateHandover =
-  (id, { date, time, notes }) =>
+  (service, id, { date, time, notes }) =>
   async (dispatch) => {
     try {
       dispatch({ type: UPDATE_HANDOVER_REQUEST });
@@ -66,12 +66,12 @@ export const updateHandover =
     }
   };
 
-export const deleteHandover = (id) => async (dispatch) => {
+export const deleteHandover = (service, id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_HANDOVER_REQUEST });
     const { data } = await axios.put(`${URL}/handover/${id}`);
     dispatch({ type: DELETE_HANDOVER_SUCCESS, payload: data });
-    const result = await axios.get(`${URL}/handover/${id}`);
+    const result = await axios.get(`${URL}/handover/${service}`);
     dispatch({ type: GET_HANDOVERS_SUCCESS, payload: result.data });
   } catch (error) {
     dispatch({
