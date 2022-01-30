@@ -20,6 +20,8 @@ import Appraisals from "./pages/appraisals/Appraisals";
 import Communications from "./pages/communications/Communications";
 import DailyObservations from "./pages/dailyObservations/DailyObservations";
 import Absences from "./pages/absences/Absences";
+import ShiftPlans from "./pages/shiftPlans/ShiftPlans";
+import HealthAndSafety from "./pages/healthAndSafety/HealthAndSafety";
 
 const App = () => {
   return (
@@ -55,6 +57,11 @@ const App = () => {
           <Route
             path="/services/absence-management/:slug"
             element={<Absences />}
+          />
+          <Route path="/services/shift-plans/:slug" element={<ShiftPlans />} />
+          <Route
+            path="/services/health-and-safety/:slug"
+            element={<HealthAndSafety />}
           />
         </Routes>
       </BrowserRouter>

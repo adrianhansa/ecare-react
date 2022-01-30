@@ -227,6 +227,44 @@ const ServiceScreen = () => {
                 </Card.Footer>
               </Card>
             </Col>
+            <Col xs={12} sm={6} md={3} lg={3} xl={2}>
+              <Card className="mx-1 mb-3">
+                <Card.Title className="p-3">
+                  <img
+                    src="/images/HealthAndSafety.png"
+                    height={124}
+                    alt="Health and Safety"
+                  />
+                </Card.Title>
+                <Card.Footer>
+                  <Link
+                    to={`/services/health-and-safety/${slug}`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <h4>Health and Safety</h4>
+                  </Link>
+                </Card.Footer>
+              </Card>
+            </Col>
+            <Col xs={12} sm={6} md={3} lg={3} xl={2}>
+              <Card className="mx-1 mb-3">
+                <Card.Title className="p-3">
+                  <img
+                    src="/images/ShiftPlans.png"
+                    height={124}
+                    alt="Shift Plans"
+                  />
+                </Card.Title>
+                <Card.Footer>
+                  <Link
+                    to={`/services/shift-plans/${slug}`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <h4>Shift Plans</h4>
+                  </Link>
+                </Card.Footer>
+              </Card>
+            </Col>
           </Row>
         </Col>
       </Row>
