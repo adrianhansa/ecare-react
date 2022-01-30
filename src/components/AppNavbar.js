@@ -32,6 +32,11 @@ const AppNavbar = () => {
                 <LinkContainer to={`/services/employees/${service.slug}`}>
                   <Nav.Link>Employees</Nav.Link>
                 </LinkContainer>
+                <LinkContainer
+                  to={`/services/absence-management/${service.slug}`}
+                >
+                  <Nav.Link>Absences</Nav.Link>
+                </LinkContainer>
                 <LinkContainer to={`/services/handover/${service.slug}`}>
                   <Nav.Link>Handover</Nav.Link>
                 </LinkContainer>

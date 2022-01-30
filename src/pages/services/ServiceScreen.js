@@ -208,10 +208,28 @@ const ServiceScreen = () => {
                 </Card.Footer>
               </Card>
             </Col>
+            <Col xs={12} sm={6} md={3} lg={3} xl={2}>
+              <Card className="mx-1 mb-3">
+                <Card.Title className="p-3">
+                  <img
+                    src="/images/Absences.png"
+                    height={124}
+                    alt="Absence management"
+                  />
+                </Card.Title>
+                <Card.Footer>
+                  <Link
+                    to={`/services/absence-management/${slug}`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <h4>Absence Management</h4>
+                  </Link>
+                </Card.Footer>
+              </Card>
+            </Col>
           </Row>
         </Col>
       </Row>
-      )
     </Container>
   );
 };

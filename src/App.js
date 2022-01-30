@@ -19,6 +19,7 @@ import Supervisions from "./pages/supervisions/Supervisions";
 import Appraisals from "./pages/appraisals/Appraisals";
 import Communications from "./pages/communications/Communications";
 import DailyObservations from "./pages/dailyObservations/DailyObservations";
+import Absences from "./pages/absences/Absences";
 
 const App = () => {
   return (
@@ -50,6 +51,10 @@ const App = () => {
           <Route
             path="/services/supervisions/:slug"
             element={<Supervisions />}
+          />
+          <Route
+            path="/services/absence-management/:slug"
+            element={<Absences />}
           />
         </Routes>
       </BrowserRouter>
