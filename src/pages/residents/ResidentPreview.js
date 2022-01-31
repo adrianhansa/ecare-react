@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { deleteServiceUser } from "../../redux/actions/serviceUserActions";
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 const CommunicationPreview = ({ serviceUser, service }) => {
   const dispatch = useDispatch();
@@ -41,6 +42,13 @@ const CommunicationPreview = ({ serviceUser, service }) => {
     <>
       <td>{serviceUser.name}</td>
       <td>{moment(serviceUser.dob).format("DD-MM-YYYY")}</td>
+      <td>
+        <Link
+          to={`/services/residents/daily-book/${service}/${serviceUser._id}`}
+        >
+          Daily Book
+        </Link>
+      </td>
       <td>
         <Button className="success me-2" onClick={() => setShow(true)}>
           Edit

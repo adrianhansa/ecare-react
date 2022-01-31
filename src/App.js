@@ -22,6 +22,7 @@ import DailyObservationItems from "./pages/dailyObservations/DailyObservationIte
 import Absences from "./pages/absences/Absences";
 import ShiftPlans from "./pages/shiftPlans/ShiftPlans";
 import HealthAndSafety from "./pages/healthAndSafety/HealthAndSafety";
+import DailyBook from "./pages/residents/records/DailyBook";
 
 const App = () => {
   return (
@@ -62,6 +63,10 @@ const App = () => {
           <Route
             path="/services/health-and-safety/:slug"
             element={<HealthAndSafety />}
+          />
+          <Route
+            path="/services/residents/daily-book/:slug/:resident"
+            element={<DailyBook />}
           />
         </Routes>
       </BrowserRouter>
