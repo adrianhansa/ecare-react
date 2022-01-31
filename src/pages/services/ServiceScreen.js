@@ -265,6 +265,25 @@ const ServiceScreen = () => {
                 </Card.Footer>
               </Card>
             </Col>
+            <Col xs={12} sm={6} md={3} lg={3} xl={2}>
+              <Card className="mx-1 mb-3">
+                <Card.Title className="p-3">
+                  <img
+                    src="/images/AnnualLeave.png"
+                    height={124}
+                    alt="Annual Leave"
+                  />
+                </Card.Title>
+                <Card.Footer>
+                  <Link
+                    to={`/services/annual-leave/${slug}`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <h4>Annual Leave</h4>
+                  </Link>
+                </Card.Footer>
+              </Card>
+            </Col>
           </Row>
         </Col>
       </Row>

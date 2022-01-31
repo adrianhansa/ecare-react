@@ -23,6 +23,7 @@ import Absences from "./pages/absences/Absences";
 import ShiftPlans from "./pages/shiftPlans/ShiftPlans";
 import HealthAndSafety from "./pages/healthAndSafety/HealthAndSafety";
 import DailyBook from "./pages/residents/records/DailyBook";
+import AnnualLeave from "./pages/annualLeave/AnnualLeave";
 
 const App = () => {
   return (
@@ -67,6 +68,10 @@ const App = () => {
           <Route
             path="/services/residents/daily-book/:slug/:resident"
             element={<DailyBook />}
+          />
+          <Route
+            path="/services/annual-leave/:slug"
+            element={<AnnualLeave />}
           />
         </Routes>
       </BrowserRouter>

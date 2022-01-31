@@ -37,6 +37,9 @@ const AppNavbar = () => {
                 >
                   <Nav.Link>Absences</Nav.Link>
                 </LinkContainer>
+                <LinkContainer to={`/services/annual-leave/${service.slug}`}>
+                  <Nav.Link>Annual Leave</Nav.Link>
+                </LinkContainer>
                 <LinkContainer to={`/services/handover/${service.slug}`}>
                   <Nav.Link>Handover</Nav.Link>
                 </LinkContainer>
