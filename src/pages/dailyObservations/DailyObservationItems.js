@@ -46,6 +46,7 @@ const DailyObservationItems = () => {
                 <thead>
                   <tr>
                     <th>Description</th>
+                    <th>Name</th>
                     <th>Element</th>
                     <th>Active</th>
                     <th>Edit</th>

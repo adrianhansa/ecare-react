@@ -11,6 +11,7 @@ const EditDiary = ({ show, handleClose, item, service }) => {
   const validationSchema = yup.object({
     description: yup.string().required("Please provide a description."),
     element: yup.string(),
+    name: yup.string(),
   });
   return (
     <Modal show={show} onHide={handleClose}>
@@ -24,6 +25,7 @@ const EditDiary = ({ show, handleClose, item, service }) => {
           initialValues={{
             description: item.description,
             element: item.element,
+            name: item.name,
           }}
           validationSchema={validationSchema}
           onSubmit={(values) => {
@@ -43,6 +45,15 @@ const EditDiary = ({ show, handleClose, item, service }) => {
                 {props.touched.description && (
                   <p className="text-danger">{props.errors.description}</p>
                 )}
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicName">
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={props.values.name}
+                  onChange={props.handleChange("name")}
+                  onBlur={props.handleBlur("name")}
+                />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicName">
                 <Form.Label>Element</Form.Label>

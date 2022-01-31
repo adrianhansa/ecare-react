@@ -11,6 +11,7 @@ const AddItem = ({ show, handleClose, service }) => {
   const validationSchema = yup.object({
     description: yup.string().required("Please provide a description."),
     element: yup.string(),
+    name: yup.string(),
   });
   return (
     <Modal show={show} onHide={handleClose}>
@@ -24,10 +25,10 @@ const AddItem = ({ show, handleClose, service }) => {
           initialValues={{
             description: "",
             element: "",
+            name: "",
           }}
           validationSchema={validationSchema}
           onSubmit={(values) => {
-            console.log(values);
             dispatch(addItem(service, values));
           }}
         >
@@ -44,6 +45,15 @@ const AddItem = ({ show, handleClose, service }) => {
                 {props.touched.description && (
                   <p className="text-danger">{props.errors.description}</p>
                 )}
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicName">
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={props.values.name}
+                  onChange={props.handleChange("name")}
+                  onBlur={props.handleBlur("name")}
+                />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicName">
                 <Form.Label>Element</Form.Label>

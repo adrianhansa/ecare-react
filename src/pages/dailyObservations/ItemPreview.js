@@ -44,6 +44,7 @@ const ItemPreview = ({ item, service }) => {
   return (
     <>
       <td>{item.description}</td>
+      <td>{item.name}</td>
       <td>{item.element}</td>
       <td>
         {item.active ? (
