@@ -31,9 +31,6 @@ const AddItem = ({ show, handleClose, service }) => {
   };
 
   const removeItemValueHandler = (val) => {
-    // const index = itemValues.indexOf(val);
-    // const newList = [...itemValues].splice(index);
-    // setItemValues(newList);
     setItemValues(itemValues.filter((item) => val !== item));
   };
 
