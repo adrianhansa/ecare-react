@@ -16,13 +16,15 @@ const DailyBook = () => {
     e.preventDefault();
     console.log(values);
   };
-  const [values, setValues] = useState(
-    dailyObservationItems
-      ? dailyObservationItems.map((item) => {
-          return { [item.name]: "" };
-        })
-      : {}
-  );
+  //   const [values, setValues] = useState(
+  //     dailyObservationItems
+  //       ? dailyObservationItems.map((item) => {
+  //           return { [item.name]: "" };
+  //         })
+  //       : {}
+  //   );
+
+  const [values, setValues] = useState(null);
   useEffect(() => {
     dispatch(getService(slug));
     dispatch(getItems(slug));

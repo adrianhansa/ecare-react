@@ -44,7 +44,16 @@ const ItemPreview = ({ item, service }) => {
   return (
     <>
       <td>{item.description}</td>
-      <td>{item.name}</td>
+      <td>
+        {item.name}{" "}
+        {item.values.length > 0 && (
+          <ul>
+            {item.values.map((value) => (
+              <li key={value}>{value}</li>
+            ))}
+          </ul>
+        )}
+      </td>
       <td>{item.element}</td>
       <td>
         {item.active ? (
