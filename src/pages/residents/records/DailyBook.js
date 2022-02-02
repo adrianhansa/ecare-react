@@ -16,13 +16,6 @@ const DailyBook = () => {
     e.preventDefault();
     console.log(values);
   };
-  //   const [values, setValues] = useState(
-  //     dailyObservationItems
-  //       ? dailyObservationItems.map((item) => {
-  //           return { [item.name]: "" };
-  //         })
-  //       : {}
-  //   );
 
   const [values, setValues] = useState(null);
   useEffect(() => {
@@ -45,12 +38,32 @@ const DailyBook = () => {
                 <div key={item._id} className="ms-2">
                   <label>{item.description}</label>
                   <br />
-                  <input
-                    type={item.element}
-                    onChange={(e) =>
-                      setValues({ ...values, [item.name]: e.target.value })
-                    }
-                  />
+                  {item.element === "text" ? (
+                    <input
+                      type={item.element}
+                      onChange={(e) =>
+                        setValues({ ...values, [item.name]: e.target.value })
+                      }
+                    />
+                  ) : item.element === "textarea" ? (
+                    <textarea
+                      onChange={(e) =>
+                        setValues({ ...values, [item.name]: e.target.value })
+                      }
+                    ></textarea>
+                  ) : item.element === "selection" ? (
+                    <select
+                      onChange={(e) =>
+                        setValues({ ...values, [item.name]: e.target.value })
+                      }
+                    >
+                      {item.values.map((val) => {
+                        return <option value={val}>{val}</option>;
+                      })}
+                    </select>
+                  ) : (
+                    ""
+                  )}
                 </div>
               );
             })}
