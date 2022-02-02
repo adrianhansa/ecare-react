@@ -6,6 +6,21 @@ import { GrAddCircle } from "react-icons/gr";
 import { AiOutlineMinusCircle } from "react-icons/ai";
 
 const AddItem = ({ show, handleClose, service }) => {
+  const elements = [
+    {
+      element: "text",
+      description: "Select this if the input expected requires a short answer.",
+    },
+    {
+      element: "textarea",
+      description: "Select this if the input expected is more detailed",
+    },
+    {
+      element: "selection",
+      description:
+        "Select this if you want to define more options and want staff to select one of them.",
+    },
+  ];
   const [itemValues, setItemValues] = useState([]);
   const [itemValue, setItemValue] = useState("");
   const [description, setDescription] = useState("");
@@ -60,12 +75,24 @@ const AddItem = ({ show, handleClose, service }) => {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicName">
-            <Form.Label>Element</Form.Label>
-            <Form.Control
-              type="text"
-              value={element}
-              onChange={(e) => setElement(e.target.value)}
-            />
+            <Form.Label>Select an element</Form.Label>
+            {elements.map((item) => {
+              return (
+                <div key={item.element}>
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="flexRadioDefault"
+                    id="flexRadioDefault1"
+                    value={item.element}
+                    onChange={(e) => setElement(e.target.value)}
+                  />{" "}
+                  <Form.Label style={{ fontSize: 12 }}>
+                    {item.description}
+                  </Form.Label>
+                </div>
+              );
+            })}
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicName">
             <Form.Label>Define the values</Form.Label>

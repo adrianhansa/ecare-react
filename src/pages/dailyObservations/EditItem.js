@@ -18,6 +18,21 @@ const EditDiary = ({ show, handleClose, item, service }) => {
     itemValue !== "" && setItemValues([...itemValues, itemValue]);
     setItemValue("");
   };
+  const elements = [
+    {
+      element: "text",
+      description: "Select this if the input expected requires a short answer.",
+    },
+    {
+      element: "textarea",
+      description: "Select this if the input expected is more detailed",
+    },
+    {
+      element: "selection",
+      description:
+        "Select this if you want to define more options and want staff to select one of them.",
+    },
+  ];
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,11 +44,6 @@ const EditDiary = ({ show, handleClose, item, service }) => {
         values: itemValues,
       })
     );
-    setItemValue("");
-    setName("");
-    setDescription("");
-    setElement();
-    setItemValues([]);
   };
 
   const removeItemValueHandler = (val) => {
@@ -66,13 +76,32 @@ const EditDiary = ({ show, handleClose, item, service }) => {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicName">
-            <Form.Label>Element</Form.Label>
-            <Form.Control
-              type="text"
-              value={element}
-              onChange={(e) => setElement(e.target.value)}
-            />
+            <Form.Label>Select an element</Form.Label>
+            {elements.map((x) => {
+              return (
+                <div key={x.element}>
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="flexRadioDefault"
+                    id="flexRadioDefault1"
+                    value={x.element}
+                    onChange={(e) => setElement(e.target.value)}
+                  />{" "}
+                  <Form.Label style={{ fontSize: 12 }}>
+                    <span
+                      className={
+                        x.element === item.element ? "text-primary" : ""
+                      }
+                    >
+                      {x.description}
+                    </span>
+                  </Form.Label>
+                </div>
+              );
+            })}
           </Form.Group>
+
           <Form.Group className="mb-3" controlId="formBasicName">
             <Form.Label>Define the values</Form.Label>
             <Form.Control
