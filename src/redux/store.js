@@ -36,6 +36,10 @@ import {
   dailyObservationItemReducer,
   dailyObservationItemsReducer,
 } from "./reducers/dailyObservationItemsReducers";
+import {
+  dailyObservationReducer,
+  dailyObservationsReducer,
+} from "./reducers/dailyObservationReducers";
 
 const authFromLocalStorage = localStorage.getItem("auth")
   ? JSON.parse(localStorage.getItem("auth"))
@@ -72,6 +76,8 @@ const rootReducer = combineReducers({
   absenceList: absencesReducer,
   dailyObservationItemDetails: dailyObservationItemReducer,
   dailyObservationItemList: dailyObservationItemsReducer,
+  dailyObservationDetails: dailyObservationReducer,
+  dailyObservationList: dailyObservationsReducer,
 });
 
 const store = createStore(
