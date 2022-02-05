@@ -19,7 +19,30 @@ import {
   UPDATE_DAILY_OBSERVATION_FAIL,
   UPDATE_DAILY_OBSERVATION_REQUEST,
   UPDATE_DAILY_OBSERVATION_SUCCESS,
+  FIND_RECORD_REQUEST,
+  FIND_RECORD_SUCCESS,
+  FIND_RECORD_FAIL,
 } from "../constants/dailyObservationConstants";
+
+export const findRecord =
+  (service, { date, shift, serviceUser }) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: FIND_RECORD_REQUEST });
+      const { data } = await axios(
+        `${URL}/daily-observations/${service}/${date}/${shift}/${serviceUser}`
+      );
+      dispatch({ type: FIND_RECORD_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: FIND_RECORD_FAIL,
+        payload:
+          error.response.data.message && error.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
 
 export const addRecord =
   (service, { date, shift, serviceUser, records }) =>

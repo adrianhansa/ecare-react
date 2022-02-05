@@ -24,6 +24,7 @@ import ShiftPlans from "./pages/shiftPlans/ShiftPlans";
 import HealthAndSafety from "./pages/healthAndSafety/HealthAndSafety";
 import DailyBook from "./pages/residents/records/DailyBook";
 import AnnualLeave from "./pages/annualLeave/AnnualLeave";
+import ShiftRecord from "./pages/residents/records/ShiftRecord";
 
 const App = () => {
   return (
@@ -41,6 +42,10 @@ const App = () => {
           <Route path="/services/residents/:slug" element={<Residents />} />
           <Route
             path="/services/daily-observations/:slug"
+            element={<DailyObservationItems />}
+          />
+          <Route
+            path="/services/daily-observations/:slug/:date/:shift"
             element={<DailyObservationItems />}
           />
           <Route path="/services/diary/:slug" element={<Diary />} />

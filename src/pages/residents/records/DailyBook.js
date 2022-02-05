@@ -5,7 +5,10 @@ import { getItems } from "../../../redux/actions/dailyObservationItemActions";
 import { getServiceUser } from "../../../redux/actions/serviceUserActions";
 import { getService } from "../../../redux/actions/serviceActions";
 import { Form, Container, Button, Col, Row } from "react-bootstrap";
-// import { addDailyBookEntry } from "../../../redux/actions/dailyBooksActions";
+import {
+  addRecord,
+  findRecord,
+} from "../../../redux/actions/dailyObservationActions";
 import moment from "moment";
 
 const DailyBook = () => {
@@ -22,8 +25,28 @@ const DailyBook = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // dispatch(slug, addDailyBookEntry({ date, shift, values }));
-    console.log({ date, shift, values });
+    dispatch(
+      addRecord(slug, {
+        date,
+        shift,
+        serviceUser: su.serviceUser._id,
+        records: values,
+      })
+    );
+    console.log(slug, date, shift, su.serviceUser._id, values);
+  };
+  const { success, dailyObservation } = useSelector(
+    (state) => state.dailyObservationDetails
+  );
+
+  const handleShiftSelector = (e) => {
+    dispatch(
+      findRecord(slug, { date, shift: e.target.value, serviceUser: resident })
+    );
+    if (success) {
+      // setShift(dailyObservation.shift);
+      setValues(dailyObservation.records);
+    }
   };
 
   useEffect(() => {
@@ -55,7 +78,7 @@ const DailyBook = () => {
                 </Form.Group>
                 <Form.Group>
                   <Form.Label>Select the shift:</Form.Label>
-                  <Form.Select onChange={(e) => setShift(e.target.value)}>
+                  <Form.Select onChange={handleShiftSelector}>
                     <option></option>
                     <option value="AM">AM</option>
                     <option value="PM">PM</option>

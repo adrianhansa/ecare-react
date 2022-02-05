@@ -17,6 +17,9 @@ import {
   UPDATE_DAILY_OBSERVATION_FAIL,
   UPDATE_DAILY_OBSERVATION_REQUEST,
   UPDATE_DAILY_OBSERVATION_SUCCESS,
+  FIND_RECORD_FAIL,
+  FIND_RECORD_REQUEST,
+  FIND_RECORD_SUCCESS,
 } from "../constants/dailyObservationConstants";
 
 export const dailyObservationReducer = (
@@ -63,6 +66,16 @@ export const dailyObservationReducer = (
         dailyObservation: action.payload,
       };
     case GET_DAILY_OBSERVATION_FAIL:
+      return { loading: false, success: false, error: action.payload };
+    case FIND_RECORD_REQUEST:
+      return { loading: true };
+    case FIND_RECORD_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        dailyObservation: action.payload,
+      };
+    case FIND_RECORD_FAIL:
       return { loading: false, success: false, error: action.payload };
     default:
       return state;
