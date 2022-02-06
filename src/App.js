@@ -44,10 +44,6 @@ const App = () => {
             path="/services/daily-observations/:slug"
             element={<DailyObservationItems />}
           />
-          <Route
-            path="/services/daily-observations/:slug/:date/:shift"
-            element={<DailyObservationItems />}
-          />
           <Route path="/services/diary/:slug" element={<Diary />} />
           <Route path="/services/handover/:slug" element={<Handover />} />
           <Route path="/services/employees/:slug" element={<Employees />} />
@@ -71,8 +67,12 @@ const App = () => {
             element={<HealthAndSafety />}
           />
           <Route
-            path="/services/residents/daily-book/:slug/:resident"
+            path="/services/daily-records/:slug/:resident"
             element={<DailyBook />}
+          />
+          <Route
+            path="/services/daily-records/:slug/:resident/:date/:shift"
+            element={<ShiftRecord />}
           />
           <Route
             path="/services/annual-leave/:slug"

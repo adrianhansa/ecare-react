@@ -1,146 +1,66 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getItems } from "../../../redux/actions/dailyObservationItemActions";
 import { getServiceUser } from "../../../redux/actions/serviceUserActions";
 import { getService } from "../../../redux/actions/serviceActions";
-import { Form, Container, Button, Col, Row } from "react-bootstrap";
-import {
-  addRecord,
-  findRecord,
-} from "../../../redux/actions/dailyObservationActions";
+import { Container, Col, Row, Card } from "react-bootstrap";
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 const DailyBook = () => {
   const dispatch = useDispatch();
   const su = useSelector((state) => state.serviceUserDetails);
-  const { dailyObservationItems, loading, error } = useSelector(
-    (state) => state.dailyObservationItemList
-  );
   const { slug, resident } = useParams();
 
-  const [values, setValues] = useState(null);
   const [date, setDate] = useState(moment(new Date()).format("YYYY-MM-DD"));
-  const [shift, setShift] = useState("");
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(
-      addRecord(slug, {
-        date,
-        shift,
-        serviceUser: su.serviceUser._id,
-        records: values,
-      })
-    );
-    console.log(slug, date, shift, su.serviceUser._id, values);
-  };
-  const { success, dailyObservation } = useSelector(
-    (state) => state.dailyObservationDetails
-  );
-
-  const handleShiftSelector = (e) => {
-    dispatch(
-      findRecord(slug, { date, shift: e.target.value, serviceUser: resident })
-    );
-    if (success) {
-      // setShift(dailyObservation.shift);
-      setValues(dailyObservation.records);
-    }
-  };
+  const shifts = ["AM", "PM", "Night"];
 
   useEffect(() => {
     dispatch(getService(slug));
-    dispatch(getItems(slug));
     dispatch(getServiceUser(slug, resident));
   }, [dispatch]);
 
   return (
     <Container fluid>
       <Row>
-        <Col className="mx-auto" md={8} xs={12} sm={10} lg={6} xl={6}>
-          {su.loading && <p>Loading...</p>}
-          {su.error && <p className="text-danger">{error}</p>}
-          {su.serviceUser && (
-            <>
-              <h2>Daily records for {su.serviceUser.name}</h2>
-              {loading && <p>Daily book is loading...</p>}
-              {error && <p className="text-danger">{error}</p>}
-              <Form>
-                <Form.Group>
-                  <Form.Label>Date</Form.Label>
-                  <Form.Control
-                    type="date"
-                    format="DD/MM/YYYY"
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Select the shift:</Form.Label>
-                  <Form.Select onChange={handleShiftSelector}>
-                    <option></option>
-                    <option value="AM">AM</option>
-                    <option value="PM">PM</option>
-                    <option value="Night">Night</option>
-                  </Form.Select>
-                </Form.Group>
-                {dailyObservationItems &&
-                  dailyObservationItems.map((item) => {
-                    return (
-                      <Form.Group key={item._id} className="mb-4">
-                        <Form.Label>{item.description}</Form.Label>
-                        <br />
-                        {item.element === "text" ? (
-                          <Form.Control
-                            type={item.element}
-                            onChange={(e) =>
-                              setValues({
-                                ...values,
-                                [item.name]: e.target.value,
-                              })
-                            }
-                          />
-                        ) : item.element === "textarea" ? (
-                          <Form.Control
-                            as="textarea"
-                            onChange={(e) =>
-                              setValues({
-                                ...values,
-                                [item.name]: e.target.value,
-                              })
-                            }
-                          />
-                        ) : item.element === "selection" ? (
-                          <Form.Select
-                            onChange={(e) =>
-                              setValues({
-                                ...values,
-                                [item.name]: e.target.value,
-                              })
-                            }
-                          >
-                            {item.values.map((val) => {
-                              return (
-                                <option value={val} key={val}>
-                                  {val}
-                                </option>
-                              );
-                            })}
-                          </Form.Select>
-                        ) : (
-                          ""
-                        )}
-                      </Form.Group>
-                    );
-                  })}
-                <Button onClick={handleSubmit} type="submit" className="mt-2">
-                  Save Records
-                </Button>
-              </Form>
-            </>
-          )}
-        </Col>
+        {su.loading && <p>Loading...</p>}
+        {su.error && <p className="text-danger">{su.error}</p>}
+        {su.serviceUser && (
+          <>
+            <h2 className="text-center">
+              Daily records for {su.serviceUser.name}
+            </h2>
+            {shifts.map((shift) => {
+              return (
+                <Col
+                  key={shift}
+                  xl={3}
+                  lg={3}
+                  md={3}
+                  sm={4}
+                  xs={4}
+                  className="mx-auto"
+                >
+                  <Link
+                    to={`/services/daily-records/${slug}/${resident}/${date}/${shift}`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <Card>
+                      <Card.Title className="text-center">
+                        <img
+                          src="/images/Book.png"
+                          alt="Record Daily Book"
+                          height={120}
+                        />
+                      </Card.Title>
+                      <Card.Body className="text-center">{shift}</Card.Body>
+                    </Card>
+                  </Link>
+                </Col>
+              );
+            })}
+          </>
+        )}
       </Row>
     </Container>
   );

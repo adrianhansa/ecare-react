@@ -43,9 +43,7 @@ const CommunicationPreview = ({ serviceUser, service }) => {
       <td>{serviceUser.name}</td>
       <td>{moment(serviceUser.dob).format("DD-MM-YYYY")}</td>
       <td>
-        <Link
-          to={`/services/residents/daily-book/${service}/${serviceUser._id}`}
-        >
+        <Link to={`/services/daily-records/${service}/${serviceUser._id}`}>
           Daily Book
         </Link>
       </td>
