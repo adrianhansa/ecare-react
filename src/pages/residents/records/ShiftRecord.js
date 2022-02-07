@@ -4,9 +4,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { getService } from "../../../redux/actions/serviceActions";
 import { getServiceUser } from "../../../redux/actions/serviceUserActions";
 import { getItems } from "../../../redux/actions/dailyObservationItemActions";
-import { Form, Container, Button, Col, Row } from "react-bootstrap";
+import { Form, Container, Button, Col, Row, Card } from "react-bootstrap";
 import {
   addRecord,
+  updateRecord,
   findRecord,
 } from "../../../redux/actions/dailyObservationActions";
 
@@ -20,7 +21,12 @@ const ShiftRecord = () => {
     (state) => state.dailyObservationItemList
   );
 
+  const dailyObservationDetails = useSelector(
+    (state) => state.dailyObservationDetails
+  );
+
   useEffect(() => {
+    dispatch(findRecord(slug, { date, shift, serviceUser: resident }));
     dispatch(getService(slug));
     dispatch(getItems(slug));
     dispatch(getServiceUser(slug, resident));
@@ -28,80 +34,97 @@ const ShiftRecord = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(
-      addRecord(slug, {
-        date,
-        shift,
-        serviceUser: su.serviceUser._id,
-        records: values,
-      })
-    );
-    console.log(slug, date, shift, su.serviceUser._id, values);
+    if (!dailyObservationDetails.success) {
+      dispatch(
+        addRecord(slug, {
+          date,
+          shift,
+          serviceUser: su.serviceUser._id,
+          records: values,
+        })
+      );
+    } else {
+      dispatch(
+        updateRecord(dailyObservationDetails.dailyObservation._id, {
+          date,
+          shift,
+          records: values,
+        })
+      );
+    }
   };
-  const { success, dailyObservation } = useSelector(
-    (state) => state.dailyObservationDetails
-  );
 
   return (
     <Container fluid>
       <Row>
-        <Col xs={12} sm={10} md={8} lg={6} xl={4}>
-          {loading && <p>Daily book is loading...</p>}
+        <Col xs={12} sm={10} md={8} lg={6} xl={6} className="mx-auto">
+          {loading && <p>Daily records book is loading...</p>}
           {error && <p className="text-danger">{error}</p>}
-          <Form>
-            {dailyObservationItems &&
-              dailyObservationItems.map((item) => {
-                return (
-                  <Form.Group key={item._id} className="mb-4">
-                    <Form.Label>{item.description}</Form.Label>
-                    <br />
-                    {item.element === "text" ? (
-                      <Form.Control
-                        type={item.element}
-                        onChange={(e) =>
-                          setValues({
-                            ...values,
-                            [item.name]: e.target.value,
-                          })
-                        }
-                      />
-                    ) : item.element === "textarea" ? (
-                      <Form.Control
-                        as="textarea"
-                        onChange={(e) =>
-                          setValues({
-                            ...values,
-                            [item.name]: e.target.value,
-                          })
-                        }
-                      />
-                    ) : item.element === "selection" ? (
-                      <Form.Select
-                        onChange={(e) =>
-                          setValues({
-                            ...values,
-                            [item.name]: e.target.value,
-                          })
-                        }
-                      >
-                        {item.values.map((val) => {
-                          return (
-                            <option value={val} key={val}>
-                              {val}
-                            </option>
-                          );
-                        })}
-                      </Form.Select>
-                    ) : (
-                      ""
-                    )}
-                  </Form.Group>
-                );
-              })}
-            <Button onClick={handleSubmit} type="submit" className="mt-2">
-              Save Records
-            </Button>
-          </Form>
+          <Card className="mt-2">
+            <Card.Header>
+              {su.serviceUser && (
+                <h2>
+                  {shift} records for {su.serviceUser.name}
+                </h2>
+              )}
+            </Card.Header>
+            <Card.Body>
+              <Form>
+                {dailyObservationItems &&
+                  dailyObservationItems.map((item) => {
+                    return (
+                      <Form.Group key={item._id} className="mb-4">
+                        <Form.Label>{item.description}</Form.Label>
+                        <br />
+                        {item.element === "text" ? (
+                          <Form.Control
+                            type={item.element}
+                            onChange={(e) =>
+                              setValues({
+                                ...values,
+                                [item.name]: e.target.value,
+                              })
+                            }
+                          />
+                        ) : item.element === "textarea" ? (
+                          <Form.Control
+                            as="textarea"
+                            onChange={(e) =>
+                              setValues({
+                                ...values,
+                                [item.name]: e.target.value,
+                              })
+                            }
+                          />
+                        ) : item.element === "selection" ? (
+                          <Form.Select
+                            onChange={(e) =>
+                              setValues({
+                                ...values,
+                                [item.name]: e.target.value,
+                              })
+                            }
+                          >
+                            {item.values.map((val) => {
+                              return (
+                                <option value={val} key={val}>
+                                  {val}
+                                </option>
+                              );
+                            })}
+                          </Form.Select>
+                        ) : (
+                          ""
+                        )}
+                      </Form.Group>
+                    );
+                  })}
+                <Button onClick={handleSubmit} type="submit" className="mt-2">
+                  Save Records
+                </Button>
+              </Form>
+            </Card.Body>
+          </Card>
         </Col>
       </Row>
     </Container>

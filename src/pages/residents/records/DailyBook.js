@@ -46,13 +46,13 @@ const DailyBook = () => {
                     style={{ textDecoration: "none" }}
                   >
                     <Card>
-                      <Card.Title className="text-center">
+                      <Card.Header className="text-center">
                         <img
                           src="/images/Book.png"
                           alt="Record Daily Book"
                           height={120}
                         />
-                      </Card.Title>
+                      </Card.Header>
                       <Card.Body className="text-center">{shift}</Card.Body>
                     </Card>
                   </Link>
