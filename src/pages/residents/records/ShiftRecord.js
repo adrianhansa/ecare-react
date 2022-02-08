@@ -15,31 +15,32 @@ import moment from "moment";
 const ShiftRecord = () => {
   const dispatch = useDispatch();
   const { slug, resident, date, shift } = useParams();
-
+  useEffect(() => {
+    dispatch(findRecord(slug, { date, shift, serviceUser: resident }));
+  }, []);
   const [values, setValues] = useState({});
   const su = useSelector((state) => state.serviceUserDetails);
   const { dailyObservationItems, loading, error } = useSelector(
     (state) => state.dailyObservationItemList
   );
 
-  const { success, dailyObservation } = useSelector(
-    (state) => state.dailyObservationDetails
+  const { recordFound, existingRecord } = useSelector(
+    (state) => state.existingRecordDetails
   );
 
   useEffect(() => {
-    dispatch(findRecord(slug, { date, shift, serviceUser: resident }));
     dispatch(getService(slug));
     dispatch(getItems(slug));
     dispatch(getServiceUser(slug, resident));
   }, [dispatch]);
 
   useEffect(() => {
-    success && setValues(dailyObservation.records);
-  }, [success]);
+    recordFound && setValues(existingRecord.records);
+  }, [recordFound]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!success) {
+    if (!recordFound) {
       dispatch(
         addRecord(slug, {
           date,
@@ -50,7 +51,7 @@ const ShiftRecord = () => {
       );
     } else {
       dispatch(
-        updateRecord(dailyObservation._id, {
+        updateRecord(existingRecord._id, {
           date,
           shift,
           records: values,

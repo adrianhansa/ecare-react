@@ -39,6 +39,7 @@ import {
 import {
   dailyObservationReducer,
   dailyObservationsReducer,
+  existingRecordReducer,
 } from "./reducers/dailyObservationReducers";
 
 const authFromLocalStorage = localStorage.getItem("auth")
@@ -78,6 +79,7 @@ const rootReducer = combineReducers({
   dailyObservationItemList: dailyObservationItemsReducer,
   dailyObservationDetails: dailyObservationReducer,
   dailyObservationList: dailyObservationsReducer,
+  existingRecordDetails: existingRecordReducer,
 });
 
 const store = createStore(

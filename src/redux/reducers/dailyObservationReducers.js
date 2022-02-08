@@ -67,13 +67,24 @@ export const dailyObservationReducer = (
       };
     case GET_DAILY_OBSERVATION_FAIL:
       return { loading: false, success: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const existingRecordReducer = (
+  state = { existingRecordDetails: {} },
+  action
+) => {
+  switch (action.type) {
     case FIND_RECORD_REQUEST:
       return { loading: true };
     case FIND_RECORD_SUCCESS:
       return {
         loading: false,
         success: true,
-        dailyObservation: action.payload,
+        recordFound: true,
+        existingRecord: action.payload,
       };
     case FIND_RECORD_FAIL:
       return { loading: false, success: false, error: action.payload };
