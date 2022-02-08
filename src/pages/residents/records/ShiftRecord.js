@@ -10,18 +10,19 @@ import {
   updateRecord,
   findRecord,
 } from "../../../redux/actions/dailyObservationActions";
+import moment from "moment";
 
 const ShiftRecord = () => {
   const dispatch = useDispatch();
   const { slug, resident, date, shift } = useParams();
 
-  const [values, setValues] = useState(null);
+  const [values, setValues] = useState({});
   const su = useSelector((state) => state.serviceUserDetails);
   const { dailyObservationItems, loading, error } = useSelector(
     (state) => state.dailyObservationItemList
   );
 
-  const dailyObservationDetails = useSelector(
+  const { success, dailyObservation } = useSelector(
     (state) => state.dailyObservationDetails
   );
 
@@ -32,9 +33,13 @@ const ShiftRecord = () => {
     dispatch(getServiceUser(slug, resident));
   }, [dispatch]);
 
+  useEffect(() => {
+    success && setValues(dailyObservation.records);
+  }, [success]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!dailyObservationDetails.success) {
+    if (!success) {
       dispatch(
         addRecord(slug, {
           date,
@@ -45,7 +50,7 @@ const ShiftRecord = () => {
       );
     } else {
       dispatch(
-        updateRecord(dailyObservationDetails.dailyObservation._id, {
+        updateRecord(dailyObservation._id, {
           date,
           shift,
           records: values,
@@ -63,9 +68,14 @@ const ShiftRecord = () => {
           <Card className="mt-2">
             <Card.Header>
               {su.serviceUser && (
-                <h2>
-                  {shift} records for {su.serviceUser.name}
-                </h2>
+                <>
+                  <h4 className="text-primary">
+                    {moment(date).format("dddd, DD MMM YYYY")}
+                  </h4>
+                  <h3>
+                    {shift} records for {su.serviceUser.name}
+                  </h3>
+                </>
               )}
             </Card.Header>
             <Card.Body>
@@ -79,6 +89,10 @@ const ShiftRecord = () => {
                         {item.element === "text" ? (
                           <Form.Control
                             type={item.element}
+                            // value={
+                            //   success && dailyObservation.records[item.name]
+                            // }
+                            value={values[item.name]}
                             onChange={(e) =>
                               setValues({
                                 ...values,
