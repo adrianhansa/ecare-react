@@ -22,12 +22,14 @@ import {
   FIND_RECORD_REQUEST,
   FIND_RECORD_SUCCESS,
   FIND_RECORD_FAIL,
+  CLEAR_EXISTING_RECORD,
 } from "../constants/dailyObservationConstants";
 
 export const findRecord =
   (service, { date, shift, serviceUser }) =>
   async (dispatch) => {
     try {
+      dispatch({ type: CLEAR_EXISTING_RECORD, payload: {} });
       dispatch({ type: FIND_RECORD_REQUEST });
       const { data } = await axios(
         `${URL}/daily-observations/${service}/${date}/${shift}/${serviceUser}`

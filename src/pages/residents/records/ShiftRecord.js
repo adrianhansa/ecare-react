@@ -15,9 +15,7 @@ import moment from "moment";
 const ShiftRecord = () => {
   const dispatch = useDispatch();
   const { slug, resident, date, shift } = useParams();
-  useEffect(() => {
-    dispatch(findRecord(slug, { date, shift, serviceUser: resident }));
-  }, []);
+
   const [values, setValues] = useState({});
   const su = useSelector((state) => state.serviceUserDetails);
   const { dailyObservationItems, loading, error } = useSelector(
@@ -32,6 +30,7 @@ const ShiftRecord = () => {
     dispatch(getService(slug));
     dispatch(getItems(slug));
     dispatch(getServiceUser(slug, resident));
+    dispatch(findRecord(slug, { date, shift, serviceUser: resident }));
   }, [dispatch]);
 
   useEffect(() => {

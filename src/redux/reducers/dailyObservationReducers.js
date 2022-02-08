@@ -20,6 +20,7 @@ import {
   FIND_RECORD_FAIL,
   FIND_RECORD_REQUEST,
   FIND_RECORD_SUCCESS,
+  CLEAR_EXISTING_RECORD,
 } from "../constants/dailyObservationConstants";
 
 export const dailyObservationReducer = (
@@ -77,6 +78,8 @@ export const existingRecordReducer = (
   action
 ) => {
   switch (action.type) {
+    case CLEAR_EXISTING_RECORD:
+      return { existingRecord: {} };
     case FIND_RECORD_REQUEST:
       return { loading: true };
     case FIND_RECORD_SUCCESS:
