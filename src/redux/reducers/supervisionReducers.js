@@ -14,6 +14,9 @@ import {
   DELETE_SUPERVISION_SUCCESS,
   DELETE_SUPERVISION_FAIL,
   DELETE_SUPERVISION_REQUEST,
+  GET_LATEST_SUPERVISION_SUCCESS,
+  GET_LATEST_SUPERVISION_REQUEST,
+  GET_LATEST_SUPERVISION_FAIL,
 } from "../constants/supervisionConstants";
 
 export const supervisionReducer = (state = { supervision: {} }, action) => {
@@ -35,6 +38,12 @@ export const supervisionReducer = (state = { supervision: {} }, action) => {
     case GET_SUPERVISION_SUCCESS:
       return { loading: false, success: true, supervision: action.payload };
     case GET_SUPERVISION_FAIL:
+      return { loading: false, success: false, error: action.payload };
+    case GET_LATEST_SUPERVISION_REQUEST:
+      return { loading: true };
+    case GET_LATEST_SUPERVISION_SUCCESS:
+      return { loading: false, success: true, supervision: action.payload };
+    case GET_LATEST_SUPERVISION_FAIL:
       return { loading: false, success: false, error: action.payload };
     case DELETE_SUPERVISION_REQUEST:
       return { loading: true };
