@@ -79,9 +79,9 @@ export const existingRecordReducer = (
 ) => {
   switch (action.type) {
     case CLEAR_EXISTING_RECORD:
-      return { existingRecord: {} };
+      return { existingRecord: action.payload, recordFound: false };
     case FIND_RECORD_REQUEST:
-      return { loading: true };
+      return { loading: true, recordFound: false };
     case FIND_RECORD_SUCCESS:
       return {
         loading: false,

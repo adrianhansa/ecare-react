@@ -6,6 +6,7 @@ import { getService } from "../../../redux/actions/serviceActions";
 import { Container, Col, Row, Card } from "react-bootstrap";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import { clearRecord } from "../../../redux/actions/dailyObservationActions";
 
 const DailyBook = () => {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const DailyBook = () => {
   const shifts = ["AM", "PM", "Night"];
 
   useEffect(() => {
+    dispatch(clearRecord());
     dispatch(getService(slug));
     dispatch(getServiceUser(slug, resident));
   }, [dispatch]);

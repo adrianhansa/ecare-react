@@ -22,16 +22,17 @@ const ShiftRecord = () => {
     (state) => state.dailyObservationItemList
   );
 
-  const { recordFound, existingRecord } = useSelector(
-    (state) => state.existingRecordDetails
-  );
-
   useEffect(() => {
     dispatch(getService(slug));
     dispatch(getItems(slug));
     dispatch(getServiceUser(slug, resident));
     dispatch(findRecord(slug, { date, shift, serviceUser: resident }));
+    recordFound && setValues(existingRecord.records);
   }, [dispatch]);
+
+  const { recordFound, existingRecord } = useSelector(
+    (state) => state.existingRecordDetails
+  );
 
   useEffect(() => {
     recordFound && setValues(existingRecord.records);
@@ -69,6 +70,7 @@ const ShiftRecord = () => {
             <Card.Header>
               {su.serviceUser && (
                 <>
+                  {recordFound && <p>Record found</p>}
                   <h4 className="text-primary">
                     {moment(date).format("dddd, DD MMM YYYY")}
                   </h4>

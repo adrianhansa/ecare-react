@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { deleteEmployee } from "../../redux/actions/employeeActions";
+import { getLatestSupervision } from "../../redux/actions/supervisionActions";
 
 const EmployeeCard = ({ employee }) => {
   const dispatch = useDispatch();
@@ -33,6 +34,11 @@ const EmployeeCard = ({ employee }) => {
       }
     });
   };
+
+  useEffect(() => {
+    dispatch(getLatestSupervision(employee._id));
+  }, [dispatch]);
+
   useEffect(() => {
     success && handleClose();
   }, [success]);
@@ -45,6 +51,7 @@ const EmployeeCard = ({ employee }) => {
       <td>{employee.address}</td>
       <td>{employee.contractHours}</td>
       <td>{employee.role}</td>
+      <td>10/02/2022</td>
       <td>{employee.accessLevel}</td>
       <td>{employee.driver ? "Yes" : "No"}</td>
       <td>

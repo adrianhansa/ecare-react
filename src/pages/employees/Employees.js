@@ -52,6 +52,7 @@ const Employees = () => {
                     <th>Address</th>
                     <th>Contract hours</th>
                     <th>Role</th>
+                    <th>Latest Supervison</th>
                     <th>Access Level</th>
                     <th>Driver</th>
                     <th>Edit</th>

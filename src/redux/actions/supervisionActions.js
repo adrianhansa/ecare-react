@@ -82,7 +82,9 @@ export const getSupervision = (id) => async (dispatch) => {
 export const getLatestSupervision = (supervisee) => async (dispatch) => {
   try {
     dispatch({ type: GET_LATEST_SUPERVISION_REQUEST });
-    const { data } = await axios.get(`${URL}/supervisions/${supervisee}`);
+    const { data } = await axios.get(
+      `${URL}/supervisions/latest-supervision/${supervisee}`
+    );
     dispatch({ type: GET_LATEST_SUPERVISION_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
