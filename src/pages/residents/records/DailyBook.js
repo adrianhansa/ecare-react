@@ -7,6 +7,7 @@ import { Container, Col, Row, Card } from "react-bootstrap";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import { clearRecord } from "../../../redux/actions/dailyObservationActions";
+import RecordList from "./RecordList";
 
 const DailyBook = () => {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const DailyBook = () => {
     <Container fluid>
       <Row>
         <Col md="auto">
-          <h3>Previous Records</h3>
+          <RecordList />
         </Col>
         <Col>
           {su.loading && <p>Loading...</p>}

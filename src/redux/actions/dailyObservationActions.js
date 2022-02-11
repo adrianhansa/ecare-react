@@ -23,6 +23,9 @@ import {
   FIND_RECORD_SUCCESS,
   FIND_RECORD_FAIL,
   CLEAR_EXISTING_RECORD,
+  GET_RECORDS_BY_RESIDENT_FAIL,
+  GET_RECORDS_BY_RESIDENT_REQUEST,
+  GET_RECORDS_BY_RESIDENT_SUCCESS,
 } from "../constants/dailyObservationConstants";
 
 export const findRecord = (service, { date, shift, serviceUser }) => async (
@@ -160,6 +163,24 @@ export const getRecordsByInterval = (service, startDate, endDate) => async (
   } catch (error) {
     dispatch({
       type: GET_DAILY_OBSERVATIONS_BY_INTERVAL_FAIL,
+      payload:
+        error.response.data.message && error.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getRecordsByResident = (serviceUser) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_RECORDS_BY_RESIDENT_REQUEST });
+    const { data } = await axios.get(
+      `${URL}/daily-observations/${serviceUser}`
+    );
+    dispatch({ type: GET_RECORDS_BY_RESIDENT_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: GET_RECORDS_BY_RESIDENT_FAIL,
       payload:
         error.response.data.message && error.message
           ? error.response.data.message

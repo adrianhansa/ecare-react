@@ -21,6 +21,9 @@ import {
   FIND_RECORD_REQUEST,
   FIND_RECORD_SUCCESS,
   CLEAR_EXISTING_RECORD,
+  GET_RECORDS_BY_RESIDENT_REQUEST,
+  GET_RECORDS_BY_RESIDENT_SUCCESS,
+  GET_RECORDS_BY_RESIDENT_FAIL,
 } from "../constants/dailyObservationConstants";
 
 export const dailyObservationReducer = (
@@ -120,6 +123,16 @@ export const dailyObservationsReducer = (
         dailyObservations: action.payload,
       };
     case GET_DAILY_OBSERVATIONS_BY_INTERVAL_FAIL:
+      return { loading: false, success: false, error: action.payload };
+    case GET_RECORDS_BY_RESIDENT_REQUEST:
+      return { loading: true };
+    case GET_RECORDS_BY_RESIDENT_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+        dailyObservations: action.payload,
+      };
+    case GET_RECORDS_BY_RESIDENT_FAIL:
       return { loading: false, success: false, error: action.payload };
     default:
       return state;
