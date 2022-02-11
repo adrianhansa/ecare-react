@@ -27,7 +27,7 @@ const DailyBook = () => {
     <Container fluid>
       <Row>
         <Col md="auto">
-          <RecordList />
+          <RecordList resident={resident} />
         </Col>
         <Col>
           {su.loading && <p>Loading...</p>}
