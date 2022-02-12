@@ -29,7 +29,7 @@ const ShiftRecord = () => {
     dispatch(getServiceUser(slug, resident));
     dispatch(findRecord(slug, { date, shift, serviceUser: resident }));
     recordFound && setValues(existingRecord.records);
-  }, [dispatch]);
+  }, [dispatch, date, shift]);
 
   const { recordFound, existingRecord } = useSelector(
     (state) => state.existingRecordDetails
@@ -64,10 +64,10 @@ const ShiftRecord = () => {
   return (
     <Container fluid>
       <Row>
-        <Col className="md-auto">
+        <Col md="auto">
           <RecordList service={slug} resident={resident} />
         </Col>
-        <Col xs={12} sm={10} md={8} lg={6} xl={6} className="mx-auto">
+        <Col className="mx-auto">
           {loading && <p>Daily records book is loading...</p>}
           {error && <p className="text-danger">{error}</p>}
           <Card className="mt-2">
