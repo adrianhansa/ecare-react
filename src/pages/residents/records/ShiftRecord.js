@@ -11,6 +11,7 @@ import {
   findRecord,
 } from "../../../redux/actions/dailyObservationActions";
 import moment from "moment";
+import RecordList from "./RecordList";
 
 const ShiftRecord = () => {
   const dispatch = useDispatch();
@@ -63,6 +64,9 @@ const ShiftRecord = () => {
   return (
     <Container fluid>
       <Row>
+        <Col className="md-auto">
+          <RecordList service={slug} resident={resident} />
+        </Col>
         <Col xs={12} sm={10} md={8} lg={6} xl={6} className="mx-auto">
           {loading && <p>Daily records book is loading...</p>}
           {error && <p className="text-danger">{error}</p>}
