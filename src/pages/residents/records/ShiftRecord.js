@@ -108,6 +108,7 @@ const ShiftRecord = () => {
                         ) : item.element === "textarea" ? (
                           <Form.Control
                             as="textarea"
+                            value={values[item.name]}
                             onChange={(e) =>
                               setValues({
                                 ...values,
