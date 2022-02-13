@@ -53,7 +53,7 @@ const ShiftRecord = () => {
     } else {
       dispatch(
         updateRecord(existingRecord._id, {
-          date,
+          date: date,
           shift,
           records: values,
         })
@@ -74,7 +74,6 @@ const ShiftRecord = () => {
             <Card.Header>
               {su.serviceUser && (
                 <>
-                  {recordFound && <p>Record found</p>}
                   <h4 className="text-primary">
                     {moment(date).format("dddd, DD MMM YYYY")}
                   </h4>
@@ -118,6 +117,7 @@ const ShiftRecord = () => {
                           />
                         ) : item.element === "selection" ? (
                           <Form.Select
+                            value={values[item.name]}
                             onChange={(e) =>
                               setValues({
                                 ...values,

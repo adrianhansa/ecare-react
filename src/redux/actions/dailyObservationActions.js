@@ -81,6 +81,7 @@ export const updateRecord = (id, { date, shift, records }) => async (
 ) => {
   try {
     dispatch({ type: UPDATE_DAILY_OBSERVATION_REQUEST });
+    console.log(date);
     const { data } = await axios.put(`${URL}/daily-observations/${id}`, {
       date,
       shift,
