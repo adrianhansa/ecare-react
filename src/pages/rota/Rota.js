@@ -236,6 +236,7 @@ const Rota = () => {
                                 employee={employee}
                                 day={day}
                                 handleDeleteWorkShift={handleDeleteWorkShift}
+                                service={slug}
                               />
                               <div
                                 // className="mt-auto"

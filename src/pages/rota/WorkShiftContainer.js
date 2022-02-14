@@ -1,18 +1,24 @@
-import React from "react";
+import React, {useState} from "react";
 import { FiEdit } from "react-icons/fi";
 import { TiDeleteOutline } from "react-icons/ti";
 import moment from "moment";
+import EditWorkShift from "./EditWorkShift";
 
 const WorkShiftContainer = ({
   workshifts,
+  service,
   employee,
   day,
   handleDeleteWorkShift,
 }) => {
-  const shifts = workshifts.filter((ws) => ws.employee === employee._id);
+  const shifts = workshifts.filter((ws) => ws.employee._id === employee._id);
   const results = shifts.filter(
     (item) => item.date.split("T")[0] === moment(day).format("YYYY-MM-DD")
   );
+
+  const [show,setShow] = useState(false)
+  const handleClose = ()=> setShow(false)
+
   return (
     <div>
       {results.length > 0 ? (
@@ -48,7 +54,8 @@ const WorkShiftContainer = ({
                   color="red"
                   onClick={() => handleDeleteWorkShift(result._id)}
                 />
-                <FiEdit type="button" color="green" />
+                <FiEdit type="button" color="green" onClick={()=>setShow(true)} />
+                <EditWorkShift show={show} handleClose={handleClose} workshift={result} service={service} />
               </div>
               <div>
                 <span>
