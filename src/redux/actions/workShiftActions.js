@@ -148,17 +148,11 @@ export const addWorkShift =
   };
 
 export const updateWorkShift =
-  (
-    id,
-    day,
-    { date, employee, shift, startTime, endTime, notes, allocatedTo }
-  ) =>
+  (id, { shift, startTime, endTime, notes, allocatedTo }) =>
   async (dispatch) => {
     try {
       dispatch({ type: UPDATE_WORKING_SHIFT_REQUEST });
       const { data } = await axios.put(`${URL}/work-shifts/${id}`, {
-        date,
-        employee,
         shift,
         startTime,
         endTime,
@@ -166,8 +160,6 @@ export const updateWorkShift =
         allocatedTo,
       });
       dispatch({ type: UPDATE_WORKING_SHIFT_SUCCESS, payload: data });
-      const result = await axios.get(`${URL}/work-shifts/${day}`);
-      dispatch({ type: GET_WORKING_SHIFTS_SUCCESS, payload: result.data });
     } catch (error) {
       dispatch({
         type: UPDATE_WORKING_SHIFT_FAIL,

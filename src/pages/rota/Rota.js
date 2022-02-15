@@ -235,6 +235,8 @@ const Rota = () => {
                                 workshifts={workShifts}
                                 employee={employee}
                                 day={day}
+                                startDate={startDate}
+                                endDate={endDate}
                                 handleDeleteWorkShift={handleDeleteWorkShift}
                                 service={slug}
                               />
