@@ -114,7 +114,7 @@ const Rota = () => {
 
   const countHours = (employee, workShifts) => {
     const employeeShifts = workShifts.filter((ws) => {
-      return ws.employee === employee._id;
+      return ws.employee._id === employee._id;
     });
     let total = 0;
     employeeShifts.forEach((item) => {
