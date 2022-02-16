@@ -6,11 +6,15 @@ import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { deleteEmployee } from "../../redux/actions/employeeActions";
 import { getLatestSupervision } from "../../redux/actions/supervisionActions";
+import AbsenceRecording from "../absences/AbsenceRecording";
+import { MdOutlineSick } from "react-icons/md";
 
 const EmployeeCard = ({ employee }) => {
   const dispatch = useDispatch();
   const { error, success } = useSelector((state) => state.employeeDetails);
   const [show, setShow] = useState(false);
+  const [showAbsenceRecording, setShowAbsenceRecording] = useState(false);
+  const handleCloseAbsenceRecording = () => setShowAbsenceRecording(false);
   const handleClose = () => setShow(false);
   const handleDelete = () => {
     Swal.fire({
@@ -54,6 +58,14 @@ const EmployeeCard = ({ employee }) => {
       <td>10/02/2022</td>
       <td>{employee.accessLevel}</td>
       <td>{employee.driver ? "Yes" : "No"}</td>
+      <td>
+        <MdOutlineSick onClick={() => setShowAbsenceRecording(true)} />
+        <AbsenceRecording
+          show={showAbsenceRecording}
+          handleClose={handleCloseAbsenceRecording}
+          employee={employee}
+        />
+      </td>
       <td>
         <Button className="success me-2" onClick={() => setShow(true)}>
           Edit

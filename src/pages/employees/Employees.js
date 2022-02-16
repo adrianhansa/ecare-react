@@ -55,6 +55,7 @@ const Employees = () => {
                     <th>Latest Supervison</th>
                     <th>Access Level</th>
                     <th>Driver</th>
+                    <th>Absences</th>
                     <th>Edit</th>
                     <th>Delete</th>
                   </tr>
