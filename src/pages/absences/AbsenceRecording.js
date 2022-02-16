@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import DateRangePicker from "@wojtekmaj/react-daterange-picker";
 import moment from "moment";
 
-const AbsenceRecording = ({ employee, show, handleClose }) => {
+const AbsenceRecording = ({ employee, show, handleClose, service }) => {
   const dispatch = useDispatch();
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [notes, setNotes] = useState("");
   const [value, onChange] = useState([
     new Date(
       moment(new Date()).startOf("week").add(1, "day").format("MM-DD-YYYY")
     ),
     new Date(
-      moment(new Date()).startOf("week").add(28, "days").format("MM-DD-YYYY")
+      moment(new Date()).startOf("week").add(1, "days").format("MM-DD-YYYY")
     ),
   ]);
 
@@ -22,8 +23,23 @@ const AbsenceRecording = ({ employee, show, handleClose }) => {
     setEndDate(moment(value[1]).format("MM-DD-YYYY"));
   }, [value]);
 
+  const enumerateDaysBetweenDates = (startDate, endDate) => {
+    var dates = [];
+    var currDate = moment(startDate).startOf("day");
+    var lastDate = moment(endDate).startOf("day");
+    while (currDate.diff(lastDate) <= 0) {
+      dates.push(currDate.clone().toDate());
+      currDate.add(1, "days");
+    }
+    return dates;
+  };
+
   const handleSubmit = () => {
-    console.log(startDate, endDate);
+    console.log(
+      startDate,
+      endDate,
+      enumerateDaysBetweenDates(startDate, endDate).length
+    );
     handleClose();
   };
 
@@ -38,20 +54,27 @@ const AbsenceRecording = ({ employee, show, handleClose }) => {
           value={value}
           format="dd-MM-yyyy"
         />
+        <Form.Group>
+          <Form.Label>Notes</Form.Label>
+          <Form.Control
+            as="textarea"
+            onChange={(e) => setNotes(e.target.value)}
+          />
+        </Form.Group>
+        <div className="mt-3">
+          <Button
+            variant="primary"
+            type="submit"
+            className="me-3"
+            onClick={handleSubmit}
+          >
+            Add Absence
+          </Button>
+          <Button variant="secondary" onClick={handleClose}>
+            Cancel
+          </Button>
+        </div>
       </Modal.Body>
-      <div className="mt-3">
-        <Button
-          variant="primary"
-          type="submit"
-          className="me-3"
-          onClick={handleSubmit}
-        >
-          Add Absence
-        </Button>
-        <Button variant="secondary" onClick={handleClose}>
-          Cancel
-        </Button>
-      </div>
     </Modal>
   );
 };

@@ -9,7 +9,7 @@ import { getLatestSupervision } from "../../redux/actions/supervisionActions";
 import AbsenceRecording from "../absences/AbsenceRecording";
 import { MdOutlineSick } from "react-icons/md";
 
-const EmployeeCard = ({ employee }) => {
+const EmployeeCard = ({ employee, service }) => {
   const dispatch = useDispatch();
   const { error, success } = useSelector((state) => state.employeeDetails);
   const [show, setShow] = useState(false);
@@ -58,12 +58,18 @@ const EmployeeCard = ({ employee }) => {
       <td>10/02/2022</td>
       <td>{employee.accessLevel}</td>
       <td>{employee.driver ? "Yes" : "No"}</td>
-      <td>
-        <MdOutlineSick onClick={() => setShowAbsenceRecording(true)} />
+      <td className="text-center">
+        <MdOutlineSick
+          type="button"
+          size={30}
+          onClick={() => setShowAbsenceRecording(true)}
+          className="text-danger"
+        />
         <AbsenceRecording
           show={showAbsenceRecording}
           handleClose={handleCloseAbsenceRecording}
           employee={employee}
+          service={service}
         />
       </td>
       <td>

@@ -64,7 +64,7 @@ const Employees = () => {
                   {employees &&
                     employees.map((employee) => (
                       <tr key={employee._id}>
-                        <EmployeeCard employee={employee} slug={slug} />
+                        <EmployeeCard employee={employee} service={slug} />
                       </tr>
                     ))}
                 </tbody>
