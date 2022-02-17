@@ -3,6 +3,7 @@ import { Button, Form, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import DateRangePicker from "@wojtekmaj/react-daterange-picker";
 import moment from "moment";
+import { addAbsence } from "../../redux/actions/absenceActions";
 
 const AbsenceRecording = ({ employee, show, handleClose, service }) => {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const AbsenceRecording = ({ employee, show, handleClose, service }) => {
       moment(new Date()).startOf("week").add(1, "days").format("MM-DD-YYYY")
     ),
   ]);
+  const { error } = useSelector((state) => state.absenceDetails);
 
   useEffect(() => {
     setStartDate(moment(value[0]).format("MM-DD-YYYY"));
@@ -35,12 +37,16 @@ const AbsenceRecording = ({ employee, show, handleClose, service }) => {
   };
 
   const handleSubmit = () => {
-    console.log(
-      startDate,
-      endDate,
-      enumerateDaysBetweenDates(startDate, endDate).length
+    dispatch(
+      addAbsence(service, {
+        employee: employee._id,
+        startDate,
+        endDate,
+        days: enumerateDaysBetweenDates(startDate, endDate).length,
+        notes,
+      })
     );
-    handleClose();
+    !error && handleClose();
   };
 
   return (
@@ -49,6 +55,7 @@ const AbsenceRecording = ({ employee, show, handleClose, service }) => {
         <Modal.Title>Record a new absence for {employee.name}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        {error && <Form.Label className="text-danger">{error}</Form.Label>}
         <DateRangePicker
           onChange={onChange}
           value={value}
