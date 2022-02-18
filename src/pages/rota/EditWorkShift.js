@@ -25,7 +25,7 @@ const EditWorkShift = ({
 
   useEffect(() => {
     dispatch(getShifts(service));
-  }, [dispatch]);
+  }, [dispatch, service]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -45,7 +45,9 @@ const EditWorkShift = ({
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Edit shift for {workshift.employee.name}</Modal.Title>
+        <Modal.Title>
+          Edit {workshift.shift.name} shift for {workshift.employee.name}
+        </Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
