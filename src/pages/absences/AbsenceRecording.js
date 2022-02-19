@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import DateRangePicker from "@wojtekmaj/react-daterange-picker";
 import moment from "moment";
 import { addAbsence } from "../../redux/actions/absenceActions";
+import enumerateDaysBetweenDates from "../../utils/enumerateDays";
 
 const AbsenceRecording = ({ employee, show, handleClose, service }) => {
   const dispatch = useDispatch();
@@ -24,17 +25,6 @@ const AbsenceRecording = ({ employee, show, handleClose, service }) => {
     setStartDate(moment(value[0]).format("MM-DD-YYYY"));
     setEndDate(moment(value[1]).format("MM-DD-YYYY"));
   }, [value]);
-
-  const enumerateDaysBetweenDates = (startDate, endDate) => {
-    var dates = [];
-    var currDate = moment(startDate).startOf("day");
-    var lastDate = moment(endDate).startOf("day");
-    while (currDate.diff(lastDate) <= 0) {
-      dates.push(currDate.clone().toDate());
-      currDate.add(1, "days");
-    }
-    return dates;
-  };
 
   const handleSubmit = () => {
     dispatch(

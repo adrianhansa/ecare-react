@@ -5,19 +5,12 @@ import { getAbsencesByEmployee } from "../../redux/actions/absenceActions";
 import AbsenceRecording from "./AbsenceRecording";
 import { MdOutlineSick } from "react-icons/md";
 import moment from "moment";
-import enumerateDaysBetweenDates from "../../utils/enumerateDays";
+import bradfordScore from "../../utils/bradfordScore";
 import { Row, Col, Container } from "react-bootstrap";
 import { getEmployee } from "../../redux/actions/employeeActions";
+import { getService } from "../../redux/actions/serviceActions";
 
 const Absences = () => {
-  const handleMouseEnter = (e) => {
-    e.target.style.background = "maroon";
-    e.target.style.color = "silver";
-  };
-  const handleMouseLeave = (e) => {
-    e.target.style.background = "silver";
-    e.target.style.color = "black";
-  };
   const [startDate, setStartDate] = useState(
     moment(new Date())
       .startOf("week")
@@ -38,6 +31,7 @@ const Absences = () => {
   useEffect(() => {
     dispatch(getAbsencesByEmployee(employee, startDate, endDate));
     dispatch(getEmployee(employee));
+    dispatch(getService(slug));
   }, [dispatch]);
 
   const [show, setShow] = useState(false);
@@ -58,6 +52,7 @@ const Absences = () => {
               />
             </h1>
           )}
+          <h3>Bradford Score: {absences && bradfordScore(absences)}</h3>
           <AbsenceRecording
             show={show}
             handleClose={handleClose}
