@@ -109,7 +109,7 @@ export const getAbsencesByEmployee =
     try {
       dispatch({ type: GET_ABSENCES_BY_EMPLOYEE_REQUEST });
       const { data } = await axios.get(
-        `${URL}/absences/${employee}/${startDate}/${endDate}`
+        `${URL}/absences/by-employee/${employee}/${startDate}/${endDate}`
       );
       dispatch({ type: GET_ABSENCES_BY_EMPLOYEE_SUCCESS, payload: data });
     } catch (error) {

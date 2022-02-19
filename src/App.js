@@ -61,7 +61,7 @@ const App = () => {
             element={<Supervisions />}
           />
           <Route
-            path="/services/absence-management/:slug"
+            path="/services/absence-management/:slug/:employee"
             element={<Absences />}
           />
           <Route path="/services/shift-plans/:slug" element={<ShiftPlans />} />

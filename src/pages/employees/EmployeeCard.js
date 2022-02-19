@@ -6,15 +6,12 @@ import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { deleteEmployee } from "../../redux/actions/employeeActions";
 import { getLatestSupervision } from "../../redux/actions/supervisionActions";
-import AbsenceRecording from "../absences/AbsenceRecording";
-import { MdOutlineSick } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const EmployeeCard = ({ employee, service }) => {
   const dispatch = useDispatch();
   const { error, success } = useSelector((state) => state.employeeDetails);
   const [show, setShow] = useState(false);
-  const [showAbsenceRecording, setShowAbsenceRecording] = useState(false);
-  const handleCloseAbsenceRecording = () => setShowAbsenceRecording(false);
   const handleClose = () => setShow(false);
   const handleDelete = () => {
     Swal.fire({
@@ -59,18 +56,9 @@ const EmployeeCard = ({ employee, service }) => {
       <td>{employee.accessLevel}</td>
       <td>{employee.driver ? "Yes" : "No"}</td>
       <td className="text-center">
-        <MdOutlineSick
-          type="button"
-          size={30}
-          onClick={() => setShowAbsenceRecording(true)}
-          className="text-danger"
-        />
-        <AbsenceRecording
-          show={showAbsenceRecording}
-          handleClose={handleCloseAbsenceRecording}
-          employee={employee}
-          service={service}
-        />
+        <Link to={`/services/absence-management/${service}/${employee._id}`}>
+          Bradford score
+        </Link>
       </td>
       <td>
         <Button className="success me-2" onClick={() => setShow(true)}>

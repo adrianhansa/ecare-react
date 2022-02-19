@@ -39,7 +39,7 @@ const AbsenceRecording = ({ employee, show, handleClose, service }) => {
   const handleSubmit = () => {
     dispatch(
       addAbsence(service, {
-        employee: employee._id,
+        employee,
         startDate,
         endDate,
         days: enumerateDaysBetweenDates(startDate, endDate).length,
