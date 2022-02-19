@@ -42,7 +42,7 @@ const AbsenceRecording = ({ employee, show, handleClose, service }) => {
         employee,
         startDate,
         endDate,
-        days: enumerateDaysBetweenDates(startDate, endDate).length,
+        days: enumerateDaysBetweenDates(startDate, endDate),
         notes,
       })
     );

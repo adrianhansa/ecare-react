@@ -55,13 +55,13 @@ export const absencesReducer = (state = { absences: [] }, action) => {
     case GET_ABSENCES_BY_DATES_REQUEST:
       return { loading: true };
     case GET_ABSENCES_BY_DATES_SUCCESS:
-      return { loading: false, success: true, absence: action.payload };
+      return { loading: false, success: true, absences: action.payload };
     case GET_ABSENCES_BY_DATES_FAIL:
       return { loading: false, success: false, error: action.payload };
     case GET_ABSENCES_BY_EMPLOYEE_REQUEST:
       return { loading: true };
     case GET_ABSENCES_BY_EMPLOYEE_SUCCESS:
-      return { loading: false, success: true, absence: action.payload };
+      return { loading: false, success: true, absences: action.payload };
     case GET_ABSENCES_BY_EMPLOYEE_FAIL:
       return { loading: false, success: false, error: action.payload };
     default:

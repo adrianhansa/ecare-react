@@ -7,8 +7,17 @@ import { MdOutlineSick } from "react-icons/md";
 import moment from "moment";
 import enumerateDaysBetweenDates from "../../utils/enumerateDays";
 import { Row, Col, Container } from "react-bootstrap";
+import { getEmployee } from "../../redux/actions/employeeActions";
 
 const Absences = () => {
+  const handleMouseEnter = (e) => {
+    e.target.style.background = "maroon";
+    e.target.style.color = "silver";
+  };
+  const handleMouseLeave = (e) => {
+    e.target.style.background = "silver";
+    e.target.style.color = "black";
+  };
   const [startDate, setStartDate] = useState(
     moment(new Date())
       .startOf("week")
@@ -20,90 +29,64 @@ const Absences = () => {
     moment(new Date()).format("MM-DD-YYYY")
   );
 
-  const days = enumerateDaysBetweenDates(startDate, endDate);
-
   const { slug, employee } = useParams();
   const dispatch = useDispatch();
   const { loading, error, absences } = useSelector(
     (state) => state.absenceList
   );
+  const employeeDetails = useSelector((state) => state.employeeDetails);
   useEffect(() => {
     dispatch(getAbsencesByEmployee(employee, startDate, endDate));
+    dispatch(getEmployee(employee));
   }, [dispatch]);
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const daysOfTheWeek = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ];
-
-  const results = daysOfTheWeek.map((weekDay) => {
-    return days.filter((day) => {
-      return weekDay === moment(day).format("dddd");
-    });
-  });
 
   return (
     <Container fluid>
-      <h1>
-        Absences{" "}
-        <MdOutlineSick
-          type="button"
-          size={30}
-          onClick={() => setShow(true)}
-          className="text-danger"
-        />
-      </h1>
-      <AbsenceRecording
-        show={show}
-        handleClose={handleClose}
-        employee={employee}
-        service={slug}
-      />
       <Row>
-        {daysOfTheWeek.map((weekDay) => {
-          return (
-            <Col style={{ fontSize: 8 }} key={weekDay}>
-              {weekDay}
-            </Col>
-          );
-        })}
-      </Row>
-      <Row>
-        {results.map((result, index) => {
-          return (
-            <Col key={index}>
-              {result.map((r, i) => {
-                return (
-                  <Row key={i} style={{ marginBottom: 2 }}>
-                    <Col
-                      className="text-center"
-                      style={{
-                        fontSize: 8,
-                        border: "1px solid grey",
-                        padding: 10,
-                        margin: 2,
-                        borderRadius: 5,
-                        hover: {
-                          fontSize: 12,
-                          color: "red",
-                        },
-                      }}
-                    >
-                      {moment(r).format("DD-MM-YYYY")}
-                    </Col>
-                  </Row>
-                );
-              })}
-            </Col>
-          );
-        })}
+        <Col>
+          {employeeDetails.employee && (
+            <h1>
+              Absences for {employeeDetails.employee.name}{" "}
+              <MdOutlineSick
+                type="button"
+                size={30}
+                onClick={() => setShow(true)}
+                className="text-danger"
+              />
+            </h1>
+          )}
+          <AbsenceRecording
+            show={show}
+            handleClose={handleClose}
+            employee={employee}
+            service={slug}
+          />
+          {loading && <p>Loading...</p>}
+          {error && <p className="text-danger">{error}</p>}
+          {absences &&
+            absences.map((absence) => {
+              return (
+                <div key={absence._id}>
+                  <h4>
+                    {absence.notes ? absence.notes : "no reason given"},{" "}
+                    {absence.days.length > 1
+                      ? `${absence.days.length} days`
+                      : `${absence.days.length} day`}
+                  </h4>
+                  {absence.days.map((day) => {
+                    return (
+                      <p key={day}>
+                        {moment(day).format("dddd, DD/MMMM/YYYY")}
+                      </p>
+                    );
+                  })}
+                </div>
+              );
+            })}
+        </Col>
       </Row>
     </Container>
   );

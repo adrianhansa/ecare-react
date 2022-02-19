@@ -114,7 +114,7 @@ export const updateEmployee =
 export const getEmployee = (id) => async (dispatch) => {
   try {
     dispatch({ type: GET_EMPLOYEE_REQUEST });
-    const { data } = await axios.get(`${URL}/employees/${id}`);
+    const { data } = await axios.get(`${URL}/employees/get-employee/${id}`);
     dispatch({ type: GET_EMPLOYEE_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
