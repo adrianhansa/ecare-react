@@ -7,6 +7,8 @@ import { useDispatch } from "react-redux";
 import { deleteEmployee } from "../../redux/actions/employeeActions";
 import { getLatestSupervision } from "../../redux/actions/supervisionActions";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { URL } from "../../redux/constants/url";
 
 const EmployeeCard = ({ employee, service }) => {
   const dispatch = useDispatch();
@@ -36,6 +38,13 @@ const EmployeeCard = ({ employee, service }) => {
     });
   };
 
+  const {
+    data,
+  } = async () => {
+    await axios.get(`${URL}/absences/bradford-score/${employee._id}`);
+  };
+  console.log(data);
+
   useEffect(() => {
     dispatch(getLatestSupervision(employee._id));
   }, [dispatch]);
@@ -57,7 +66,7 @@ const EmployeeCard = ({ employee, service }) => {
       <td>{employee.driver ? "Yes" : "No"}</td>
       <td className="text-center">
         <Link to={`/services/absence-management/${service}/${employee._id}`}>
-          Bradford score
+          Bradford score {data}
         </Link>
       </td>
       <td>
