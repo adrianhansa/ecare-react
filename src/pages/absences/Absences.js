@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import {
-  getAbsencesByEmployee,
-  deleteAbsence,
-} from "../../redux/actions/absenceActions";
+import { getAbsencesByEmployee } from "../../redux/actions/absenceActions";
 import AbsenceRecording from "./AbsenceRecording";
 import { MdOutlineSick } from "react-icons/md";
 import moment from "moment";
@@ -12,8 +9,7 @@ import bradfordScore from "../../utils/bradfordScore";
 import { Row, Col, Container } from "react-bootstrap";
 import { getEmployee } from "../../redux/actions/employeeActions";
 import { getService } from "../../redux/actions/serviceActions";
-import { AiOutlineDelete } from "react-icons/ai";
-import Swal from "sweetalert2";
+import AbsencePreview from "./AbsencePreview";
 
 const Absences = () => {
   const [startDate, setStartDate] = useState(
@@ -42,30 +38,6 @@ const Absences = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
 
-  const handleDelete = (id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        dispatch(deleteAbsence(id));
-        dispatch(getAbsencesByEmployee(employee, startDate, endDate));
-        Swal.fire({
-          position: "bottom-end",
-          icon: "success",
-          title: "Absence deleted",
-          showConfirmButton: false,
-          timer: 1000,
-        });
-      }
-    });
-  };
-
   return (
     <Container fluid>
       <Row>
@@ -93,26 +65,13 @@ const Absences = () => {
           {absences &&
             absences.map((absence) => {
               return (
-                <div key={absence._id}>
-                  <h4>
-                    {absence.notes ? absence.notes : "no reason given"},{" "}
-                    {absence.days.length > 1
-                      ? `${absence.days.length} days`
-                      : `${absence.days.length} day`}
-                    <AiOutlineDelete
-                      type="button"
-                      onClick={() => handleDelete(absence._id)}
-                      className="text-danger"
-                    />
-                  </h4>
-                  {absence.days.map((day) => {
-                    return (
-                      <p key={day}>
-                        {moment(day).format("dddd, DD/MMMM/YYYY")}
-                      </p>
-                    );
-                  })}
-                </div>
+                <AbsencePreview
+                  key={absence._id}
+                  absence={absence}
+                  employee={employee}
+                  startDate={startDate}
+                  endDate={endDate}
+                />
               );
             })}
         </Col>
