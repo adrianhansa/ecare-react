@@ -14,6 +14,7 @@ const EmployeeCard = ({ employee, service }) => {
   const dispatch = useDispatch();
   const { error, success } = useSelector((state) => state.employeeDetails);
   const [show, setShow] = useState(false);
+  const [score, setScore] = useState(0);
   const handleClose = () => setShow(false);
   const handleDelete = () => {
     Swal.fire({
@@ -38,12 +39,12 @@ const EmployeeCard = ({ employee, service }) => {
     });
   };
 
-  const {
-    data,
-  } = async () => {
-    await axios.get(`${URL}/absences/bradford-score/${employee._id}`);
-  };
-  console.log(data);
+  useEffect(() => {
+    axios
+      .get(`${URL}/absences/bradford-score/${employee._id}`)
+      .then((result) => setScore(result.data))
+      .catch((error) => console.log(error));
+  });
 
   useEffect(() => {
     dispatch(getLatestSupervision(employee._id));
@@ -66,7 +67,7 @@ const EmployeeCard = ({ employee, service }) => {
       <td>{employee.driver ? "Yes" : "No"}</td>
       <td className="text-center">
         <Link to={`/services/absence-management/${service}/${employee._id}`}>
-          Bradford score {data}
+          Bradford score: {score}
         </Link>
       </td>
       <td>
