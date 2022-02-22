@@ -1,14 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import moment from "moment";
 import { useDispatch } from "react-redux";
-import {
-  deleteAbsence,
-  getAbsencesByEmployee,
-} from "../../redux/actions/absenceActions";
+import { deleteAbsence } from "../../redux/actions/absenceActions";
 import { AiOutlineDelete } from "react-icons/ai";
 import Swal from "sweetalert2";
 
-const AbsencePreview = ({ absence, startDate, endDate, employee }) => {
+const AbsencePreview = ({ absence, getAbsences }) => {
   const dispatch = useDispatch();
   const handleDelete = (id) => {
     Swal.fire({
@@ -22,7 +19,7 @@ const AbsencePreview = ({ absence, startDate, endDate, employee }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(deleteAbsence(id));
-        dispatch(getAbsencesByEmployee(employee, startDate, endDate));
+        getAbsences();
         Swal.fire({
           position: "bottom-end",
           icon: "success",

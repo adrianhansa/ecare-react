@@ -30,10 +30,13 @@ const Absences = () => {
   );
   const employeeDetails = useSelector((state) => state.employeeDetails);
   useEffect(() => {
-    dispatch(getAbsencesByEmployee(employee, startDate, endDate));
     dispatch(getEmployee(employee));
     dispatch(getService(slug));
-  }, [dispatch]);
+  }, [dispatch, employee]);
+
+  useEffect(() => {
+    dispatch(getAbsencesByEmployee(employee, startDate, endDate));
+  }, [startDate, endDate, employee, dispatch]);
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -59,6 +62,9 @@ const Absences = () => {
             handleClose={handleClose}
             employee={employee}
             service={slug}
+            getAbsences={() =>
+              dispatch(getAbsencesByEmployee(employee, startDate, endDate))
+            }
           />
           {loading && <p>Loading...</p>}
           {error && <p className="text-danger">{error}</p>}
@@ -71,6 +77,11 @@ const Absences = () => {
                   employee={employee}
                   startDate={startDate}
                   endDate={endDate}
+                  getAbsences={() =>
+                    dispatch(
+                      getAbsencesByEmployee(employee, startDate, endDate)
+                    )
+                  }
                 />
               );
             })}

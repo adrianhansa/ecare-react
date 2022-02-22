@@ -6,7 +6,13 @@ import moment from "moment";
 import { addAbsence } from "../../redux/actions/absenceActions";
 import enumerateDaysBetweenDates from "../../utils/enumerateDays";
 
-const AbsenceRecording = ({ employee, show, handleClose, service }) => {
+const AbsenceRecording = ({
+  employee,
+  show,
+  handleClose,
+  service,
+  getAbsences,
+}) => {
   const dispatch = useDispatch();
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -36,6 +42,7 @@ const AbsenceRecording = ({ employee, show, handleClose, service }) => {
         notes,
       })
     );
+    getAbsences();
     !error && handleClose();
   };
 
