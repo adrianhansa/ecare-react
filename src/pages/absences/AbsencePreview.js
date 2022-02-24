@@ -1,12 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { useDispatch } from "react-redux";
-import { deleteAbsence } from "../../redux/actions/absenceActions";
+import {
+  deleteAbsence,
+  removeDaysFromAbsencePeriod,
+} from "../../redux/actions/absenceActions";
 import { AiOutlineDelete } from "react-icons/ai";
 import Swal from "sweetalert2";
 
 const AbsencePreview = ({ absence, getAbsences }) => {
   const dispatch = useDispatch();
+  const [dates, setDates] = useState(absence.days);
+  const absencesRemoved = (e, id, day) => {
+    e.preventDefault();
+    setDates(dates.filter((date) => date !== day));
+    dispatch(removeDaysFromAbsencePeriod(id, dates));
+    getAbsences();
+  };
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -45,7 +55,14 @@ const AbsencePreview = ({ absence, getAbsences }) => {
         />
       </h4>
       {absence.days.map((day) => {
-        return <p key={day}>{moment(day).format("dddd, DD/MMMM/YYYY")}</p>;
+        return (
+          <div key={day}>
+            <p>{moment(day).format("dddd, DD/MMMM/YYYY")}</p>
+            <button onClick={(e) => absencesRemoved(e, absence._id, day)}>
+              -
+            </button>
+          </div>
+        );
       })}
     </div>
   );

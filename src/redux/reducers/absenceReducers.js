@@ -17,6 +17,9 @@ import {
   UPDATE_ABSENCE_REQUEST,
   UPDATE_ABSENCE_SUCCESS,
   UPDATE_ABSENCE_FAIL,
+  REMOVE_DAY_OF_ABSENCE_FAIL,
+  REMOVE_DAY_OF_ABSENCE_SUCCESS,
+  REMOVE_DAY_OF_ABSENCE_REQUEST,
 } from "../constants/absenceContants";
 
 export const absenceReducer = (state = { absence: {} }, action) => {
@@ -44,6 +47,12 @@ export const absenceReducer = (state = { absence: {} }, action) => {
     case UPDATE_ABSENCE_SUCCESS:
       return { loading: false, success: true, absence: action.payload };
     case UPDATE_ABSENCE_FAIL:
+      return { loading: false, success: false, error: action.payload };
+    case REMOVE_DAY_OF_ABSENCE_REQUEST:
+      return { loading: true };
+    case REMOVE_DAY_OF_ABSENCE_SUCCESS:
+      return { loading: false, success: true, absence: action.payload };
+    case REMOVE_DAY_OF_ABSENCE_FAIL:
       return { loading: false, success: false, error: action.payload };
     default:
       return state;

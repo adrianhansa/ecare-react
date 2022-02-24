@@ -19,6 +19,9 @@ import {
   UPDATE_ABSENCE_REQUEST,
   UPDATE_ABSENCE_SUCCESS,
   UPDATE_ABSENCE_FAIL,
+  REMOVE_DAY_OF_ABSENCE_FAIL,
+  REMOVE_DAY_OF_ABSENCE_REQUEST,
+  REMOVE_DAY_OF_ABSENCE_SUCCESS,
 } from "../constants/absenceContants";
 
 export const addAbsence = (service, absence) => async (dispatch) => {
@@ -32,6 +35,22 @@ export const addAbsence = (service, absence) => async (dispatch) => {
       payload:
         error.message && error.response.data.message
           ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const removeDaysFromAbsencePeriod = (id, days) => async (dispatch) => {
+  try {
+    dispatch({ type: REMOVE_DAY_OF_ABSENCE_REQUEST });
+    const { data } = await axios.put(`${URL}/absences/remove-date/${id}`, days);
+    dispatch({ type: REMOVE_DAY_OF_ABSENCE_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: REMOVE_DAY_OF_ABSENCE_FAIL,
+      payload:
+        error.response.data.message && error.message
+          ? error.resposne.data.message
           : error.message,
     });
   }
