@@ -1,21 +1,50 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import moment from "moment";
 import { useDispatch } from "react-redux";
 import {
   deleteAbsence,
   removeDaysFromAbsencePeriod,
+  getAbsencesByEmployee,
 } from "../../redux/actions/absenceActions";
 import { AiOutlineDelete } from "react-icons/ai";
 import Swal from "sweetalert2";
 
-const AbsencePreview = ({ absence, getAbsences }) => {
+const AbsencePreview = ({
+  absence,
+  getAbsences,
+  employee,
+  startDate,
+  endDate,
+}) => {
   const dispatch = useDispatch();
-  const [dates, setDates] = useState(absence.days);
   const absencesRemoved = (e, id, day) => {
     e.preventDefault();
-    setDates(dates.filter((date) => date !== day));
-    dispatch(removeDaysFromAbsencePeriod(id, dates));
-    getAbsences();
+    const dates = absence.days.filter((date) => {
+      return date !== day;
+    });
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(removeDaysFromAbsencePeriod(id, dates));
+        // dispatch(getAbsencesByEmployee(employee, startDate, endDate));
+        getAbsences();
+        Swal.fire({
+          position: "bottom-end",
+          icon: "success",
+          title: "Absence day deleted",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+      }
+    });
   };
   const handleDelete = (id) => {
     Swal.fire({

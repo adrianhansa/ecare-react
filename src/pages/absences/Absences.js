@@ -36,10 +36,13 @@ const Absences = () => {
 
   useEffect(() => {
     dispatch(getAbsencesByEmployee(employee, startDate, endDate));
-  }, [startDate, endDate, employee, dispatch]);
+  }, [dispatch]);
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
+  const getAbsences = () => {
+    dispatch(getAbsencesByEmployee(employee, startDate, endDate));
+  };
 
   return (
     <Container fluid>
@@ -62,9 +65,7 @@ const Absences = () => {
             handleClose={handleClose}
             employee={employee}
             service={slug}
-            getAbsences={() =>
-              dispatch(getAbsencesByEmployee(employee, startDate, endDate))
-            }
+            getAbsences={getAbsences}
           />
           {loading && <p>Loading...</p>}
           {error && <p className="text-danger">{error}</p>}

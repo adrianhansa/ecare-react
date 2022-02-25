@@ -43,7 +43,9 @@ export const addAbsence = (service, absence) => async (dispatch) => {
 export const removeDaysFromAbsencePeriod = (id, days) => async (dispatch) => {
   try {
     dispatch({ type: REMOVE_DAY_OF_ABSENCE_REQUEST });
-    const { data } = await axios.put(`${URL}/absences/remove-date/${id}`, days);
+    const { data } = await axios.put(`${URL}/absences/remove-date/${id}`, {
+      days,
+    });
     dispatch({ type: REMOVE_DAY_OF_ABSENCE_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
