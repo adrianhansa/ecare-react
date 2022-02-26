@@ -34,8 +34,7 @@ const AbsencePreview = ({
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(removeDaysFromAbsencePeriod(id, dates));
-        // dispatch(getAbsencesByEmployee(employee, startDate, endDate));
-        getAbsences();
+        dispatch(getAbsencesByEmployee(employee, startDate, endDate));
         Swal.fire({
           position: "bottom-end",
           icon: "success",

@@ -23,6 +23,8 @@ const Absences = () => {
     moment(new Date()).format("MM-DD-YYYY")
   );
 
+  const [score, setScore] = useState(0);
+
   const { slug, employee } = useParams();
   const dispatch = useDispatch();
   const { loading, error, absences } = useSelector(
@@ -32,14 +34,19 @@ const Absences = () => {
   useEffect(() => {
     dispatch(getEmployee(employee));
     dispatch(getService(slug));
-  }, [dispatch, employee]);
+    absences && setScore(bradfordScore(absences));
+  }, [dispatch, employee, absences]);
 
   useEffect(() => {
     dispatch(getAbsencesByEmployee(employee, startDate, endDate));
-  }, [dispatch]);
+  }, [employee, startDate, endDate]);
 
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    // dispatch(getAbsencesByEmployee(employee, startDate, endDate));
+    document.location.reload();
+    setShow(false);
+  };
   const getAbsences = () => {
     dispatch(getAbsencesByEmployee(employee, startDate, endDate));
   };
@@ -59,7 +66,7 @@ const Absences = () => {
               />
             </h1>
           )}
-          <h3>Bradford Score: {absences && bradfordScore(absences)}</h3>
+          <h3>Bradford Score: {score}</h3>
           <AbsenceRecording
             show={show}
             handleClose={handleClose}
@@ -78,11 +85,7 @@ const Absences = () => {
                   employee={employee}
                   startDate={startDate}
                   endDate={endDate}
-                  getAbsences={() =>
-                    dispatch(
-                      getAbsencesByEmployee(employee, startDate, endDate)
-                    )
-                  }
+                  getAbsences={getAbsences}
                 />
               );
             })}
