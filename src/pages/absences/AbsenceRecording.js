@@ -11,7 +11,8 @@ const AbsenceRecording = ({
   show,
   handleClose,
   service,
-  getAbsences,
+  start,
+  end,
 }) => {
   const dispatch = useDispatch();
   const [startDate, setStartDate] = useState(new Date());
@@ -34,15 +35,21 @@ const AbsenceRecording = ({
 
   const handleSubmit = () => {
     dispatch(
-      addAbsence(service, {
+      addAbsence(
+        service,
+        {
+          employee,
+          startDate,
+          endDate,
+          days: enumerateDaysBetweenDates(startDate, endDate),
+          notes,
+        },
         employee,
-        startDate,
-        endDate,
-        days: enumerateDaysBetweenDates(startDate, endDate),
-        notes,
-      })
+        start,
+        end
+      )
     );
-    getAbsences();
+    // getAbsences();
     !error && handleClose();
   };
 

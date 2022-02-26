@@ -37,14 +37,15 @@ const Absences = () => {
     absences && setScore(bradfordScore(absences));
   }, [dispatch, employee, absences]);
 
+  const [show, setShow] = useState(false);
+
   useEffect(() => {
     dispatch(getAbsencesByEmployee(employee, startDate, endDate));
-  }, [employee, startDate, endDate]);
+  }, [employee, startDate, endDate, show]);
 
-  const [show, setShow] = useState(false);
   const handleClose = () => {
-    // dispatch(getAbsencesByEmployee(employee, startDate, endDate));
-    document.location.reload();
+    dispatch(getAbsencesByEmployee(employee, startDate, endDate));
+    // document.location.reload();
     setShow(false);
   };
   const getAbsences = () => {
@@ -72,7 +73,9 @@ const Absences = () => {
             handleClose={handleClose}
             employee={employee}
             service={slug}
-            getAbsences={getAbsences}
+            start={startDate}
+            end={endDate}
+            // getAbsences={getAbsences}
           />
           {loading && <p>Loading...</p>}
           {error && <p className="text-danger">{error}</p>}
