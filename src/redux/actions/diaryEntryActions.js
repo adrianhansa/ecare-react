@@ -1,5 +1,5 @@
-import axios from "axios";
-import { URL } from "../constants/url";
+import axios from 'axios';
+import { URL } from '../constants/url';
 import {
   ADD_DIARY_ENTRY_FAIL,
   ADD_DIARY_ENTRY_REQUEST,
@@ -16,7 +16,10 @@ import {
   UPDATE_DIARY_ENTRY_FAIL,
   UPDATE_DIARY_ENTRY_REQUEST,
   UPDATE_DIARY_ENTRY_SUCCESS,
-} from "../constants/diaryEntryConstants";
+  TOGGLE_COMPLETED_DIARY_ENTRY_REQUEST,
+  TOGGLE_COMPLETED_DIARY_ENTRY_SUCCESS,
+  TOGGLE_COMPLETED_DIARY_ENTRY_FAIL,
+} from '../constants/diaryEntryConstants';
 
 export const getDiaryEntries = (service) => async (dispatch) => {
   try {
@@ -34,53 +37,75 @@ export const getDiaryEntries = (service) => async (dispatch) => {
   }
 };
 
-export const addDiaryEntry =
-  (service, { date, time, content }) =>
-  async (dispatch) => {
-    try {
-      dispatch({ type: ADD_DIARY_ENTRY_REQUEST });
-      const { data } = await axios.post(`${URL}/diary/${service}`, {
-        date,
-        time,
-        content,
-      });
-      dispatch({ type: ADD_DIARY_ENTRY_SUCCESS, payload: data });
-      const result = await axios.get(`${URL}/diary/${service}`);
-      dispatch({ type: GET_DIARY_ENTRIES_SUCCESS, payload: result.data });
-    } catch (error) {
-      dispatch({
-        type: ADD_DIARY_ENTRY_FAIL,
-        payload:
-          error.message && error.response.data.message
-            ? error.response.data.message
-            : error.message,
-      });
-    }
-  };
+export const toggleCompleteDiaryEntry = (id, service) => async (dispatch) => {
+  try {
+  } catch (error) {
+    dispatch({ type: TOGGLE_COMPLETED_DIARY_ENTRY_REQUEST });
+    const { data } = await axios.put(
+      `${URL}/toggle-complete-diary-entry/${id}`
+    );
+    dispatch({ type: TOGGLE_COMPLETED_DIARY_ENTRY_SUCCESS, payload: data });
+    const result = await axios.get(`${URL}/diary/${service}`);
+    dispatch({ type: GET_DIARY_ENTRIES_SUCCESS, payload: result.data });
+    dispatch({
+      type: TOGGLE_COMPLETED_DIARY_ENTRY_FAIL,
+      payload:
+        error.response.data.message && error.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
 
-export const updateDiaryEntry =
-  (service, id, { date, time, content }) =>
-  async (dispatch) => {
-    try {
-      dispatch({ type: UPDATE_DIARY_ENTRY_REQUEST });
-      const { data } = await axios.put(`${URL}/diary/${id}`, {
-        date,
-        time,
-        content,
-      });
-      dispatch({ type: UPDATE_DIARY_ENTRY_SUCCESS, payload: data });
-      const result = await axios.get(`${URL}/diary/${service}`);
-      dispatch({ type: GET_DIARY_ENTRIES_SUCCESS, payload: result.data });
-    } catch (error) {
-      dispatch({
-        type: UPDATE_DIARY_ENTRY_FAIL,
-        payload:
-          error.message && error.response.data.message
-            ? error.response.data.message
-            : error.message,
-      });
-    }
-  };
+export const addDiaryEntry = (service, { date, time, content }) => async (
+  dispatch
+) => {
+  try {
+    dispatch({ type: ADD_DIARY_ENTRY_REQUEST });
+    const { data } = await axios.post(`${URL}/diary/${service}`, {
+      date,
+      time,
+      content,
+    });
+    dispatch({ type: ADD_DIARY_ENTRY_SUCCESS, payload: data });
+    const result = await axios.get(`${URL}/diary/${service}`);
+    dispatch({ type: GET_DIARY_ENTRIES_SUCCESS, payload: result.data });
+  } catch (error) {
+    dispatch({
+      type: ADD_DIARY_ENTRY_FAIL,
+      payload:
+        error.message && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const updateDiaryEntry = (
+  service,
+  id,
+  { date, time, content }
+) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_DIARY_ENTRY_REQUEST });
+    const { data } = await axios.put(`${URL}/diary/${id}`, {
+      date,
+      time,
+      content,
+    });
+    dispatch({ type: UPDATE_DIARY_ENTRY_SUCCESS, payload: data });
+    const result = await axios.get(`${URL}/diary/${service}`);
+    dispatch({ type: GET_DIARY_ENTRIES_SUCCESS, payload: result.data });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_DIARY_ENTRY_FAIL,
+      payload:
+        error.message && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
 
 export const getDiaryEntry = (id) => async (dispatch) => {
   try {

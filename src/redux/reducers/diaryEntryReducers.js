@@ -14,7 +14,10 @@ import {
   UPDATE_DIARY_ENTRY_FAIL,
   UPDATE_DIARY_ENTRY_SUCCESS,
   UPDATE_DIARY_ENTRY_REQUEST,
-} from "../constants/diaryEntryConstants";
+  TOGGLE_COMPLETED_DIARY_ENTRY_FAIL,
+  TOGGLE_COMPLETED_DIARY_ENTRY_REQUEST,
+  TOGGLE_COMPLETED_DIARY_ENTRY_SUCCESS,
+} from '../constants/diaryEntryConstants';
 
 export const diaryEntriesReducer = (state = { diaryEntries: [] }, action) => {
   switch (action.type) {
@@ -42,6 +45,12 @@ export const diaryEntryReducer = (state = { diaryEntry: {} }, action) => {
     case ADD_DIARY_ENTRY_SUCCESS:
       return { loading: false, success: true, diaryEntry: action.payload };
     case ADD_DIARY_ENTRY_FAIL:
+      return { loading: false, success: false, error: action.payload };
+    case TOGGLE_COMPLETED_DIARY_ENTRY_REQUEST:
+      return { loading: true };
+    case TOGGLE_COMPLETED_DIARY_ENTRY_SUCCESS:
+      return { loading: false, success: true, diaryEntry: action.payload };
+    case TOGGLE_COMPLETED_DIARY_ENTRY_FAIL:
       return { loading: false, success: false, error: action.payload };
     case UPDATE_DIARY_ENTRY_REQUEST:
       return { loading: true };
