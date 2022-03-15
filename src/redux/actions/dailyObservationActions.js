@@ -1,5 +1,5 @@
-import axios from "axios";
-import { URL } from "../constants/url";
+import axios from 'axios';
+import { URL } from '../constants/url';
 import {
   ADD_DAILY_OBSERVATION_FAIL,
   ADD_DAILY_OBSERVATION_REQUEST,
@@ -26,7 +26,7 @@ import {
   GET_RECORDS_BY_RESIDENT_FAIL,
   GET_RECORDS_BY_RESIDENT_REQUEST,
   GET_RECORDS_BY_RESIDENT_SUCCESS,
-} from "../constants/dailyObservationConstants";
+} from '../constants/dailyObservationConstants';
 
 export const findRecord = (service, { date, shift, serviceUser }) => async (
   dispatch
@@ -81,7 +81,6 @@ export const updateRecord = (id, { date, shift, records }) => async (
 ) => {
   try {
     dispatch({ type: UPDATE_DAILY_OBSERVATION_REQUEST });
-    console.log(date);
     const { data } = await axios.put(`${URL}/daily-observations/${id}`, {
       date,
       shift,

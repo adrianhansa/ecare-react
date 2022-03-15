@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { getService } from "../../../redux/actions/serviceActions";
-import { getServiceUser } from "../../../redux/actions/serviceUserActions";
-import { getItems } from "../../../redux/actions/dailyObservationItemActions";
-import { Form, Container, Button, Col, Row, Card } from "react-bootstrap";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getService } from '../../../redux/actions/serviceActions';
+import { getServiceUser } from '../../../redux/actions/serviceUserActions';
+import { getItems } from '../../../redux/actions/dailyObservationItemActions';
+import { Form, Container, Button, Col, Row, Card } from 'react-bootstrap';
 import {
   addRecord,
   updateRecord,
   findRecord,
-} from "../../../redux/actions/dailyObservationActions";
-import moment from "moment";
-import RecordList from "./RecordList";
+} from '../../../redux/actions/dailyObservationActions';
+import moment from 'moment';
+import RecordList from './RecordList';
 
 const ShiftRecord = () => {
   const dispatch = useDispatch();
@@ -75,7 +75,7 @@ const ShiftRecord = () => {
               {su.serviceUser && (
                 <>
                   <h4 className="text-primary">
-                    {moment(date).format("dddd, DD MMM YYYY")}
+                    {moment(date).format('dddd, DD MMM YYYY')}
                   </h4>
                   <h3>
                     {shift} records for {su.serviceUser.name}
@@ -91,12 +91,9 @@ const ShiftRecord = () => {
                       <Form.Group key={item._id} className="mb-4">
                         <Form.Label>{item.description}</Form.Label>
                         <br />
-                        {item.element === "text" ? (
+                        {item.element === 'text' ? (
                           <Form.Control
                             type={item.element}
-                            // value={
-                            //   success && dailyObservation.records[item.name]
-                            // }
                             value={values[item.name]}
                             onChange={(e) =>
                               setValues({
@@ -105,7 +102,7 @@ const ShiftRecord = () => {
                               })
                             }
                           />
-                        ) : item.element === "textarea" ? (
+                        ) : item.element === 'textarea' ? (
                           <Form.Control
                             as="textarea"
                             value={values[item.name]}
@@ -116,7 +113,7 @@ const ShiftRecord = () => {
                               })
                             }
                           />
-                        ) : item.element === "selection" ? (
+                        ) : item.element === 'selection' ? (
                           <Form.Select
                             value={values[item.name]}
                             onChange={(e) =>
@@ -135,7 +132,7 @@ const ShiftRecord = () => {
                             })}
                           </Form.Select>
                         ) : (
-                          ""
+                          ''
                         )}
                       </Form.Group>
                     );
