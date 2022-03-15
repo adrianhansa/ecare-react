@@ -6,11 +6,15 @@ import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { deleteEmployee } from "../../redux/actions/employeeActions";
 import { getLatestSupervision } from "../../redux/actions/supervisionActions";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { URL } from "../../redux/constants/url";
 
-const EmployeeCard = ({ employee }) => {
+const EmployeeCard = ({ employee, service }) => {
   const dispatch = useDispatch();
   const { error, success } = useSelector((state) => state.employeeDetails);
   const [show, setShow] = useState(false);
+  const [score, setScore] = useState(0);
   const handleClose = () => setShow(false);
   const handleDelete = () => {
     Swal.fire({
@@ -36,6 +40,13 @@ const EmployeeCard = ({ employee }) => {
   };
 
   useEffect(() => {
+    axios
+      .get(`${URL}/absences/bradford-score/${employee._id}`)
+      .then((result) => setScore(result.data))
+      .catch((error) => console.log(error));
+  });
+
+  useEffect(() => {
     dispatch(getLatestSupervision(employee._id));
   }, [dispatch]);
 
@@ -54,6 +65,11 @@ const EmployeeCard = ({ employee }) => {
       <td>10/02/2022</td>
       <td>{employee.accessLevel}</td>
       <td>{employee.driver ? "Yes" : "No"}</td>
+      <td className="text-center">
+        <Link to={`/services/absence-management/${service}/${employee._id}`}>
+          Bradford score: {score}
+        </Link>
+      </td>
       <td>
         <Button className="success me-2" onClick={() => setShow(true)}>
           Edit

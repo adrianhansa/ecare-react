@@ -25,6 +25,7 @@ import HealthAndSafety from "./pages/healthAndSafety/HealthAndSafety";
 import DailyBook from "./pages/residents/records/DailyBook";
 import AnnualLeave from "./pages/annualLeave/AnnualLeave";
 import ShiftRecord from "./pages/residents/records/ShiftRecord";
+import OnCallLogs from "./pages/onCall/OnCallLogs";
 
 const App = () => {
   return (
@@ -35,9 +36,11 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/employee-login" element={<EmployeeLogin />} />
+          <Route path="/onCall" element={<OnCallLogs />} />
           <Route path="/services" element={<Services />} />
           <Route path="/services/:slug" element={<ServiceScreen />} />
           <Route path="/services/rota/:slug" element={<Rota />} />
+
           <Route path="/services/roles/:slug" element={<Roles />} />
           <Route path="/services/residents/:slug" element={<Residents />} />
           <Route
@@ -58,7 +61,7 @@ const App = () => {
             element={<Supervisions />}
           />
           <Route
-            path="/services/absence-management/:slug"
+            path="/services/absence-management/:slug/:employee"
             element={<Absences />}
           />
           <Route path="/services/shift-plans/:slug" element={<ShiftPlans />} />

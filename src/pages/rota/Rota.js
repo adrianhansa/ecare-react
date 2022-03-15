@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Table, Card } from "react-bootstrap";
+import { Container, Row, Col, Table } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { getEmployees } from "../../redux/actions/employeeActions";
 import { getShifts } from "../../redux/actions/shiftActions";
@@ -15,6 +15,7 @@ import WorkShift from "./WorkShift";
 import { GrAddCircle } from "react-icons/gr";
 import Swal from "sweetalert2";
 import WorkShiftContainer from "./WorkShiftContainer";
+import enumerateDaysBetweenDates from "../../utils/enumerateDays";
 
 const Rota = () => {
   const dispatch = useDispatch();
@@ -34,17 +35,6 @@ const Rota = () => {
   const handleClose = () => {
     setShow(false);
     setData(null);
-  };
-
-  const enumerateDaysBetweenDates = (startDate, endDate) => {
-    var dates = [];
-    var currDate = moment(startDate).startOf("day");
-    var lastDate = moment(endDate).startOf("day");
-    while (currDate.diff(lastDate) <= 0) {
-      dates.push(currDate.clone().toDate());
-      currDate.add(1, "days");
-    }
-    return dates;
   };
 
   const myDays = enumerateDaysBetweenDates(startDate, endDate);
@@ -114,7 +104,7 @@ const Rota = () => {
 
   const countHours = (employee, workShifts) => {
     const employeeShifts = workShifts.filter((ws) => {
-      return ws.employee === employee._id;
+      return ws.employee._id === employee._id;
     });
     let total = 0;
     employeeShifts.forEach((item) => {
@@ -235,7 +225,10 @@ const Rota = () => {
                                 workshifts={workShifts}
                                 employee={employee}
                                 day={day}
+                                startDate={startDate}
+                                endDate={endDate}
                                 handleDeleteWorkShift={handleDeleteWorkShift}
+                                service={slug}
                               />
                               <div
                                 // className="mt-auto"

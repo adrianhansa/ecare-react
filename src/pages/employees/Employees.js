@@ -55,6 +55,7 @@ const Employees = () => {
                     <th>Latest Supervison</th>
                     <th>Access Level</th>
                     <th>Driver</th>
+                    <th>Absences</th>
                     <th>Edit</th>
                     <th>Delete</th>
                   </tr>
@@ -63,7 +64,7 @@ const Employees = () => {
                   {employees &&
                     employees.map((employee) => (
                       <tr key={employee._id}>
-                        <EmployeeCard employee={employee} slug={slug} />
+                        <EmployeeCard employee={employee} service={slug} />
                       </tr>
                     ))}
                 </tbody>

@@ -19,19 +19,48 @@ import {
   UPDATE_ABSENCE_REQUEST,
   UPDATE_ABSENCE_SUCCESS,
   UPDATE_ABSENCE_FAIL,
+  REMOVE_DAY_OF_ABSENCE_FAIL,
+  REMOVE_DAY_OF_ABSENCE_REQUEST,
+  REMOVE_DAY_OF_ABSENCE_SUCCESS,
 } from "../constants/absenceContants";
 
-export const addAbsence = (service, absence) => async (dispatch) => {
+export const addAbsence =
+  (service, absence, employee, start, end) => async (dispatch) => {
+    try {
+      dispatch({ type: ADD_ABSENCE_REQUEST });
+      const { data } = await axios.post(`${URL}/absences/${service}`, absence);
+      dispatch({ type: ADD_ABSENCE_SUCCESS, payload: data });
+      const result = await axios.get(
+        `${URL}/absences/by-employee/${employee}/${start}/${end}`
+      );
+      dispatch({
+        type: GET_ABSENCES_BY_EMPLOYEE_SUCCESS,
+        payload: result.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ADD_ABSENCE_FAIL,
+        payload:
+          error.message && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+export const removeDaysFromAbsencePeriod = (id, days) => async (dispatch) => {
   try {
-    dispatch({ type: ADD_ABSENCE_REQUEST });
-    const { data } = await axios.post(`${URL}/${service}`, absence);
-    dispatch({ type: ADD_ABSENCE_SUCCESS, payload: data });
+    dispatch({ type: REMOVE_DAY_OF_ABSENCE_REQUEST });
+    const { data } = await axios.put(`${URL}/absences/remove-date/${id}`, {
+      days,
+    });
+    dispatch({ type: REMOVE_DAY_OF_ABSENCE_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
-      type: ADD_ABSENCE_FAIL,
+      type: REMOVE_DAY_OF_ABSENCE_FAIL,
       payload:
-        error.message && error.response.data.message
-          ? error.response.data.message
+        error.response.data.message && error.message
+          ? error.resposne.data.message
           : error.message,
     });
   }
@@ -40,7 +69,7 @@ export const addAbsence = (service, absence) => async (dispatch) => {
 export const updateAbsence = (id, absence) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_ABSENCE_REQUEST });
-    const { data } = await axios.put(`${URL}/${id}`, absence);
+    const { data } = await axios.put(`${URL}/absences/${id}`, absence);
     dispatch({ type: UPDATE_ABSENCE_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -56,7 +85,7 @@ export const updateAbsence = (id, absence) => async (dispatch) => {
 export const getAbsence = (id) => async (dispatch) => {
   try {
     dispatch({ type: GET_ABSENCE_REQUEST });
-    const { data } = await axios.get(`${URL}/${id}`);
+    const { data } = await axios.get(`${URL}/absences/${id}`);
     dispatch({ type: GET_ABSENCE_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -72,7 +101,7 @@ export const getAbsence = (id) => async (dispatch) => {
 export const deleteAbsence = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_ABSENCE_REQUEST });
-    const { data } = await axios.delete(`${URL}/${id}`);
+    const { data } = await axios.delete(`${URL}/absences/${id}`);
     dispatch({ type: DELETE_ABSENCE_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -90,7 +119,7 @@ export const getAbsencesByDates =
     try {
       dispatch({ type: GET_ABSENCES_BY_DATES_REQUEST });
       const { data } = await axios.get(
-        `${URL}/${service}/${startDate}/${endDate}`
+        `${URL}/absences/${service}/${startDate}/${endDate}`
       );
       dispatch({ type: GET_ABSENCES_BY_DATES_SUCCESS, payload: data });
     } catch (error) {
@@ -109,7 +138,7 @@ export const getAbsencesByEmployee =
     try {
       dispatch({ type: GET_ABSENCES_BY_EMPLOYEE_REQUEST });
       const { data } = await axios.get(
-        `${URL}/${employee}/${startDate}/${endDate}`
+        `${URL}/absences/by-employee/${employee}/${startDate}/${endDate}`
       );
       dispatch({ type: GET_ABSENCES_BY_EMPLOYEE_SUCCESS, payload: data });
     } catch (error) {
