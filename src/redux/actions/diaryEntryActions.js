@@ -39,14 +39,14 @@ export const getDiaryEntries = (service) => async (dispatch) => {
 
 export const toggleCompleteDiaryEntry = (id, service) => async (dispatch) => {
   try {
-  } catch (error) {
     dispatch({ type: TOGGLE_COMPLETED_DIARY_ENTRY_REQUEST });
-    const { data } = await axios.put(
-      `${URL}/toggle-complete-diary-entry/${id}`
+    const { data } = await axios.get(
+      `${URL}/diary/toggle-complete-diary-entry/${id}`
     );
     dispatch({ type: TOGGLE_COMPLETED_DIARY_ENTRY_SUCCESS, payload: data });
     const result = await axios.get(`${URL}/diary/${service}`);
     dispatch({ type: GET_DIARY_ENTRIES_SUCCESS, payload: result.data });
+  } catch (error) {
     dispatch({
       type: TOGGLE_COMPLETED_DIARY_ENTRY_FAIL,
       payload:

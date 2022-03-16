@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { Container, Col, Row, Table } from "react-bootstrap";
-import { getService } from "../../redux/actions/serviceActions";
-import AddDiary from "./AddDiary";
-import DiaryPreview from "./DiaryPreview";
-import { GrAddCircle } from "react-icons/gr";
-import { getDiaryEntries } from "../../redux/actions/diaryEntryActions";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { Container, Col, Row, Table } from 'react-bootstrap';
+import { getService } from '../../redux/actions/serviceActions';
+import AddDiary from './AddDiary';
+import DiaryPreview from './DiaryPreview';
+import { GrAddCircle } from 'react-icons/gr';
+import { getDiaryEntries } from '../../redux/actions/diaryEntryActions';
 
 const Diary = () => {
   const dispatch = useDispatch();
@@ -48,6 +48,7 @@ const Diary = () => {
                     <th>Date</th>
                     <th>Time</th>
                     <th>Event</th>
+                    <th>Status</th>
                     <th>Edit</th>
                     <th>Delete</th>
                   </tr>
